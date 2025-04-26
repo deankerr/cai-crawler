@@ -13,7 +13,7 @@ alwaysApply: true
 - The goal to be able to query our cache by model/lora etc.
 - Finally, we will add frontend UI.
 
-See [index.ts](mdc:demo/index.ts) for a demo Civitai query client, with example results in the output folder
+See [index.ts](mdc:demo/demo-query-client/index.ts) emo Civitai query client, with example results in the output folder
 See [civitai-crawler-system-design.md](mdc:demo/civitai-crawler-system-design.md) for a design proposal
 
 # Philosophy
@@ -30,10 +30,4 @@ See [civitai-crawler-system-design.md](mdc:demo/civitai-crawler-system-design.md
 # Convex
 
 - If you encounter a circular type dependancy issue, then STOP! Only a user can fix this issue. You must stop an ask the user for assistance - trying to code around it will NEVER WORK, and will only make the problem WORSE.
-
-# Current Focus
-
-- Developing robust query patterns
-- Adapting to new result variations
-- Skipping asset storage for now - this is relatively easy to implement later
-- Use simple sequential requests and manually triggering before considering more complex workflow structures
+- Actions should almost always be internal, unless you want and end user to use them directly (this is rare).
