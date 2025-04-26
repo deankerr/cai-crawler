@@ -1,0 +1,556 @@
+{
+  "id": 1218156,
+  "modelId": 15003,
+  "name": "v7.0",
+  "createdAt": "2024-12-29T23:41:19.500Z",
+  "updatedAt": "2025-02-26T14:47:02.658Z",
+  "trainedWords": [],
+  "baseModel": "SD 1.5",
+  "description": "<p>Some fine-tuning and tweaks. I’m loving the results and hope you’ll enjoy it too. <strong><u>Keeping the magic of Stable Diffusion 1.5 alive!</u></strong></p>",
+  "stats": {
+    "downloadCount": 15824,
+    "ratingCount": 0,
+    "rating": 0
+  },
+  "model": {
+    "name": "CyberRealistic",
+    "type": "Checkpoint",
+    "nsfw": false,
+    "poi": false
+  },
+  "files": [
+    {
+      "name": "cyberrealistic_v70.safetensors",
+      "id": 1123513,
+      "sizeKB": 2082667.150390625,
+      "type": "Model",
+      "metadata": {
+        "fp": "fp16",
+        "size": "pruned",
+        "format": "SafeTensor"
+      },
+      "pickleScanResult": "Success",
+      "pickleScanMessage": "No Pickle imports",
+      "virusScanResult": "Success",
+      "scannedAt": "2024-12-29T23:46:37.069Z",
+      "hashes": {
+        "AutoV1": "2B445D48",
+        "AutoV2": "FE6A316F18",
+        "SHA256": "FE6A316F1872769438BD136391B23FFA5966CDBCBBE47DB36207B5E53A1A5D17",
+        "CRC32": "8B9E6B4D",
+        "BLAKE3": "F501AD297AB1800C0D5810DC9D8A2E30E377AD98E50D0E75D6CD2DB3B9BB0628",
+        "AutoV3": "B6963995FD51"
+      },
+      "downloadUrl": "https://civitai.com/api/download/models/1218156",
+      "primary": true
+    },
+    {
+      "name": "cyberrealistic_v70.safetensors",
+      "id": 1123521,
+      "sizeKB": 4165181.90234375,
+      "type": "Model",
+      "metadata": {
+        "fp": "fp32",
+        "size": "pruned",
+        "format": "SafeTensor"
+      },
+      "pickleScanResult": "Success",
+      "pickleScanMessage": "No Pickle imports",
+      "virusScanResult": "Success",
+      "scannedAt": "2024-12-29T23:52:06.982Z",
+      "hashes": {
+        "AutoV1": "654B928C",
+        "AutoV2": "C519426BA5",
+        "SHA256": "C519426BA544982D81DF9DC5F670D7C66E254F8C1069E886B9CBF7D683C735E5",
+        "CRC32": "050F7D4E",
+        "BLAKE3": "3553B5602D6A1DD13BDB33D95C6AF6C857528A729DD3F1B29D78AB0671E099D9",
+        "AutoV3": "C7FA1B417F3B"
+      },
+      "downloadUrl": "https://civitai.com/api/download/models/1218156?type=Model&format=SafeTensor&size=pruned&fp=fp32",
+      "primary": false
+    }
+  ],
+  "images": [
+    {
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/cd9b81ad-5338-4735-9137-99cf82105b90/width=1600/48911586.jpeg",
+      "width": 1600,
+      "height": 2400,
+      "hash": "UBD+PQ014:~VE+xZE2t7#RtRR-E1IoWY$fWB",
+      "meta": {
+        "TI": "CyberRealistic_Negative",
+        "Size": "512x768",
+        "seed": 418650226,
+        "Model": "CyberRealistic_V7.0_FP16",
+        "steps": 30,
+        "hashes": {
+          "model": "e2617ad799"
+        },
+        "prompt": "Award-winning masterpiece capturing a majestic tiger sitting with its head held high, gazing directly at the viewer with piercing, ultra-detailed eyes that convey power and grace. Framed in a medium shot, the composition exudes elegance and authority. Rendered in the style of dark cinematic fine-art portraits, the scene is illuminated with dramatic lighting that enhances the tiger's rich textures and striking stripes. Soft shadows and a moody atmosphere add depth and intensity, creating a high-quality, super-detailed portrayal of the tigerâs regal presence.",
+        "Version": "f2.0.1v1.10.1-previous-635-gf5330788",
+        "sampler": "DPM++ SDE",
+        "cfgScale": 5,
+        "resources": [
+          {
+            "hash": "e2617ad799",
+            "name": "CyberRealistic_V7.0_FP16",
+            "type": "model"
+          }
+        ],
+        "sag_scale": "0.5",
+        "Model hash": "e2617ad799",
+        "sag_enabled": "True",
+        "Hires upscale": "2",
+        "Schedule type": "Karras",
+        "sag_threshold": "1",
+        "Hires Module 1": "Use same choices",
+        "Hires upscaler": "4x_NMKD-Siax_200k",
+        "negativePrompt": "(CyberRealistic_Negative:0.8), (deformed iris, deformed pupils, semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime, mutated hands and fingers:1.4), (deformed, distorted, disfigured:1.3), poorly drawn, bad anatomy, wrong anatomy, extra limb, missing limb, floating limbs, disconnected limbs, mutation, mutated, ugly, disgusting, amputation",
+        "sag_blur_sigma": "2",
+        "Hires CFG Scale": "3",
+        "Denoising strength": "0.35"
+      }
+    },
+    {
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/e82c268a-c450-4d2c-b9f4-057dd665c889/width=1466/48399688.jpeg",
+      "width": 1466,
+      "height": 2200,
+      "hash": "UQC$yJD%tlay~qDit7WB%#IAn%s:-;Mxaet7",
+      "meta": {
+        "Size": "512x768",
+        "seed": 2243011553,
+        "Model": "CyberRealistic_V7.0_FP16",
+        "steps": 30,
+        "hashes": {
+          "model": "e2617ad799"
+        },
+        "prompt": "Photo portrait of a 24-year-old Dutch woman, her expression a mix of defiance and pensiveness. Her face is adorned with subtle freckles, and her long, dark blonde hair falls straight around her shoulders. Her piercing blue eyes captivate the viewer, radiating depth and emotion. The portrait features soft, natural lighting with a shallow depth of field, highlighting her striking features and creating an intimate, photorealistic atmosphere.",
+        "Version": "f2.0.1v1.10.1-previous-635-gf5330788",
+        "sampler": "DPM++ SDE",
+        "cfgScale": 5,
+        "resources": [
+          {
+            "hash": "e2617ad799",
+            "name": "CyberRealistic_V7.0_FP16",
+            "type": "model"
+          }
+        ],
+        "sag_scale": "0.5",
+        "Model hash": "e2617ad799",
+        "Hires steps": "15",
+        "sag_enabled": "True",
+        "Hires upscale": "2",
+        "Schedule type": "Karras",
+        "sag_threshold": "1",
+        "Hires Module 1": "Use same choices",
+        "Hires upscaler": "4x_NMKD-Siax_200k",
+        "negativePrompt": "(worst quality:1.2), (low quality:1.2), (normal quality:1.2), lowres, bad anatomy, bad hands, signature, watermarks, ugly, imperfect eyes, skewed eyes, unnatural face, unnatural body, error, extra limb, missing limbs",
+        "sag_blur_sigma": "2",
+        "Hires CFG Scale": "3",
+        "Denoising strength": "0.35"
+      }
+    },
+    {
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/c800e767-61b6-42a4-98c5-b042f96a2d43/width=1466/48399672.jpeg",
+      "width": 1466,
+      "height": 2200,
+      "hash": "U45#Y3xu00D%?bt79ZM{0KRk^+xu00Rj~W%M",
+      "meta": {
+        "Size": "512x768",
+        "seed": 187512734,
+        "Model": "CyberRealistic_V7.0_FP16",
+        "steps": 30,
+        "hashes": {
+          "model": "e2617ad799"
+        },
+        "prompt": "1girl, clown makeup smudged with tears, dusty and desolate background, sorrowful clown girl, tear-streaked face, hollow eyes, close-up of a weathered and anguished expression, film photography, vintage aesthetic, dark cinematic fine-art portrait style, dramatic and melancholic lighting, soft, heavy shadows, textured details, oppressive and moody atmosphere, evoking profound sadness and loneliness",
+        "Version": "f2.0.1v1.10.1-previous-635-gf5330788",
+        "sampler": "DPM++ SDE",
+        "cfgScale": 5,
+        "resources": [
+          {
+            "hash": "e2617ad799",
+            "name": "CyberRealistic_V7.0_FP16",
+            "type": "model"
+          }
+        ],
+        "sag_scale": "0.5",
+        "Model hash": "e2617ad799",
+        "Hires steps": "15",
+        "sag_enabled": "True",
+        "Hires upscale": "2",
+        "Schedule type": "Karras",
+        "sag_threshold": "1",
+        "Hires Module 1": "Use same choices",
+        "Hires upscaler": "4x_NMKD-Siax_200k",
+        "negativePrompt": "(worst quality:1.2), (low quality:1.2), (normal quality:1.2), lowres, bad anatomy, bad hands, signature, watermarks, ugly, imperfect eyes, skewed eyes, unnatural face, unnatural body, error, extra limb, missing limbs",
+        "sag_blur_sigma": "2",
+        "Hires CFG Scale": "3",
+        "Denoising strength": "0.35"
+      }
+    },
+    {
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/5f0d74b0-833b-45c6-b1f6-073d96dd7a4b/width=1466/48399687.jpeg",
+      "width": 1466,
+      "height": 2200,
+      "hash": "U88gQ+0y#Rt-~W9tv}t,InWFenxuI9ozR*so",
+      "meta": {
+        "Size": "512x768",
+        "seed": 2677559186,
+        "Model": "CyberRealistic_V7.0_FP16",
+        "steps": 30,
+        "hashes": {
+          "model": "e2617ad799"
+        },
+        "prompt": "Gritty, raw street photography of a plain yet striking female hacker, dressed in a short skirt, thigh-highs, and black boots, embodying a matrix punk style. She sits in a dimly lit alley, neon lights from nearby shops casting an otherworldly glow on her figure, film grain, evoking the atmosphere of a cinematic still, shallow depth of field that highlights her intense presence in this urban, cyberpunk world",
+        "Version": "f2.0.1v1.10.1-previous-635-gf5330788",
+        "sampler": "DPM++ SDE",
+        "cfgScale": 5,
+        "resources": [
+          {
+            "hash": "e2617ad799",
+            "name": "CyberRealistic_V7.0_FP16",
+            "type": "model"
+          }
+        ],
+        "sag_scale": "0.5",
+        "Model hash": "e2617ad799",
+        "Hires steps": "15",
+        "sag_enabled": "True",
+        "Hires upscale": "2",
+        "Schedule type": "Karras",
+        "sag_threshold": "1",
+        "Hires Module 1": "Use same choices",
+        "Hires upscaler": "4x_NMKD-Siax_200k",
+        "negativePrompt": "(worst quality:1.2), (low quality:1.2), (normal quality:1.2), lowres, bad anatomy, bad hands, signature, watermarks, ugly, imperfect eyes, skewed eyes, unnatural face, unnatural body, error, extra limb, missing limbs",
+        "sag_blur_sigma": "2",
+        "ADetailer model": "face_yolov8n.pt",
+        "ADetailer steps": "70",
+        "Hires CFG Scale": "3",
+        "ADetailer version": "24.11.1",
+        "Denoising strength": "0.35",
+        "ADetailer mask blur": "4",
+        "ADetailer confidence": "0.3",
+        "ADetailer dilate erode": "4",
+        "ADetailer inpaint width": "768",
+        "ADetailer inpaint height": "768",
+        "ADetailer inpaint padding": "32",
+        "ADetailer mask only top k": "1",
+        "ADetailer denoising strength": "0.5",
+        "ADetailer use separate steps": "True",
+        "ADetailer inpaint only masked": "True",
+        "ADetailer use inpaint width height": "True",
+        "ADetailer method to decide top k masks": "Area"
+      }
+    },
+    {
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b1948881-b4c5-49c3-aad1-88bba510a3c2/width=1466/48399683.jpeg",
+      "width": 1466,
+      "height": 2200,
+      "hash": "U6BM}XM{00NG~VWB-;WBxtayQmt800j[^+o#",
+      "meta": {
+        "Size": "512x768",
+        "seed": 3081215236,
+        "Model": "CyberRealistic_V7.0_FP16",
+        "steps": 30,
+        "hashes": {
+          "model": "e2617ad799"
+        },
+        "prompt": "A photograph of a woman in a public restroom captures the allure of a tall, slender figure with short hair, wearing a sleek black dress with an open back, standing against graffiti-covered walls, The dimly lit room, illuminated by a neon sign, casts a moody glow, while her red lips add a touch of intrigue",
+        "Version": "f2.0.1v1.10.1-previous-635-gf5330788",
+        "sampler": "DPM++ SDE",
+        "cfgScale": 5,
+        "resources": [
+          {
+            "hash": "e2617ad799",
+            "name": "CyberRealistic_V7.0_FP16",
+            "type": "model"
+          }
+        ],
+        "sag_scale": "0.5",
+        "Model hash": "e2617ad799",
+        "Hires steps": "15",
+        "sag_enabled": "True",
+        "Hires upscale": "2",
+        "Schedule type": "Karras",
+        "sag_threshold": "1",
+        "Hires Module 1": "Use same choices",
+        "Hires upscaler": "4x_NMKD-Siax_200k",
+        "negativePrompt": "(worst quality:1.2), (low quality:1.2), (normal quality:1.2), lowres, bad anatomy, bad hands, signature, watermarks, ugly, imperfect eyes, skewed eyes, unnatural face, unnatural body, error, extra limb, missing limbs",
+        "sag_blur_sigma": "2",
+        "ADetailer model": "face_yolov8n.pt",
+        "ADetailer steps": "70",
+        "Hires CFG Scale": "3",
+        "ADetailer version": "24.11.1",
+        "Denoising strength": "0.35",
+        "ADetailer mask blur": "4",
+        "ADetailer confidence": "0.3",
+        "ADetailer dilate erode": "4",
+        "ADetailer inpaint width": "768",
+        "ADetailer inpaint height": "768",
+        "ADetailer inpaint padding": "32",
+        "ADetailer mask only top k": "1",
+        "ADetailer denoising strength": "0.5",
+        "ADetailer use separate steps": "True",
+        "ADetailer inpaint only masked": "True",
+        "ADetailer use inpaint width height": "True",
+        "ADetailer method to decide top k masks": "Area"
+      }
+    },
+    {
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/e172f202-7ff8-4222-bacd-6abbc2099818/width=1466/48399678.jpeg",
+      "width": 1466,
+      "height": 2200,
+      "hash": "UGJG~7yCbo?bia%2bbVr%$R4IANH~o-;?c%L",
+      "meta": {
+        "Size": "512x768",
+        "seed": 2095607300,
+        "Model": "CyberRealistic_V7.0_FP16",
+        "steps": 30,
+        "hashes": {
+          "model": "e2617ad799"
+        },
+        "prompt": "Beautiful girl with curls and lots of freckles, ginger hair, smiling with joy, full body, dramatic light highlighting her joyful expression, Rembrandt lighting scheme, vibrant and lively mood, (hyperrealism:1.2), (8K UHD:1.2), (photorealistic:1.2), shot with Canon EOS 5D Mark IV, capturing every detail of her glowing skin and sparkling eyes, exuding warmth and happiness in the frame",
+        "Version": "f2.0.1v1.10.1-previous-635-gf5330788",
+        "sampler": "DPM++ SDE",
+        "cfgScale": 5,
+        "resources": [
+          {
+            "hash": "e2617ad799",
+            "name": "CyberRealistic_V7.0_FP16",
+            "type": "model"
+          }
+        ],
+        "sag_scale": "0.5",
+        "Model hash": "e2617ad799",
+        "Hires steps": "15",
+        "sag_enabled": "True",
+        "Hires upscale": "2",
+        "Schedule type": "Karras",
+        "sag_threshold": "1",
+        "Hires Module 1": "Use same choices",
+        "Hires upscaler": "4x_NMKD-Siax_200k",
+        "negativePrompt": "(worst quality:1.2), (low quality:1.2), (normal quality:1.2), lowres, bad anatomy, bad hands, signature, watermarks, ugly, imperfect eyes, skewed eyes, unnatural face, unnatural body, error, extra limb, missing limbs",
+        "sag_blur_sigma": "2",
+        "Hires CFG Scale": "3",
+        "Denoising strength": "0.35"
+      }
+    },
+    {
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/54d868f8-2e09-47a8-900f-7ae2796b16f9/width=1466/48399676.jpeg",
+      "width": 1466,
+      "height": 2200,
+      "hash": "UA5rxqtRD%H?uPo}M_R4.8tSMxMwxakqMdR*",
+      "meta": {
+        "Size": "512x768",
+        "seed": 3318654219,
+        "Model": "CyberRealistic_V7.0_FP16",
+        "steps": 30,
+        "hashes": {
+          "model": "e2617ad799"
+        },
+        "prompt": "Award-winning masterpiece, a solitary woman wearing headphones, a cropped top, and a worn leather jacket, seated in a dimly lit room, illuminated by a haunting blue light haloing her head, in the evocative style of Anka Zhuravleva. Cyberpunk art fused with retrofuturism, drenched in a moody and introspective atmosphere, intricate details of neon reflections and shadows, capturing the weight of isolation within a dystopian aesthetic",
+        "Version": "f2.0.1v1.10.1-previous-635-gf5330788",
+        "sampler": "DPM++ SDE",
+        "cfgScale": 5,
+        "resources": [
+          {
+            "hash": "e2617ad799",
+            "name": "CyberRealistic_V7.0_FP16",
+            "type": "model"
+          }
+        ],
+        "sag_scale": "0.5",
+        "Model hash": "e2617ad799",
+        "Hires steps": "15",
+        "sag_enabled": "True",
+        "Hires upscale": "2",
+        "Schedule type": "Karras",
+        "sag_threshold": "1",
+        "Hires Module 1": "Use same choices",
+        "Hires upscaler": "4x_NMKD-Siax_200k",
+        "negativePrompt": "(worst quality:1.2), (low quality:1.2), (normal quality:1.2), lowres, bad anatomy, bad hands, signature, watermarks, ugly, imperfect eyes, skewed eyes, unnatural face, unnatural body, error, extra limb, missing limbs",
+        "sag_blur_sigma": "2",
+        "ADetailer model": "face_yolov8n.pt",
+        "ADetailer steps": "70",
+        "Hires CFG Scale": "3",
+        "ADetailer version": "24.11.1",
+        "Denoising strength": "0.35",
+        "ADetailer mask blur": "4",
+        "ADetailer confidence": "0.3",
+        "ADetailer dilate erode": "4",
+        "ADetailer inpaint width": "768",
+        "ADetailer inpaint height": "768",
+        "ADetailer inpaint padding": "32",
+        "ADetailer mask only top k": "1",
+        "ADetailer denoising strength": "0.5",
+        "ADetailer use separate steps": "True",
+        "ADetailer inpaint only masked": "True",
+        "ADetailer use inpaint width height": "True",
+        "ADetailer method to decide top k masks": "Area"
+      }
+    },
+    {
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/8b8ed882-dc34-4d96-b8f4-8f1f061e3762/width=1466/48399670.jpeg",
+      "width": 1466,
+      "height": 2200,
+      "hash": "UDA0,e9bniWA~pNfWCi^i]krWFwaD$krR--m",
+      "meta": {
+        "Size": "512x768",
+        "seed": 930419658,
+        "Model": "CyberRealistic_V7.0_FP16",
+        "steps": 30,
+        "hashes": {
+          "model": "e2617ad799"
+        },
+        "prompt": "Gritty, raw street photography of a plain yet striking female hacker, dressed in a short skirt, thigh-highs, and black boots, embodying a matrix punk style. She sits in a dimly lit alley, neon lights from nearby shops casting an otherworldly glow on her figure, film grain, evoking the atmosphere of a cinematic still, shallow depth of field that highlights her intense presence in this urban, cyberpunk world",
+        "Version": "f2.0.1v1.10.1-previous-635-gf5330788",
+        "sampler": "DPM++ SDE",
+        "cfgScale": 5,
+        "resources": [
+          {
+            "hash": "e2617ad799",
+            "name": "CyberRealistic_V7.0_FP16",
+            "type": "model"
+          }
+        ],
+        "sag_scale": "0.5",
+        "Model hash": "e2617ad799",
+        "Hires steps": "15",
+        "sag_enabled": "True",
+        "Hires upscale": "2",
+        "Schedule type": "Karras",
+        "sag_threshold": "1",
+        "Hires Module 1": "Use same choices",
+        "Hires upscaler": "4x_NMKD-Siax_200k",
+        "negativePrompt": "(worst quality:1.2), (low quality:1.2), (normal quality:1.2), lowres, bad anatomy, bad hands, signature, watermarks, ugly, imperfect eyes, skewed eyes, unnatural face, unnatural body, error, extra limb, missing limbs",
+        "sag_blur_sigma": "2",
+        "ADetailer model": "face_yolov8n.pt",
+        "ADetailer steps": "70",
+        "Hires CFG Scale": "3",
+        "ADetailer version": "24.11.1",
+        "Denoising strength": "0.35",
+        "ADetailer mask blur": "4",
+        "ADetailer confidence": "0.3",
+        "ADetailer dilate erode": "4",
+        "ADetailer inpaint width": "768",
+        "ADetailer inpaint height": "768",
+        "ADetailer inpaint padding": "32",
+        "ADetailer mask only top k": "1",
+        "ADetailer denoising strength": "0.5",
+        "ADetailer use separate steps": "True",
+        "ADetailer inpaint only masked": "True",
+        "ADetailer use inpaint width height": "True",
+        "ADetailer method to decide top k masks": "Area"
+      }
+    },
+    {
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/d422aebf-9607-42b4-833d-0332408748d8/width=1466/48399673.jpeg",
+      "width": 1466,
+      "height": 2200,
+      "hash": "UEDufDuj-V~q~Cvg;h-WE1XmNGM{OrNGkBS2",
+      "meta": {
+        "Size": "512x768",
+        "seed": 2264695450,
+        "Model": "CyberRealistic_V7.0_FP16",
+        "steps": 30,
+        "hashes": {
+          "model": "e2617ad799"
+        },
+        "prompt": "Epic photograph of a strikingly sexy young woman in a sleek cyberpunk suit, her short hair framing her confident, futuristic allure. The scene is drenched in intense red color grading, evoking a bold and dystopian aesthetic. Captured with the cinematic quality of Ektachrome film on a Fujifilm XT3, the image boasts intricate details, vivid contrasts, and a dynamic cyberpunk atmosphere",
+        "Version": "f2.0.1v1.10.1-previous-635-gf5330788",
+        "sampler": "DPM++ SDE",
+        "cfgScale": 5,
+        "resources": [
+          {
+            "hash": "e2617ad799",
+            "name": "CyberRealistic_V7.0_FP16",
+            "type": "model"
+          }
+        ],
+        "sag_scale": "0.5",
+        "Model hash": "e2617ad799",
+        "Hires steps": "15",
+        "sag_enabled": "True",
+        "Hires upscale": "2",
+        "Schedule type": "Karras",
+        "sag_threshold": "1",
+        "Hires Module 1": "Use same choices",
+        "Hires upscaler": "4x_NMKD-Siax_200k",
+        "negativePrompt": "(worst quality:1.2), (low quality:1.2), (normal quality:1.2), lowres, bad anatomy, bad hands, signature, watermarks, ugly, imperfect eyes, skewed eyes, unnatural face, unnatural body, error, extra limb, missing limbs",
+        "sag_blur_sigma": "2",
+        "ADetailer model": "face_yolov8n.pt",
+        "ADetailer steps": "70",
+        "Hires CFG Scale": "3",
+        "ADetailer version": "24.11.1",
+        "Denoising strength": "0.35",
+        "ADetailer mask blur": "4",
+        "ADetailer confidence": "0.3",
+        "ADetailer dilate erode": "4",
+        "ADetailer inpaint width": "768",
+        "ADetailer inpaint height": "768",
+        "ADetailer inpaint padding": "32",
+        "ADetailer mask only top k": "1",
+        "ADetailer denoising strength": "0.5",
+        "ADetailer use separate steps": "True",
+        "ADetailer inpaint only masked": "True",
+        "ADetailer use inpaint width height": "True",
+        "ADetailer method to decide top k masks": "Area"
+      }
+    },
+    {
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/5d463955-babd-4d6f-b327-102c1c2c082a/width=1466/48399675.jpeg",
+      "width": 1466,
+      "height": 2200,
+      "hash": "UDF}[zjE-N%3~Vt80NsT~AaK^*RQNFRjw[t7",
+      "meta": {
+        "Size": "512x768",
+        "seed": 661664450,
+        "Model": "CyberRealistic_V7.0_FP16",
+        "steps": 30,
+        "hashes": {
+          "model": "e2617ad799"
+        },
+        "prompt": "Full-body photo of a 23-year-old woman with a bold undercut hairstyle, dressed in a casual yet edgy outfitâa fitted tee, a sleek leather jacket, and classic jeans. She stands in the nostalgic setting of an 80s convenience store, surrounded by atmospheric haze that adds depth and character to the scene. The composition feels like a cinematic film still, with a shallow depth of field drawing attention to intricate details. The shot is highly detailed, showcasing skin pores and natural imperfections, lending authenticity to her photorealistic presence. The image is framed in a high-budget cinemascope style, with moody, epic vibes enhanced by subtle film grain and color-graded cinematic tones, evoking the timeless allure of a 2000s vintage RAW photo",
+        "Version": "f2.0.1v1.10.1-previous-635-gf5330788",
+        "sampler": "DPM++ SDE",
+        "cfgScale": 5,
+        "resources": [
+          {
+            "hash": "e2617ad799",
+            "name": "CyberRealistic_V7.0_FP16",
+            "type": "model"
+          }
+        ],
+        "sag_scale": "0.5",
+        "Model hash": "e2617ad799",
+        "Hires steps": "15",
+        "sag_enabled": "True",
+        "Hires upscale": "2",
+        "Schedule type": "Karras",
+        "sag_threshold": "1",
+        "Hires Module 1": "Use same choices",
+        "Hires upscaler": "4x_NMKD-Siax_200k",
+        "negativePrompt": "(worst quality:1.2), (low quality:1.2), (normal quality:1.2), lowres, bad anatomy, bad hands, signature, watermarks, ugly, imperfect eyes, skewed eyes, unnatural face, unnatural body, error, extra limb, missing limbs",
+        "sag_blur_sigma": "2",
+        "ADetailer model": "face_yolov8n.pt",
+        "ADetailer steps": "70",
+        "Hires CFG Scale": "3",
+        "ADetailer version": "24.11.1",
+        "Denoising strength": "0.35",
+        "ADetailer mask blur": "4",
+        "ADetailer confidence": "0.3",
+        "ADetailer dilate erode": "4",
+        "ADetailer inpaint width": "768",
+        "ADetailer inpaint height": "768",
+        "ADetailer inpaint padding": "32",
+        "ADetailer mask only top k": "1",
+        "ADetailer denoising strength": "0.5",
+        "ADetailer use separate steps": "True",
+        "ADetailer inpaint only masked": "True",
+        "ADetailer use inpaint width height": "True",
+        "ADetailer method to decide top k masks": "Area"
+      }
+    }
+  ],
+  "downloadUrl": "https://civitai.com/api/download/models/1218156"
+}

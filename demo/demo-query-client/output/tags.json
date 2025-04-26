@@ -42,10 +42,10 @@
     }
   ],
   "metadata": {
-    "totalItems": 139831,
+    "totalItems": 140089,
     "currentPage": 1,
     "pageSize": 10,
-    "totalPages": 13984,
+    "totalPages": 14009,
     "nextPage": "https://civitai.com/api/v1/tags?limit=10&page=2"
   }
 }

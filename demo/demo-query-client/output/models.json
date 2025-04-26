@@ -15,7 +15,7 @@
       "allowDerivatives": true,
       "allowDifferentLicense": false,
       "stats": {
-        "downloadCount": 640925,
+        "downloadCount": 641611,
         "favoriteCount": 0,
         "commentCount": 1452,
         "ratingCount": 0,
@@ -39,7 +39,7 @@
           "baseModel": "Pony",
           "downloadUrl": "https://civitai.com/api/download/models/290640",
           "stats": {
-            "downloadCount": 582794,
+            "downloadCount": 583433,
             "ratingCount": 1095,
             "rating": 4.93
           },
@@ -183,7 +183,7 @@
           "baseModel": "Pony",
           "downloadUrl": "https://civitai.com/api/download/models/298112",
           "stats": {
-            "downloadCount": 16701,
+            "downloadCount": 16715,
             "ratingCount": 3319,
             "rating": 5
           },
@@ -243,7 +243,7 @@
           "baseModel": "SDXL Turbo",
           "downloadUrl": "https://civitai.com/api/download/models/297100",
           "stats": {
-            "downloadCount": 16089,
+            "downloadCount": 16102,
             "ratingCount": 74,
             "rating": 5
           },
@@ -315,7 +315,7 @@
           "baseModel": "SD 1.5",
           "downloadUrl": "https://civitai.com/api/download/models/297064",
           "stats": {
-            "downloadCount": 25341,
+            "downloadCount": 25361,
             "ratingCount": 7,
             "rating": 4.71
           },
@@ -396,7 +396,7 @@
       "allowDerivatives": true,
       "allowDifferentLicense": true,
       "stats": {
-        "downloadCount": 1021901,
+        "downloadCount": 1022505,
         "favoriteCount": 0,
         "commentCount": 504,
         "ratingCount": 0,
@@ -421,7 +421,7 @@
           "baseModel": "SD 1.5",
           "downloadUrl": "https://civitai.com/api/download/models/176425",
           "stats": {
-            "downloadCount": 445921,
+            "downloadCount": 446457,
             "ratingCount": 2325,
             "rating": 4.97
           },
@@ -510,7 +510,7 @@
           "baseModel": "SD 1.5",
           "downloadUrl": "https://civitai.com/api/download/models/221343",
           "stats": {
-            "downloadCount": 22254,
+            "downloadCount": 22276,
             "ratingCount": 3115,
             "rating": 5
           },
@@ -564,7 +564,7 @@
           "baseModel": "SD 1.5",
           "downloadUrl": "https://civitai.com/api/download/models/126470",
           "stats": {
-            "downloadCount": 111925,
+            "downloadCount": 111931,
             "ratingCount": 3802,
             "rating": 4.99
           },
@@ -677,7 +677,7 @@
           "baseModel": "SD 1.5",
           "downloadUrl": "https://civitai.com/api/download/models/94640",
           "stats": {
-            "downloadCount": 237984,
+            "downloadCount": 238018,
             "ratingCount": 8617,
             "rating": 4.99
           },
@@ -939,7 +939,7 @@
           "baseModel": "SD 1.5",
           "downloadUrl": "https://civitai.com/api/download/models/79068",
           "stats": {
-            "downloadCount": 20955,
+            "downloadCount": 20956,
             "ratingCount": 1420,
             "rating": 5
           },
@@ -1034,7 +1034,7 @@
           "baseModel": "SD 1.5",
           "downloadUrl": "https://civitai.com/api/download/models/55911",
           "stats": {
-            "downloadCount": 57049,
+            "downloadCount": 57053,
             "ratingCount": 9425,
             "rating": 5
           },
@@ -1111,7 +1111,7 @@
           "baseModel": "SD 1.5",
           "downloadUrl": "https://civitai.com/api/download/models/55620",
           "stats": {
-            "downloadCount": 5612,
+            "downloadCount": 5613,
             "ratingCount": 172,
             "rating": 5
           },
@@ -1350,7 +1350,7 @@
     }
   ],
   "metadata": {
-    "nextPage": "https://civitai.com/api/v1/models?limit=2&types=Checkpoint&cursor=59018%7C1021901%7C43331",
-    "nextCursor": "59018|1021901|43331"
+    "nextPage": "https://civitai.com/api/v1/models?limit=2&types=Checkpoint&nsfw=false&cursor=59032%7C1022505%7C43331",
+    "nextCursor": "59032|1022505|43331"
   }
 }

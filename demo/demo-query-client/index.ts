@@ -1,4 +1,3 @@
-import { fetchCreators } from './query/creators'
 import { fetchImages } from './query/images'
 import { fetchModelById } from './query/modelId'
 import { fetchModels } from './query/models'
@@ -6,70 +5,45 @@ import { fetchModelVersionById } from './query/modelVersionId'
 import { fetchModelVersionByHash } from './query/modelVersionsByHash'
 import { fetchTags } from './query/tags'
 
+const DEMO_MODEL_ID = 15003 // CyberRealistic
+const DEMO_MODEL_VERSION_ID = 1218156 // v7.0
+const DEMO_MODEL_HASH = '99FDC43DD3D0' // v7.0
+
 // Test all endpoints
 async function main() {
   try {
     // Test images endpoint
     console.log('Fetching images...')
-    const images = await fetchImages({ limit: 4 })
+    const images = await fetchImages({ limit: 4, modelVersionId: DEMO_MODEL_VERSION_ID, nsfw: false })
     console.log(`Successfully fetched ${images.items.length} images`)
 
     // Test models endpoint
     console.log('Fetching models...')
-    const models = await fetchModels({ limit: 2, types: ['Checkpoint'] })
+    const models = await fetchModels({ limit: 2, types: ['Checkpoint'], nsfw: false })
     console.log(`Successfully fetched ${models.items.length} models`)
 
     // Test modelId endpoint
-    if (models.items && models.items.length > 0 && models.items[0]) {
-      const modelId = models.items[0].id
-      console.log(`Fetching model with ID ${modelId}...`)
-      const model = await fetchModelById(modelId)
-      console.log(`Successfully fetched model: ${model.name}`)
+    console.log(`Fetching model with ID ${DEMO_MODEL_ID}...`)
+    const model = await fetchModelById(DEMO_MODEL_ID)
+    console.log(`Successfully fetched model: ${model.name}`)
 
-      // Test modelVersionId endpoint
-      if (model.modelVersions && model.modelVersions.length > 0) {
-        const modelVersion = model.modelVersions[0]
-        if (modelVersion && modelVersion.id) {
-          const modelVersionId = modelVersion.id
-          console.log(`Fetching model version with ID ${modelVersionId}...`)
-          const modelVersionDetails = await fetchModelVersionById(modelVersionId)
-          console.log(`Successfully fetched model version: ${modelVersionDetails.name}`)
+    // Test modelVersionId endpoint
+    console.log(`Fetching model version with ID ${DEMO_MODEL_VERSION_ID}...`)
+    const modelVersionDetails = await fetchModelVersionById(DEMO_MODEL_VERSION_ID)
+    console.log(`Successfully fetched model version: ${modelVersionDetails.name}`)
 
-          // Test modelVersionsByHash endpoint if we have a hash
-          if (
-            modelVersionDetails.files
-            && modelVersionDetails.files.length > 0
-            && modelVersionDetails.files[0]?.hashes
-          ) {
-            const hashesObj = modelVersionDetails.files[0].hashes
-            if (hashesObj) {
-              const keys = Object.keys(hashesObj)
-              if (keys.length > 0) {
-                const firstHashKey = keys[0]
-                if (firstHashKey && hashesObj[firstHashKey]) {
-                  const hash = hashesObj[firstHashKey]
-                  console.log(`Fetching model version by hash ${hash}...`)
-                  try {
-                    const modelVersionByHash = await fetchModelVersionByHash(hash)
-                    console.log(`Successfully fetched model version by hash: ${modelVersionByHash.name}`)
-                  }
-                  catch (error: any) {
-                    console.log(`Could not fetch model version by hash: ${error?.message || 'Unknown error'}`)
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+    // Test modelVersionsByHash endpoint
+    console.log(`Fetching model version by hash ${DEMO_MODEL_HASH}...`)
+    const modelVersionByHash = await fetchModelVersionByHash(DEMO_MODEL_HASH)
+    console.log(`Successfully fetched model version by hash: ${modelVersionByHash.name}`)
 
     // Test creators endpoint
-    console.log('Fetching creators...')
-    const creators = await fetchCreators({ limit: 5 })
-    console.log(`Successfully fetched ${creators.items.length} creators`)
+    // NOTE: This endpoint barely works and is not useful
+    // console.log('Fetching creators...')
+    // const creators = await fetchCreators({ limit: 2 })
+    // console.log(`Successfully fetched ${creators.items.length} creators`)
 
-    // Test tags endpoint
+    // Test tags endpoint`
     console.log('Fetching tags...')
     const tags = await fetchTags({ limit: 10 })
     console.log(`Successfully fetched ${tags.items.length} tags`)

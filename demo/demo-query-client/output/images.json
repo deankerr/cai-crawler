@@ -1,377 +1,202 @@
 {
   "items": [
     {
-      "id": 63175621,
-      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/0f4515bd-3db6-4032-90fe-168d1c9a4cf4/width=1400/0f4515bd-3db6-4032-90fe-168d1c9a4cf4.jpeg",
-      "hash": "U#SEBGs.xZs:.lkBS#bHNeaznioLxWjZRkWV",
-      "width": 1400,
-      "height": 2046,
+      "id": 50943733,
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/415efd3f-05f1-45c3-8766-012beb33ed1b/width=512/415efd3f-05f1-45c3-8766-012beb33ed1b.jpeg",
+      "hash": "UgLWqq-:RjRP*0bIWVkBkqWAogxuoeays:kC",
+      "width": 512,
+      "height": 768,
       "nsfw": false,
       "nsfwLevel": "None",
-      "createdAt": "2025-04-03T20:46:21.212Z",
-      "postId": 14095469,
+      "createdAt": "2025-01-11T13:43:59.244Z",
+      "postId": 11459763,
       "stats": {
-        "cryCount": 823,
-        "laughCount": 1195,
-        "likeCount": 9544,
-        "heartCount": 3449,
-        "commentCount": 14
-      },
-      "meta": {
-        "Size": "832x1216",
-        "seed": 922171400,
-        "steps": 25,
-        "sampler": "Undefined",
-        "cfgScale": 3.5,
-        "clipSkip": 2,
-        "resources": [],
-        "Created Date": "2025-03-06T1004:47.8125258Z",
-        "civitaiResources": [
-          {
-            "type": "checkpoint",
-            "modelVersionId": 691639,
-            "modelVersionName": "Dev"
-          },
-          {
-            "type": "lora",
-            "weight": 0.4,
-            "modelVersionId": 806265,
-            "modelVersionName": "v1.0"
-          },
-          {
-            "type": "lora",
-            "weight": 0.5,
-            "modelVersionId": 863655,
-            "modelVersionName": "Balance_v2.0"
-          },
-          {
-            "type": "lora",
-            "weight": 0.6,
-            "modelVersionId": 754068,
-            "modelVersionName": "v1.0"
-          },
-          {
-            "type": "lora",
-            "weight": 0.25,
-            "modelVersionId": 747534,
-            "modelVersionName": "Flux.1 D v1"
-          },
-          {
-            "type": "lora",
-            "weight": 0.4,
-            "modelVersionId": 983288,
-            "modelVersionName": "Flux v1.0"
-          },
-          {
-            "type": "lora",
-            "weight": 0.25,
-            "modelVersionId": 840288,
-            "modelVersionName": "artisketchyfs"
-          },
-          {
-            "type": "lora",
-            "weight": 0.4,
-            "modelVersionId": 792756,
-            "modelVersionName": "flux v2.0"
-          }
-        ]
-      },
-      "username": "ArtifyAI"
-    },
-    {
-      "id": 64098103,
-      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/0eb99bb9-d1b0-454a-9959-d4dac7954d54/width=1248/0eb99bb9-d1b0-454a-9959-d4dac7954d54.jpeg",
-      "hash": "UJGOE4,?{};4=d=dr?Ego2oeAX#-NuE#xFkB",
-      "width": 1248,
-      "height": 1824,
-      "nsfw": false,
-      "nsfwLevel": "None",
-      "createdAt": "2025-03-18T00:12:00.000Z",
-      "postId": 14293633,
-      "stats": {
-        "cryCount": 159,
-        "laughCount": 248,
-        "likeCount": 2449,
-        "heartCount": 766,
-        "commentCount": 4
-      },
-      "meta": {
-        "Size": "832x1216",
-        "seed": 2950304666,
-        "Model": "flux1-dev-bnb-nf4-v2",
-        "steps": 30,
-        "hashes": {
-          "model": "bea01d51bd",
-          "lora:flux dtmh": "e872237e9e88",
-          "lora:RetroAnimeFluxV1": "3d6b347c868f",
-          "lora:frazetta_flux_v2": "f7aff5115fe7",
-          "lora:artisketchyfs-v02": "2097f7b0e740",
-          "lora:RM_TacExoGear_v0.5M": "1de75161613d",
-          "lora:artimegacities_00a-000001": "02c3c51616bc",
-          "lora:Elden_Ring_-_Yoshitaka_Amano": "dd42bab761bd"
-        },
-        "Version": "f2.0.1v1.10.1-previous-659-gc055f2d4",
-        "sampler": "DEIS",
-        "cfgScale": 1,
-        "resources": [
-          {
-            "hash": "02c3c51616bc",
-            "name": "artimegacities_00a-000001",
-            "type": "lora"
-          },
-          {
-            "hash": "2097f7b0e740",
-            "name": "artisketchyfs-v02",
-            "type": "lora"
-          },
-          {
-            "hash": "dd42bab761bd",
-            "name": "Elden_Ring_-_Yoshitaka_Amano",
-            "type": "lora"
-          },
-          {
-            "hash": "e872237e9e88",
-            "name": "flux dtmh",
-            "type": "lora"
-          },
-          {
-            "hash": "f7aff5115fe7",
-            "name": "frazetta_flux_v2",
-            "type": "lora"
-          },
-          {
-            "hash": "3d6b347c868f",
-            "name": "RetroAnimeFluxV1",
-            "type": "lora"
-          },
-          {
-            "hash": "1de75161613d",
-            "name": "RM_TacExoGear_v0.5M",
-            "type": "lora"
-          },
-          {
-            "hash": "bea01d51bd",
-            "name": "flux1-dev-bnb-nf4-v2",
-            "type": "model"
-          }
-        ],
-        "Model hash": "bea01d51bd",
-        "Hires steps": "10",
-        "Hires upscale": "1.5",
-        "Schedule type": "Beta",
-        "Hires Module 1": "Use same choices",
-        "Hires upscaler": "4x-UltraSharp",
-        "Hires CFG Scale": "1",
-        "Beta schedule beta": "0.6",
-        "Denoising strength": "0.5",
-        "Beta schedule alpha": "0.6",
-        "Distilled CFG Scale": "3.5",
-        "Diffusion in Low Bits": "Automatic (fp16 LoRA)",
-        "Hires Distilled CFG Scale": "3.5"
-      },
-      "username": "ArtifyAI"
-    },
-    {
-      "id": 63175374,
-      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/0c10ae89-7e13-4896-8ce2-22f479f0fc5a/width=1248/0c10ae89-7e13-4896-8ce2-22f479f0fc5a.jpeg",
-      "hash": "URE{5U_J?s^$%L%K-oxtI;IpWUSgNaRjNHSf",
-      "width": 1248,
-      "height": 1824,
-      "nsfw": false,
-      "nsfwLevel": "None",
-      "createdAt": "2025-03-13T00:05:00.000Z",
-      "postId": 14095396,
-      "stats": {
-        "cryCount": 193,
-        "laughCount": 251,
-        "likeCount": 2384,
-        "heartCount": 695,
-        "commentCount": 1
-      },
-      "meta": {
-        "Size": "832x1216",
-        "seed": 577600985,
-        "Model": "flux1-dev-bnb-nf4-v2",
-        "steps": 50,
-        "hashes": {
-          "model": "bea01d51bd",
-          "lora:artilands": "182873e6365a",
-          "lora:flux dtmh": "e872237e9e88",
-          "lora:RetroAnimeFluxV1": "3d6b347c868f",
-          "lora:frazetta_flux_v2": "f7aff5115fe7",
-          "lora:artisketchyfs-v02": "2097f7b0e740",
-          "lora:RM_TacExoGear_v0.5M": "1de75161613d",
-          "lora:artimegacities_00a-000001": "02c3c51616bc",
-          "lora:Elden_Ring_-_Yoshitaka_Amano": "dd42bab761bd"
-        },
-        "Version": "f2.0.1v1.10.1-previous-654-g8dd92501",
-        "sampler": "DEIS",
-        "cfgScale": 1,
-        "resources": [
-          {
-            "hash": "02c3c51616bc",
-            "name": "artimegacities_00a-000001",
-            "type": "lora"
-          },
-          {
-            "hash": "182873e6365a",
-            "name": "artilands",
-            "type": "lora"
-          },
-          {
-            "hash": "2097f7b0e740",
-            "name": "artisketchyfs-v02",
-            "type": "lora"
-          },
-          {
-            "hash": "dd42bab761bd",
-            "name": "Elden_Ring_-_Yoshitaka_Amano",
-            "type": "lora"
-          },
-          {
-            "hash": "e872237e9e88",
-            "name": "flux dtmh",
-            "type": "lora"
-          },
-          {
-            "hash": "f7aff5115fe7",
-            "name": "frazetta_flux_v2",
-            "type": "lora"
-          },
-          {
-            "hash": "3d6b347c868f",
-            "name": "RetroAnimeFluxV1",
-            "type": "lora"
-          },
-          {
-            "hash": "1de75161613d",
-            "name": "RM_TacExoGear_v0.5M",
-            "type": "lora"
-          },
-          {
-            "hash": "bea01d51bd",
-            "name": "flux1-dev-bnb-nf4-v2",
-            "type": "model"
-          }
-        ],
-        "Model hash": "bea01d51bd",
-        "Hires steps": "10",
-        "Hires upscale": "1.5",
-        "Schedule type": "Beta",
-        "Hires Module 1": "Use same choices",
-        "Hires upscaler": "4x-UltraSharp",
-        "Hires CFG Scale": "1",
-        "Beta schedule beta": "0.6",
-        "Denoising strength": "0.5",
-        "Beta schedule alpha": "0.6",
-        "Distilled CFG Scale": "3.5",
-        "Diffusion in Low Bits": "Automatic (fp16 LoRA)",
-        "Hires Distilled CFG Scale": "4.2"
-      },
-      "username": "ArtifyAI"
-    },
-    {
-      "id": 62776513,
-      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/e08bdfa4-122c-4527-91fb-89a36c91765c/width=1248/e08bdfa4-122c-4527-91fb-89a36c91765c.jpeg",
-      "hash": "UYDlARR+Ndt6~7WWV[s.=[S5WCoe-nWDX8WW",
-      "width": 1248,
-      "height": 1824,
-      "nsfw": false,
-      "nsfwLevel": "None",
-      "createdAt": "2025-03-11T00:08:00.000Z",
-      "postId": 14012623,
-      "stats": {
-        "cryCount": 154,
-        "laughCount": 262,
-        "likeCount": 2395,
-        "heartCount": 704,
+        "cryCount": 72,
+        "laughCount": 184,
+        "likeCount": 1296,
+        "heartCount": 305,
         "commentCount": 2
       },
       "meta": {
-        "Size": "832x1216",
-        "seed": 577600930,
-        "Model": "flux1-dev-bnb-nf4-v2",
-        "steps": 50,
+        "Size": "512x768",
+        "nsfw": false,
+        "seed": 1516878318,
+        "draft": false,
+        "steps": 25,
+        "width": 512,
+        "height": 768,
+        "prompt": "egg",
+        "sampler": "Euler a",
+        "cfgScale": 4,
+        "clipSkip": 2,
+        "quantity": 4,
+        "workflow": "txt2img",
+        "baseModel": "SD1",
+        "resources": [],
+        "Created Date": "2025-01-11T1343:22.2770000Z",
+        "negativePrompt": "human",
+        "civitaiResources": [
+          {
+            "type": "checkpoint",
+            "modelVersionId": 1218156,
+            "modelVersionName": "v7.0"
+          },
+          {
+            "type": "embed",
+            "modelVersionId": 106916,
+            "modelVersionName": "v1.0"
+          }
+        ]
+      },
+      "username": "EGGpost"
+    },
+    {
+      "id": 51137980,
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/3b18e4a3-ed65-4f90-8835-6300bcfb2278/width=512/3b18e4a3-ed65-4f90-8835-6300bcfb2278.jpeg",
+      "hash": "UIDSdfDiXSxZ_N9GozWE9vxFaeM}0L-oM|ae",
+      "width": 512,
+      "height": 768,
+      "nsfw": false,
+      "nsfwLevel": "None",
+      "createdAt": "2025-02-11T01:15:00.000Z",
+      "postId": 11502574,
+      "stats": {
+        "cryCount": 10,
+        "laughCount": 19,
+        "likeCount": 235,
+        "heartCount": 48,
+        "commentCount": 1
+      },
+      "meta": {
+        "Size": "512x768",
+        "nsfw": true,
+        "seed": 520359067,
+        "draft": false,
+        "steps": 35,
+        "width": 512,
+        "height": 768,
+        "prompt": "realistic analog photo, award winning photo, vary wide shot of magic stone witow tower:1.3, (Military watchtower), scenery,  fantasy, hills, dirt road, nature, outdoors, RAW, highres, 8k, uhd, High Dynamic Range, tonemapping, crisp details,",
+        "sampler": "Euler a",
+        "cfgScale": 7.5,
+        "clipSkip": 2,
+        "quantity": 4,
+        "workflow": "txt2img",
+        "baseModel": "SD1",
+        "resources": [],
+        "Created Date": "2025-01-12T0920:37.9077715Z",
+        "negativePrompt": "scifi, painting, drawing, sketch, anime, cartoon, render, 2D, 3D, \nlogo, text, watermark, lowres, blurry, \nng_deepnegative_v1_75t,  bad-picture-chill-75v,  bad-hands-5, easynegative",
+        "civitaiResources": [
+          {
+            "type": "checkpoint",
+            "modelVersionId": 1218156,
+            "modelVersionName": "v7.0"
+          },
+          {
+            "type": "embed",
+            "weight": 1,
+            "modelVersionId": 9208,
+            "modelVersionName": "EasyNegative"
+          },
+          {
+            "type": "embed",
+            "weight": 1,
+            "modelVersionId": 20170,
+            "modelVersionName": "75 Vector Version"
+          },
+          {
+            "type": "embed",
+            "weight": 1,
+            "modelVersionId": 5637,
+            "modelVersionName": "V1 75T"
+          },
+          {
+            "type": "lora",
+            "weight": 0.9,
+            "modelVersionId": 1018249,
+            "modelVersionName": "v1.1"
+          }
+        ]
+      },
+      "username": "stephdg453"
+    },
+    {
+      "id": 48399688,
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/e82c268a-c450-4d2c-b9f4-057dd665c889/width=1466/e82c268a-c450-4d2c-b9f4-057dd665c889.jpeg",
+      "hash": "UQC$yJD%tlay~qDit7WB%#IAn%s:-;Mxaet7",
+      "width": 1466,
+      "height": 2200,
+      "nsfw": false,
+      "nsfwLevel": "None",
+      "createdAt": "2024-12-30T00:02:29.403Z",
+      "postId": 10911709,
+      "stats": {
+        "cryCount": 2,
+        "laughCount": 11,
+        "likeCount": 203,
+        "heartCount": 94,
+        "commentCount": 0
+      },
+      "meta": {
+        "Size": "512x768",
+        "seed": 2243011553,
+        "Model": "CyberRealistic_V7.0_FP16",
+        "steps": 30,
         "hashes": {
-          "model": "bea01d51bd",
-          "lora:artilands": "182873e6365a",
-          "lora:flux dtmh": "e872237e9e88",
-          "lora:RetroAnimeFluxV1": "3d6b347c868f",
-          "lora:frazetta_flux_v2": "f7aff5115fe7",
-          "lora:artisketchyfs-v02": "2097f7b0e740",
-          "lora:RM_TacExoGear_v0.5M": "1de75161613d",
-          "lora:artimegacities_00a-000001": "02c3c51616bc",
-          "lora:Elden_Ring_-_Yoshitaka_Amano": "dd42bab761bd"
+          "model": "e2617ad799"
         },
-        "Version": "f2.0.1v1.10.1-previous-654-g8dd92501",
-        "sampler": "DEIS",
-        "cfgScale": 1,
+        "prompt": "Photo portrait of a 24-year-old Dutch woman, her expression a mix of defiance and pensiveness. Her face is adorned with subtle freckles, and her long, dark blonde hair falls straight around her shoulders. Her piercing blue eyes captivate the viewer, radiating depth and emotion. The portrait features soft, natural lighting with a shallow depth of field, highlighting her striking features and creating an intimate, photorealistic atmosphere.",
+        "Version": "f2.0.1v1.10.1-previous-635-gf5330788",
+        "sampler": "DPM++ SDE",
+        "cfgScale": 5,
         "resources": [
           {
-            "hash": "02c3c51616bc",
-            "name": "artimegacities_00a-000001",
-            "type": "lora"
-          },
-          {
-            "hash": "182873e6365a",
-            "name": "artilands",
-            "type": "lora"
-          },
-          {
-            "hash": "2097f7b0e740",
-            "name": "artisketchyfs-v02",
-            "type": "lora"
-          },
-          {
-            "hash": "dd42bab761bd",
-            "name": "Elden_Ring_-_Yoshitaka_Amano",
-            "type": "lora"
-          },
-          {
-            "hash": "e872237e9e88",
-            "name": "flux dtmh",
-            "type": "lora"
-          },
-          {
-            "hash": "f7aff5115fe7",
-            "name": "frazetta_flux_v2",
-            "type": "lora"
-          },
-          {
-            "hash": "3d6b347c868f",
-            "name": "RetroAnimeFluxV1",
-            "type": "lora"
-          },
-          {
-            "hash": "1de75161613d",
-            "name": "RM_TacExoGear_v0.5M",
-            "type": "lora"
-          },
-          {
-            "hash": "bea01d51bd",
-            "name": "flux1-dev-bnb-nf4-v2",
+            "hash": "e2617ad799",
+            "name": "CyberRealistic_V7.0_FP16",
             "type": "model"
           }
         ],
-        "Model hash": "bea01d51bd",
-        "Hires steps": "10",
-        "Hires upscale": "1.5",
-        "Schedule type": "Beta",
+        "sag_scale": "0.5",
+        "Model hash": "e2617ad799",
+        "Hires steps": "15",
+        "sag_enabled": "True",
+        "Hires upscale": "2",
+        "Schedule type": "Karras",
+        "sag_threshold": "1",
         "Hires Module 1": "Use same choices",
-        "Hires upscaler": "4x-UltraSharp",
-        "Hires CFG Scale": "1",
-        "Beta schedule beta": "0.6",
-        "Denoising strength": "0.5",
-        "Beta schedule alpha": "0.6",
-        "Distilled CFG Scale": "3.5",
-        "Diffusion in Low Bits": "Automatic (fp16 LoRA)",
-        "Hires Distilled CFG Scale": "4.2"
+        "Hires upscaler": "4x_NMKD-Siax_200k",
+        "negativePrompt": "(worst quality:1.2), (low quality:1.2), (normal quality:1.2), lowres, bad anatomy, bad hands, signature, watermarks, ugly, imperfect eyes, skewed eyes, unnatural face, unnatural body, error, extra limb, missing limbs",
+        "sag_blur_sigma": "2",
+        "Hires CFG Scale": "3",
+        "Denoising strength": "0.35"
       },
-      "username": "ArtifyAI"
+      "username": "Cyberdelia"
+    },
+    {
+      "id": 49647596,
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/29afa1ac-8b60-42b0-895b-6353734ddaa9/width=960/29afa1ac-8b60-42b0-895b-6353734ddaa9.mp4",
+      "hash": "U3C@50h|00~7EK%Mh{TJ00IU16Iq0it4H?Rk",
+      "width": 960,
+      "height": 960,
+      "nsfw": false,
+      "nsfwLevel": "None",
+      "createdAt": "2025-01-05T08:16:09.498Z",
+      "postId": 11183516,
+      "stats": {
+        "cryCount": 3,
+        "laughCount": 22,
+        "likeCount": 206,
+        "heartCount": 68,
+        "commentCount": 0
+      },
+      "meta": {
+        "prompt": "street. standing proud, wearing dark magic elvin light armor, leg armor, feetpaws, Tron like hex patterns in the armor, handsome, stunning (glowing psychic aura of orange lightning and red flame) (highly detailed epic apocalyptic lighting, ambient night lighting, 16k hdr) hyper realistic photorealistic; handsome male humanoid Meerkat with long pink green hair. anthropomorphic. Perfect dark blue eyes, rendered pupil eyes",
+        "negativePrompt": "deformed, bad anatomy, disfigured, poorly drawn face, mutation, mutated, extra limb, ugly, key, disgusting, poorly drawn hands, missing limb, floating limbs, disconnected limbs, malformed hands, blurry, ((((mutated hands and fingers)))), watermark, watermarked, oversaturated, censored, distorted hands, amputation, missing hands, obese, doubled face, double hands, b&w, black and white, sepia, Amateur, Low rated, Phone, Wedding, Frame, Painting, tumblr, watermark, signature, robot eyes, distorted pupils, distorted eyes, Unnatural anatomy ,strange anatomy ,things on face, bad lighting, low-quality, deformed, text, poorly drawn, holding camera, bad art, bad angle, boring, low-resolution, worst quality, bad composition, disfigured"
+      },
+      "username": "Skir_Ovie"
     }
   ],
   "metadata": {
-    "nextCursor": "4|1743713181212",
-    "nextPage": "https://civitai.com/api/v1/images?limit=4&modelVersionId=792756&cursor=4%7C1743713181212"
+    "nextCursor": "4|1736603039244",
+    "nextPage": "https://civitai.com/api/v1/images?limit=4&modelVersionId=1218156&nsfw=false&cursor=4%7C1736603039244"
   }
 }

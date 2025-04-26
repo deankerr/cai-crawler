@@ -11,29 +11,13 @@
       "modelCount": 5,
       "link": "https://civitai.com/api/v1/models?username=Maxfield",
       "image": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/1fbde96f-8108-49aa-878f-d1fa17213df9/width=96/Maxfield.jpeg"
-    },
-    {
-      "username": "bkdiehl482",
-      "link": "https://civitai.com/api/v1/models?username=bkdiehl482",
-      "image": "https://lh3.googleusercontent.com/a/ALm5wu3gJ6JJzkYRLbSmFQ5Z7Kybir8uEEhylcQS-gkoVg=s96-c"
-    },
-    {
-      "username": "koenb",
-      "link": "https://civitai.com/api/v1/models?username=koenb",
-      "image": "https://avatars.githubusercontent.com/u/2912652?v=4"
-    },
-    {
-      "username": "PublicPrompts",
-      "modelCount": 14,
-      "link": "https://civitai.com/api/v1/models?username=PublicPrompts",
-      "image": "https://cdn.discordapp.com/avatars/1028076279041372222/e9bd7eb9ac312844917c27977c867c71.png"
     }
   ],
   "metadata": {
-    "totalItems": 67825,
+    "totalItems": 67811,
     "currentPage": 1,
-    "pageSize": 5,
-    "totalPages": 13565,
-    "nextPage": "https://civitai.com/api/v1/creators?limit=5&page=2"
+    "pageSize": 2,
+    "totalPages": 33906,
+    "nextPage": "https://civitai.com/api/v1/creators?limit=2&page=2"
   }
 }

@@ -134,7 +134,7 @@ export async function saveQueryResult<T>(data: T, filename: string): Promise<voi
   // Create output directory if it doesn't exist
   try {
     // Use Bun.write which will create directories as needed
-    await Bun.write(`demo/demo-query-client/output/${filename}`, JSON.stringify(data, null, 2))
+    await Bun.write(`${import.meta.dir}/../output/${filename}`, JSON.stringify(data, null, 2))
     console.log(`Saved query result to output/${filename}`)
   }
   catch (error) {

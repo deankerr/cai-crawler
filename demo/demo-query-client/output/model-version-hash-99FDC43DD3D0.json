@@ -1,0 +1,65 @@
+{
+  "id": 1464918,
+  "modelId": 15003,
+  "name": "v8.0-Inpainting",
+  "createdAt": "2025-02-26T14:03:47.018Z",
+  "updatedAt": "2025-02-26T14:48:21.958Z",
+  "trainedWords": [],
+  "baseModel": "SD 1.5",
+  "description": "<p>Model for inpainting and outpainting.</p><p>Make sure that the model name has the ending -inpainting</p>",
+  "stats": {
+    "downloadCount": 2019,
+    "ratingCount": 0,
+    "rating": 0
+  },
+  "model": {
+    "name": "CyberRealistic",
+    "type": "Checkpoint",
+    "nsfw": false,
+    "poi": false
+  },
+  "files": [
+    {
+      "name": "cyberrealistic_v80Inpainting.safetensors",
+      "id": 1366114,
+      "sizeKB": 2082695.275390625,
+      "type": "Model",
+      "metadata": {
+        "fp": "fp16",
+        "size": "pruned",
+        "format": "SafeTensor"
+      },
+      "pickleScanResult": "Success",
+      "pickleScanMessage": "No Pickle imports",
+      "virusScanResult": "Success",
+      "scannedAt": "2025-02-26T14:11:34.713Z",
+      "hashes": {
+        "AutoV1": "00DCB4C1",
+        "AutoV2": "0EE757321F",
+        "SHA256": "0EE757321F40A95029C4FF7E4AE78352ED9EE67A3DDAA8D14B6B1A48161901F2",
+        "CRC32": "112222DB",
+        "BLAKE3": "DB80EFBA5FF437DDE930DF77F2BFBCE94DD4AF80C977BAB8F038E96E8966A394",
+        "AutoV3": "99FDC43DD3D0"
+      },
+      "downloadUrl": "https://civitai.com/api/download/models/1464918",
+      "primary": true
+    }
+  ],
+  "images": [
+    {
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/f4ac46ef-2065-442a-9b00-198d838b3c24/width=1024/60252355.jpeg",
+      "width": 1024,
+      "height": 768,
+      "hash": "UIB{iVNGayIoX9NGj[IoEOR*j[M|~BRjf6Io",
+      "meta": null
+    },
+    {
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/93724823-afe5-4272-a6b7-26b287490d37/width=1800/60252362.jpeg",
+      "width": 2048,
+      "height": 1536,
+      "hash": "U2H^w_};xu:%0001V@9E0PELV@E2D$-:X8Ny",
+      "meta": null
+    }
+  ],
+  "downloadUrl": "https://civitai.com/api/download/models/1464918"
+}
