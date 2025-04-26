@@ -1,7 +1,6 @@
 import { z } from 'zod'
 
 // shared
-export const CIVITAI_API_BASE = 'https://civitai.com/api/v1'
 
 export const PaginationMetadata = z.object({
   totalItems: z.number().optional(),
@@ -20,43 +19,31 @@ export const CursorMetadata = z.object({
   nextPage: z.string().url().optional(),
 })
 
+export const ItemsResponse = z.object({
+  items: z.array(z.unknown()),
+  metadata: CursorMetadata,
+})
+
 export const TimePeriod = z.enum(['AllTime', 'Year', 'Month', 'Week', 'Day'])
-
-// tags
-export const TagsQueryParams = z.object({
-  limit: z.number().min(1).max(100).optional(),
-  page: z.number().optional(),
-  query: z.string().optional(),
-  type: z.enum(['Character', 'Style', 'General']).optional(),
-})
-
-export const TagFull = z.object({
-  name: z.string(),
-  modelCount: z.number().optional(),
-  link: z.string().url().optional(),
-  type: z.enum(['Character', 'Style', 'General']).optional(),
-})
-
-export const TagsResponse = z.object({
-  items: z.array(TagFull),
-  metadata: PaginationMetadata,
-})
 
 // images
 export const NSFWLevel = z.enum(['None', 'Soft', 'Mature', 'X'])
-
 export const SortOrder = z.enum(['Most Reactions', 'Most Comments', 'Newest'])
 
-export const ImageMeta = z.record(z.string(), z.unknown()).nullable()
-
-export const ModelImage = z.object({
-  url: z.string().url(),
-  nsfw: z.boolean().optional(),
-  width: z.number(),
-  height: z.number(),
-  hash: z.string(),
-  meta: ImageMeta.optional(),
+export const ImageQueryParams = z.object({
+  limit: z.number().min(0).max(200).optional(),
+  postId: z.number().optional(),
+  modelId: z.number().optional(),
+  modelVersionId: z.number().optional(),
+  username: z.string().optional(),
+  nsfw: z.union([z.boolean(), NSFWLevel]).optional(),
+  sort: SortOrder.optional(),
+  period: TimePeriod.optional(),
+  page: z.number().optional(),
 })
+export type ImageQueryParams = z.infer<typeof ImageQueryParams>
+
+export const ImageMeta = z.record(z.string(), z.unknown()).nullable()
 
 export const ImageStats = z.object({
   cryCount: z.number(),
@@ -81,20 +68,13 @@ export const Image = z.object({
   username: z.string(),
 })
 
-export const ImageQueryParams = z.object({
-  limit: z.number().min(0).max(200).optional(),
-  postId: z.number().optional(),
-  modelId: z.number().optional(),
-  modelVersionId: z.number().optional(),
-  username: z.string().optional(),
-  nsfw: z.union([z.boolean(), NSFWLevel]).optional(),
-  sort: SortOrder.optional(),
-  period: TimePeriod.optional(),
-  page: z.number().optional(),
-})
-
 export const ImagesResponse = z.object({
   items: z.array(Image),
+  metadata: CursorMetadata,
+})
+
+export const RawImagesResponse = z.object({
+  items: z.array(z.unknown()),
   metadata: CursorMetadata,
 })
 
@@ -142,6 +122,15 @@ export const ModelFile = z.object({
   hashes: z.record(z.string(), z.string()).optional(),
   downloadUrl: z.string().url(),
   primary: z.boolean().optional(),
+})
+
+export const ModelImage = z.object({
+  url: z.string().url(),
+  nsfw: z.boolean().optional(),
+  width: z.number(),
+  height: z.number(),
+  hash: z.string(),
+  meta: ImageMeta.optional(),
 })
 
 export const ModelVersion = z.object({

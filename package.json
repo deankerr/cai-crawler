@@ -21,12 +21,12 @@
     "cli-table3": "^0.6.5",
     "commander": "^11.1.0",
     "convex": "^1.23.0",
+    "convex-helpers": "^0.1.79",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.21.2",
     "fastmcp": "^1.20.5",
     "figlet": "^1.8.0",
-    "zod": "^3.24.3",
     "fuse.js": "^7.0.0",
     "gradient-string": "^3.0.0",
     "helmet": "^8.1.0",
@@ -34,7 +34,8 @@
     "jsonwebtoken": "^9.0.2",
     "lru-cache": "^10.2.0",
     "openai": "^4.89.0",
-    "ora": "^8.2.0"
+    "ora": "^8.2.0",
+    "zod": "^3.24.3"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.12.0",

@@ -48,12 +48,6 @@ export const runCrawlerDemo = action({
         failed: number
         total: number
       }
-      creators: {
-        new: number
-        existing: number
-        failed: number
-        total: number
-      }
       insufficientData: number
     }
     durationMs: number
@@ -100,26 +94,6 @@ export const runCrawlerDemo = action({
       for (const image of imagesData.items) {
         if (image.username)
           allUsernames.add(image.username)
-      }
-    }
-
-    // Process creators
-    const creatorStats = { new: 0, existing: 0, failed: 0, total: 0 }
-    for (const username of allUsernames) {
-      creatorStats.total++
-      try {
-        const result = await ctx.runAction(api.action.models.fetchAndStoreCreator, { username })
-        if (result && result.success) {
-          // We can't distinguish new/existing from here, so rely on mutation logs
-          creatorStats.new++ // We'll adjust this below
-        }
-        else {
-          creatorStats.failed++
-        }
-      }
-      catch (error) {
-        creatorStats.failed++
-        console.error(`Error processing creator ${username}:`, error)
       }
     }
 
@@ -228,7 +202,6 @@ export const runCrawlerDemo = action({
     console.log(`Found ${allReferences.length} model references (${checkpointCount} checkpoints, ${loraCount} LoRAs).`)
     console.log(`Processed models:`, modelStats)
     console.log(`Processed model versions:`, versionStats)
-    console.log(`Processed creators:`, creatorStats)
     console.log(`Insufficient data references:`, insufficientData)
 
     return {
@@ -242,7 +215,6 @@ export const runCrawlerDemo = action({
       modelsProcessed: {
         models: modelStats,
         modelVersions: versionStats,
-        creators: creatorStats,
         insufficientData,
       },
       durationMs,

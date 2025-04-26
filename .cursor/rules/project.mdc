@@ -31,3 +31,18 @@ See [civitai-crawler-system-design.md](mdc:demo/civitai-crawler-system-design.md
 
 - If you encounter a circular type dependancy issue, then STOP! Only a user can fix this issue. You must stop an ask the user for assistance - trying to code around it will NEVER WORK, and will only make the problem WORSE.
 - Actions should almost always be internal, unless you want and end user to use them directly (this is rare).
+
+# CivitAI
+
+The endpoints:
+
+- GET /api/v1/images (the main query that will trigger everything off)
+- GET /api/v1/models/:modelId
+- GET /api/v1/model-versions/:modelVersionId
+- GET /api/v1/model-versions/by-hash/:hash
+
+We don't need currently:
+
+- GET /api/v1/models (we may support this in the future)
+- GET /api/v1/creators
+- GET /api/v1/tags

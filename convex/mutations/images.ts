@@ -64,9 +64,7 @@ export const storeImage = mutation({
         cryCount: imageData.stats.cryCount || 0,
         commentCount: imageData.stats.commentCount || 0,
       },
-      meta: imageData.meta,
-      rawData: imageData,
-      processedAt: new Date().toISOString(),
+
     })
 
     return {

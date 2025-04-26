@@ -1,5 +1,9 @@
+import { literals } from 'convex-helpers/validators'
 import { defineSchema, defineTable } from 'convex/server'
 import { v } from 'convex/values'
+
+const entityType = literals('image', 'model', 'modelVersion')
+const endpoint = literals('/images', '/models/:modelId', '/model-versions/:versionId', '/model-versions/by-hash/:hash')
 
 export default defineSchema(
   {
@@ -39,13 +43,6 @@ export default defineSchema(
         commentCount: v.number(),
       }),
 
-      // Original data
-      meta: v.any(),
-      rawData: v.any(),
-
-      // Processing metadata
-      processedAt: v.optional(v.string()),
-      processingErrors: v.optional(v.array(v.string())),
     })
       .index('by_hash', ['hash'])
       .index('by_username', ['username'])
@@ -75,13 +72,6 @@ export default defineSchema(
 
       // Version references
       versionIds: v.array(v.number()),
-
-      // Original data
-      rawData: v.any(),
-
-      // Processing metadata
-      processedAt: v.optional(v.string()),
-      processingErrors: v.optional(v.array(v.string())),
     })
       .index('by_modelId', ['modelId'])
       .index('by_creator', ['creatorUsername'])
@@ -109,34 +99,21 @@ export default defineSchema(
 
       // Image references
       imageIds: v.array(v.id('images')),
-
-      // Original data
-      rawData: v.any(),
-
-      // Processing metadata
-      processedAt: v.optional(v.string()),
-      processingErrors: v.optional(v.array(v.string())),
     })
       .index('by_versionId', ['versionId'])
       .index('by_modelId', ['modelId'])
       .index('by_createdAt', ['createdAt']),
 
-    creators: defineTable({
-      username: v.string(),
-      image: v.optional(v.string()),
-
-      // References
-      modelIds: v.array(v.number()),
-      imageIds: v.array(v.id('images')),
-
-      // Original data
-      rawData: v.any(),
-
-      // Processing metadata
-      processedAt: v.optional(v.string()),
-      processingErrors: v.optional(v.array(v.string())),
+    apiResults: defineTable({
+      endpoint,
+      params: v.optional(v.string()), // JSON-stringified query params
+      entityType,
+      entityId: v.number(), // e.g., imageId, modelId, modelVersionId
+      parentId: v.optional(v.number()), // e.g., modelId for modelVersion
+      result: v.string(), // stringified JSON blob for this entity
     })
-      .index('by_username', ['username']),
+      .index('by_entity', ['entityType', 'entityId'])
+      .index('by_endpoint', ['endpoint']),
   },
   // If you ever get an error about schema mismatch
   // between your data and your schema, and you cannot
