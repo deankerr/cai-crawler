@@ -1,0 +1,85 @@
+# Product Requirements Document (PRD) for civitai-crawler
+
+## Project Summary
+civitai-crawler is a backend system for crawling, caching, and querying data from the Civitai API. It is designed to provide a robust, queryable local cache of models, LoRAs, images, and metadata from Civitai, which is known for being slow and sometimes unreliable. The system is built with Convex (for data storage and workflow orchestration), Zod (for schema validation), and Bun (for scripts and server-side code). R2 or similar object storage will be used for images/assets in the future.
+
+## Goals
+- Crawl and cache Civitai models, LoRAs, images, and associated metadata.
+- Enable fast, reliable querying of cached data (models, LoRAs, images, creators, tags, etc.).
+- Be resilient to Civitai API changes and data anomalies.
+- Support rate-limiting and queuing of API requests to avoid bans and handle slow/unreliable endpoints.
+- Store raw API responses for later review and parsing.
+- Favor pure, composable functions and a fail-fast approach.
+- Prepare for future asset (image) storage in R2 and a frontend UI for browsing/querying data.
+
+## Core Features
+- Fetch and store Civitai models, LoRAs, model versions, images, creators, and tags.
+- Use Convex for all structured data storage and queries.
+- Use Zod for schema validation and parsing of API responses.
+- Store raw API responses for resilience to schema changes.
+- Deduplicate images by URL/hash to avoid storing duplicates.
+- Provide a simple, extensible workflow for crawling and updating data.
+- Stub out (but do not yet implement) image/asset storage in R2.
+- No frontend UI yet; focus is on backend robustness and data coverage.
+
+## Planned Features
+- Add rate-limiting, queuing, and scheduled crawling tasks.
+- Store images and assets in R2 (or similar object storage).
+- Build a frontend UI for querying and browsing cached data.
+- Support advanced search and analytics.
+- Adapt to new Civitai API features and data types as they emerge.
+
+## Technical Stack
+- Convex (database, queries, workflow orchestration)
+- Bun (runtime for scripts and server-side code)
+- Zod (schema validation)
+- R2 (object storage, planned)
+- TypeScript
+
+## Design Philosophy
+- Pure functions, single-purpose, composable code.
+- Fail fast: do not catch errors unless necessary; let Convex log errors.
+- No return types unless using generics.
+- Avoid classes and encapsulation; prefer simple, functional code.
+- No need for backwards compatibility; refactor and break as needed.
+- Capture and store abnormal API data for manual review.
+
+## Entity Overview (from docs/civitai-entities.md)
+- Model: id, name, description, type, nsfw, stats, creator, tags, modelVersions
+- ModelVersion: id, modelId, name, createdAt, baseModel, trainedWords, stats, files, images
+- ModelFile: id, name, sizeKB, type, metadata, hashes, downloadUrl, primary
+- ModelImage: url, width, height, hash, meta
+- Image: id, url, width, height, nsfw, nsfwLevel, createdAt, postId, stats, meta, username
+- Creator: username, image, modelCount, link
+- Tag: name, modelCount, link, type
+
+## Requirements
+- Must be able to crawl and store all core Civitai entities and their relationships.
+- Must deduplicate images by URL/hash.
+- Must store raw API responses for all crawled entities.
+- Must support manual and scheduled crawling.
+- Must be resilient to API changes and missing/extra fields.
+- Must provide a way to query cached data by model, LoRA, creator, tag, etc.
+- Must be easy to extend for new entity types or API changes.
+- Must not store actual model files, only metadata.
+- Must stub out (but not yet implement) image/asset storage in R2.
+- Must not include a frontend UI yet.
+
+## Out of Scope
+- Downloading and storing actual model files (weights, etc.).
+- Frontend UI (to be implemented later).
+- Analytics and advanced search (to be implemented later).
+
+## Architectural Considerations & Open Questions
+
+- **Convex Workflow Refactor:**
+  - The current demo implementation in Convex provides useful query patterns, but will require significant refactoring to support a robust, extensible workflow system. The architecture should allow for modular, maintainable workflow steps and easy extension.
+
+- **Schema Separation (Raw vs. Normalized Data):**
+  - The schema will be updated to store raw API query results separately from the main, normalized entity representations. This improves performance, resilience to API changes, and ensures all available data is captured for future-proofing—even if we are not yet aware of new fields.
+
+- **R2 Image Storage Strategy:**
+  - R2 configuration should be prioritized. If we store image assets by Civitai's UUID, we can begin storing images immediately and never need to delete them. However, we may want to offload asset management to a Cloudflare Worker and Queue, where Convex only manages API data and metadata, and the Worker handles downloading and storing images given a source URL and metadata.
+
+- **Convex Components for Workflow:**
+  - We plan to use Convex Components to manage workflow steps and orchestration. Research is needed to determine best practices and integration patterns for this approach. 
