@@ -1,0 +1,377 @@
+{
+  "items": [
+    {
+      "id": 63175621,
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/0f4515bd-3db6-4032-90fe-168d1c9a4cf4/width=1400/0f4515bd-3db6-4032-90fe-168d1c9a4cf4.jpeg",
+      "hash": "U#SEBGs.xZs:.lkBS#bHNeaznioLxWjZRkWV",
+      "width": 1400,
+      "height": 2046,
+      "nsfw": false,
+      "nsfwLevel": "None",
+      "createdAt": "2025-04-03T20:46:21.212Z",
+      "postId": 14095469,
+      "stats": {
+        "cryCount": 823,
+        "laughCount": 1195,
+        "likeCount": 9544,
+        "heartCount": 3449,
+        "commentCount": 14
+      },
+      "meta": {
+        "Size": "832x1216",
+        "seed": 922171400,
+        "steps": 25,
+        "sampler": "Undefined",
+        "cfgScale": 3.5,
+        "clipSkip": 2,
+        "resources": [],
+        "Created Date": "2025-03-06T1004:47.8125258Z",
+        "civitaiResources": [
+          {
+            "type": "checkpoint",
+            "modelVersionId": 691639,
+            "modelVersionName": "Dev"
+          },
+          {
+            "type": "lora",
+            "weight": 0.4,
+            "modelVersionId": 806265,
+            "modelVersionName": "v1.0"
+          },
+          {
+            "type": "lora",
+            "weight": 0.5,
+            "modelVersionId": 863655,
+            "modelVersionName": "Balance_v2.0"
+          },
+          {
+            "type": "lora",
+            "weight": 0.6,
+            "modelVersionId": 754068,
+            "modelVersionName": "v1.0"
+          },
+          {
+            "type": "lora",
+            "weight": 0.25,
+            "modelVersionId": 747534,
+            "modelVersionName": "Flux.1 D v1"
+          },
+          {
+            "type": "lora",
+            "weight": 0.4,
+            "modelVersionId": 983288,
+            "modelVersionName": "Flux v1.0"
+          },
+          {
+            "type": "lora",
+            "weight": 0.25,
+            "modelVersionId": 840288,
+            "modelVersionName": "artisketchyfs"
+          },
+          {
+            "type": "lora",
+            "weight": 0.4,
+            "modelVersionId": 792756,
+            "modelVersionName": "flux v2.0"
+          }
+        ]
+      },
+      "username": "ArtifyAI"
+    },
+    {
+      "id": 64098103,
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/0eb99bb9-d1b0-454a-9959-d4dac7954d54/width=1248/0eb99bb9-d1b0-454a-9959-d4dac7954d54.jpeg",
+      "hash": "UJGOE4,?{};4=d=dr?Ego2oeAX#-NuE#xFkB",
+      "width": 1248,
+      "height": 1824,
+      "nsfw": false,
+      "nsfwLevel": "None",
+      "createdAt": "2025-03-18T00:12:00.000Z",
+      "postId": 14293633,
+      "stats": {
+        "cryCount": 159,
+        "laughCount": 248,
+        "likeCount": 2449,
+        "heartCount": 766,
+        "commentCount": 4
+      },
+      "meta": {
+        "Size": "832x1216",
+        "seed": 2950304666,
+        "Model": "flux1-dev-bnb-nf4-v2",
+        "steps": 30,
+        "hashes": {
+          "model": "bea01d51bd",
+          "lora:flux dtmh": "e872237e9e88",
+          "lora:RetroAnimeFluxV1": "3d6b347c868f",
+          "lora:frazetta_flux_v2": "f7aff5115fe7",
+          "lora:artisketchyfs-v02": "2097f7b0e740",
+          "lora:RM_TacExoGear_v0.5M": "1de75161613d",
+          "lora:artimegacities_00a-000001": "02c3c51616bc",
+          "lora:Elden_Ring_-_Yoshitaka_Amano": "dd42bab761bd"
+        },
+        "Version": "f2.0.1v1.10.1-previous-659-gc055f2d4",
+        "sampler": "DEIS",
+        "cfgScale": 1,
+        "resources": [
+          {
+            "hash": "02c3c51616bc",
+            "name": "artimegacities_00a-000001",
+            "type": "lora"
+          },
+          {
+            "hash": "2097f7b0e740",
+            "name": "artisketchyfs-v02",
+            "type": "lora"
+          },
+          {
+            "hash": "dd42bab761bd",
+            "name": "Elden_Ring_-_Yoshitaka_Amano",
+            "type": "lora"
+          },
+          {
+            "hash": "e872237e9e88",
+            "name": "flux dtmh",
+            "type": "lora"
+          },
+          {
+            "hash": "f7aff5115fe7",
+            "name": "frazetta_flux_v2",
+            "type": "lora"
+          },
+          {
+            "hash": "3d6b347c868f",
+            "name": "RetroAnimeFluxV1",
+            "type": "lora"
+          },
+          {
+            "hash": "1de75161613d",
+            "name": "RM_TacExoGear_v0.5M",
+            "type": "lora"
+          },
+          {
+            "hash": "bea01d51bd",
+            "name": "flux1-dev-bnb-nf4-v2",
+            "type": "model"
+          }
+        ],
+        "Model hash": "bea01d51bd",
+        "Hires steps": "10",
+        "Hires upscale": "1.5",
+        "Schedule type": "Beta",
+        "Hires Module 1": "Use same choices",
+        "Hires upscaler": "4x-UltraSharp",
+        "Hires CFG Scale": "1",
+        "Beta schedule beta": "0.6",
+        "Denoising strength": "0.5",
+        "Beta schedule alpha": "0.6",
+        "Distilled CFG Scale": "3.5",
+        "Diffusion in Low Bits": "Automatic (fp16 LoRA)",
+        "Hires Distilled CFG Scale": "3.5"
+      },
+      "username": "ArtifyAI"
+    },
+    {
+      "id": 63175374,
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/0c10ae89-7e13-4896-8ce2-22f479f0fc5a/width=1248/0c10ae89-7e13-4896-8ce2-22f479f0fc5a.jpeg",
+      "hash": "URE{5U_J?s^$%L%K-oxtI;IpWUSgNaRjNHSf",
+      "width": 1248,
+      "height": 1824,
+      "nsfw": false,
+      "nsfwLevel": "None",
+      "createdAt": "2025-03-13T00:05:00.000Z",
+      "postId": 14095396,
+      "stats": {
+        "cryCount": 193,
+        "laughCount": 251,
+        "likeCount": 2384,
+        "heartCount": 695,
+        "commentCount": 1
+      },
+      "meta": {
+        "Size": "832x1216",
+        "seed": 577600985,
+        "Model": "flux1-dev-bnb-nf4-v2",
+        "steps": 50,
+        "hashes": {
+          "model": "bea01d51bd",
+          "lora:artilands": "182873e6365a",
+          "lora:flux dtmh": "e872237e9e88",
+          "lora:RetroAnimeFluxV1": "3d6b347c868f",
+          "lora:frazetta_flux_v2": "f7aff5115fe7",
+          "lora:artisketchyfs-v02": "2097f7b0e740",
+          "lora:RM_TacExoGear_v0.5M": "1de75161613d",
+          "lora:artimegacities_00a-000001": "02c3c51616bc",
+          "lora:Elden_Ring_-_Yoshitaka_Amano": "dd42bab761bd"
+        },
+        "Version": "f2.0.1v1.10.1-previous-654-g8dd92501",
+        "sampler": "DEIS",
+        "cfgScale": 1,
+        "resources": [
+          {
+            "hash": "02c3c51616bc",
+            "name": "artimegacities_00a-000001",
+            "type": "lora"
+          },
+          {
+            "hash": "182873e6365a",
+            "name": "artilands",
+            "type": "lora"
+          },
+          {
+            "hash": "2097f7b0e740",
+            "name": "artisketchyfs-v02",
+            "type": "lora"
+          },
+          {
+            "hash": "dd42bab761bd",
+            "name": "Elden_Ring_-_Yoshitaka_Amano",
+            "type": "lora"
+          },
+          {
+            "hash": "e872237e9e88",
+            "name": "flux dtmh",
+            "type": "lora"
+          },
+          {
+            "hash": "f7aff5115fe7",
+            "name": "frazetta_flux_v2",
+            "type": "lora"
+          },
+          {
+            "hash": "3d6b347c868f",
+            "name": "RetroAnimeFluxV1",
+            "type": "lora"
+          },
+          {
+            "hash": "1de75161613d",
+            "name": "RM_TacExoGear_v0.5M",
+            "type": "lora"
+          },
+          {
+            "hash": "bea01d51bd",
+            "name": "flux1-dev-bnb-nf4-v2",
+            "type": "model"
+          }
+        ],
+        "Model hash": "bea01d51bd",
+        "Hires steps": "10",
+        "Hires upscale": "1.5",
+        "Schedule type": "Beta",
+        "Hires Module 1": "Use same choices",
+        "Hires upscaler": "4x-UltraSharp",
+        "Hires CFG Scale": "1",
+        "Beta schedule beta": "0.6",
+        "Denoising strength": "0.5",
+        "Beta schedule alpha": "0.6",
+        "Distilled CFG Scale": "3.5",
+        "Diffusion in Low Bits": "Automatic (fp16 LoRA)",
+        "Hires Distilled CFG Scale": "4.2"
+      },
+      "username": "ArtifyAI"
+    },
+    {
+      "id": 62776513,
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/e08bdfa4-122c-4527-91fb-89a36c91765c/width=1248/e08bdfa4-122c-4527-91fb-89a36c91765c.jpeg",
+      "hash": "UYDlARR+Ndt6~7WWV[s.=[S5WCoe-nWDX8WW",
+      "width": 1248,
+      "height": 1824,
+      "nsfw": false,
+      "nsfwLevel": "None",
+      "createdAt": "2025-03-11T00:08:00.000Z",
+      "postId": 14012623,
+      "stats": {
+        "cryCount": 154,
+        "laughCount": 262,
+        "likeCount": 2395,
+        "heartCount": 704,
+        "commentCount": 2
+      },
+      "meta": {
+        "Size": "832x1216",
+        "seed": 577600930,
+        "Model": "flux1-dev-bnb-nf4-v2",
+        "steps": 50,
+        "hashes": {
+          "model": "bea01d51bd",
+          "lora:artilands": "182873e6365a",
+          "lora:flux dtmh": "e872237e9e88",
+          "lora:RetroAnimeFluxV1": "3d6b347c868f",
+          "lora:frazetta_flux_v2": "f7aff5115fe7",
+          "lora:artisketchyfs-v02": "2097f7b0e740",
+          "lora:RM_TacExoGear_v0.5M": "1de75161613d",
+          "lora:artimegacities_00a-000001": "02c3c51616bc",
+          "lora:Elden_Ring_-_Yoshitaka_Amano": "dd42bab761bd"
+        },
+        "Version": "f2.0.1v1.10.1-previous-654-g8dd92501",
+        "sampler": "DEIS",
+        "cfgScale": 1,
+        "resources": [
+          {
+            "hash": "02c3c51616bc",
+            "name": "artimegacities_00a-000001",
+            "type": "lora"
+          },
+          {
+            "hash": "182873e6365a",
+            "name": "artilands",
+            "type": "lora"
+          },
+          {
+            "hash": "2097f7b0e740",
+            "name": "artisketchyfs-v02",
+            "type": "lora"
+          },
+          {
+            "hash": "dd42bab761bd",
+            "name": "Elden_Ring_-_Yoshitaka_Amano",
+            "type": "lora"
+          },
+          {
+            "hash": "e872237e9e88",
+            "name": "flux dtmh",
+            "type": "lora"
+          },
+          {
+            "hash": "f7aff5115fe7",
+            "name": "frazetta_flux_v2",
+            "type": "lora"
+          },
+          {
+            "hash": "3d6b347c868f",
+            "name": "RetroAnimeFluxV1",
+            "type": "lora"
+          },
+          {
+            "hash": "1de75161613d",
+            "name": "RM_TacExoGear_v0.5M",
+            "type": "lora"
+          },
+          {
+            "hash": "bea01d51bd",
+            "name": "flux1-dev-bnb-nf4-v2",
+            "type": "model"
+          }
+        ],
+        "Model hash": "bea01d51bd",
+        "Hires steps": "10",
+        "Hires upscale": "1.5",
+        "Schedule type": "Beta",
+        "Hires Module 1": "Use same choices",
+        "Hires upscaler": "4x-UltraSharp",
+        "Hires CFG Scale": "1",
+        "Beta schedule beta": "0.6",
+        "Denoising strength": "0.5",
+        "Beta schedule alpha": "0.6",
+        "Distilled CFG Scale": "3.5",
+        "Diffusion in Low Bits": "Automatic (fp16 LoRA)",
+        "Hires Distilled CFG Scale": "4.2"
+      },
+      "username": "ArtifyAI"
+    }
+  ],
+  "metadata": {
+    "nextCursor": "4|1743713181212",
+    "nextPage": "https://civitai.com/api/v1/images?limit=4&modelVersionId=792756&cursor=4%7C1743713181212"
+  }
+}

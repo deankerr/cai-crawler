@@ -1,0 +1,27 @@
+{
+  "name": "civitai-crawler",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "convex dev",
+    "predev": "convex dev --until-success && convex dashboard",
+    "logs": "convex logs",
+    "lint": "tsc -p convex && eslint . --ext ts,tsx --report-unused-disable-directives --fix"
+  },
+  "dependencies": {
+    "@types/bun": "^1.2.10",
+    "@types/node": "^22.15.2",
+    "convex": "^1.23.0",
+    "zod": "^3.24.3"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^4.12.0",
+    "eslint": "^9.24.0",
+    "eslint-plugin-format": "^1.0.1",
+    "typescript": "^5.2.2"
+  },
+  "trustedDependencies": [
+    "unrs-resolver"
+  ]
+}

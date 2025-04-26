@@ -1,0 +1,39 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Project: civit-crawler
+
+- Civitai host a huge amount of image generation models, LoRAs and images, and have full API. It's also quite slow, and sometimes becomes unavailable
+- We want to crawler which iterates over queries, storing API results and images with associated data
+- It should handling queuing/rate-limiting of API requests and assets loads
+- Downloading actual model files isn't planned, but we do want their metadata
+- Architecture: Convex, R2, bun, zod
+- The goal to be able to query our cache by model/lora etc.
+- Finally, we will add frontend UI.
+
+See [index.ts](mdc:demo/index.ts) for a demo Civitai query client, with example results in the output folder
+See [civitai-crawler-system-design.md](mdc:demo/civitai-crawler-system-design.md) for a design proposal
+
+# Philosophy
+
+- This is a new project which we have started today. There is no existing system or data beyond what exists here, locally.
+- Never consider backwards compatibility - make breaking changes, refactor existing code, delete what is no longer relevant.
+- Favour pure functions with a single purpose, that can be composed throughout the codebase
+- Do not use return types (unless working with generics), they lie to the compiler and cause bugs and inflexibility
+- Avoid classes, encapsulation and hierachies.
+- Fail fast: Do not catch errors without a specific reason to. Convex logs error data in full automatically.
+- Good code is easy to delete. Avoid needless complexity and tightly coupled code.
+- We're working with an API that is subject to change at anytime, without warning. Capture the results, then parse them. Abnormalities can be reviewed manually. We don't reject data that doesn't match our naive assumptions.
+
+# Convex
+
+- If you encounter a circular type dependancy issue, then STOP! Only a user can fix this issue. You must stop an ask the user for assistance - trying to code around it will NEVER WORK, and will only make the problem WORSE.
+
+# Current Focus
+
+- Developing robust query patterns
+- Adapting to new result variations
+- Skipping asset storage for now - this is relatively easy to implement later
+- Use simple sequential requests and manually triggering before considering more complex workflow structures

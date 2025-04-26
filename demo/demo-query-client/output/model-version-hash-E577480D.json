@@ -1,0 +1,264 @@
+{
+  "id": 290640,
+  "modelId": 257749,
+  "name": "V6 (start with this one)",
+  "createdAt": "2024-01-08T01:54:45.998Z",
+  "updatedAt": "2025-02-14T21:45:13.641Z",
+  "trainedWords": [],
+  "baseModel": "Pony",
+  "description": null,
+  "stats": {
+    "downloadCount": 582794,
+    "ratingCount": 1095,
+    "rating": 4.93
+  },
+  "model": {
+    "name": "Pony Diffusion V6 XL",
+    "type": "Checkpoint",
+    "nsfw": false,
+    "poi": false
+  },
+  "files": [
+    {
+      "name": "ponyDiffusionV6XL_v6StartWithThisOne.safetensors",
+      "id": 228616,
+      "sizeKB": 6775430.712890625,
+      "type": "Model",
+      "metadata": {
+        "fp": "fp16",
+        "size": "pruned",
+        "format": "SafeTensor"
+      },
+      "pickleScanResult": "Success",
+      "pickleScanMessage": "No Pickle imports",
+      "virusScanResult": "Success",
+      "scannedAt": "2024-01-08T04:52:42.578Z",
+      "hashes": {
+        "AutoV1": "E577480D",
+        "AutoV2": "67AB2FD8EC",
+        "SHA256": "67AB2FD8EC439A89B3FEDB15CC65F54336AF163C7EB5E4F2ACC98F090A29B0B3",
+        "CRC32": "CFAD6694",
+        "BLAKE3": "E0BB278C0127A4AC4267498174E0226D6A0A77A636BDF82B770CF05D5B85D3CA",
+        "AutoV3": "E023C143436D"
+      },
+      "downloadUrl": "https://civitai.com/api/download/models/290640",
+      "primary": true
+    },
+    {
+      "name": "sdxl_vae.safetensors",
+      "id": 233666,
+      "sizeKB": 326798.009765625,
+      "type": "VAE",
+      "metadata": {
+        "fp": null,
+        "size": null,
+        "format": "SafeTensor"
+      },
+      "pickleScanResult": "Success",
+      "pickleScanMessage": "No Pickle imports",
+      "virusScanResult": "Success",
+      "scannedAt": "2024-01-12T23:21:01.892Z",
+      "hashes": {
+        "AutoV1": "584F63AB",
+        "AutoV2": "235745AF8D",
+        "SHA256": "235745AF8D86BF4A4C1B5B4F529868B37019A10F7C0B2E79AD0ABCA3A22BC6E1",
+        "CRC32": "5BB75FB4",
+        "BLAKE3": "D46EB6988A26BCAF9E9CFA5E5C6264C4EE1A70F2018F33B8BC2DD7CA0681B490",
+        "AutoV3": "55F20A1016E7"
+      },
+      "downloadUrl": "https://civitai.com/api/download/models/290640?type=VAE&format=SafeTensor",
+      "primary": false
+    }
+  ],
+  "images": [
+    {
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/4790674c-e16d-4dc7-b384-af4381fcfa3f/width=1200/5706937.jpeg",
+      "width": 1200,
+      "height": 1600,
+      "hash": "UAGtHoRs0dxUKH;^J8OG0z%N{goN0MwM$%V=",
+      "meta": null
+    },
+    {
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/ca18d37e-be8b-4a32-99d4-24e25b061a97/width=950/5275260.jpeg",
+      "width": 950,
+      "height": 950,
+      "hash": "UVM7fUEM~pv}_NRPxaxurC%1NHX9_3x]S$Mx",
+      "meta": null
+    },
+    {
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/f1d3824f-5dae-4139-86cc-ad755fb93463/width=1152/5305869.jpeg",
+      "width": 1152,
+      "height": 896,
+      "hash": "U9IEqd9F_M=v00tQ0gD+_LozM|xaTdRk=_-n",
+      "meta": {
+        "Size": "1152x896",
+        "seed": 3475198511,
+        "Model": "v6",
+        "steps": 30,
+        "prompt": "score_9, score_8_up, score_7_up, score_6_up, score_5_up, score_4_up, feral pony, show accurate",
+        "Version": "v1.6.1",
+        "sampler": "Euler a",
+        "cfgScale": 8.5,
+        "resources": [],
+        "Model hash": "",
+        "Unprompted Seed": "2245702403",
+        "Unprompted Prompt": "\"score_9, score_8_up, score_7_up, score_6_up, score_5_up, score_4_up, feral pony, show accurate\"",
+        "Unprompted Enabled": "True",
+        "Unprompted Negative Prompt": ""
+      }
+    },
+    {
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/7a167c45-98c0-4bb2-a752-d0c2f59416bb/width=896/5306294.jpeg",
+      "width": 896,
+      "height": 1152,
+      "hash": "UCHny#N200s:01xVrxof_5s:tVR-9mRoS~Rk",
+      "meta": {
+        "Size": "896x1152",
+        "seed": 1401169781,
+        "Model": "v6",
+        "steps": 30,
+        "prompt": "score_9, score_8_up, score_7_up, score_6_up, score_5_up, score_4_up, pixel art, toriel from undertale",
+        "Version": "v1.6.1",
+        "sampler": "Euler a",
+        "cfgScale": 8.5,
+        "resources": [],
+        "Model hash": "",
+        "Unprompted Seed": "2431335042",
+        "Unprompted Prompt": "\"score_9, score_8_up, score_7_up, score_6_up, score_5_up, score_4_up, pixel art, toriel from undertale\"",
+        "Unprompted Enabled": "True",
+        "Unprompted Negative Prompt": ""
+      }
+    },
+    {
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/227f8314-1d23-47f6-a0a9-64c2f99b221d/width=896/5295116.jpeg",
+      "width": 896,
+      "height": 1152,
+      "hash": "UaH-y5~VSNWU$+-p-:t7Rit7t2x[T0ocjYfP",
+      "meta": {
+        "Size": "896x1152",
+        "seed": 3777620754,
+        "Model": "v6",
+        "steps": 30,
+        "prompt": "score_9, score_8_up, score_7_up, score_6_up, score_5_up, score_4_up, rating_safe, Zipp Storm, ((cute, little, fuzzy pony, fur)), (high quality, detailed, beautiful), shiny, adorable face, detailed beautiful eyes, diadema, sunlight, realistic, outstanding, countershading, detailed soft lighting, ear fluff, hoof on face, cinematic vintage photography",
+        "Version": "v1.6.1",
+        "sampler": "Euler a",
+        "cfgScale": 8.5,
+        "Model hash": "",
+        "Unprompted Seed": "455888233",
+        "Unprompted Prompt": "\"score_9, score_8_up, score_7_up, score_6_up, score_5_up, score_4_up, rating_safe, Zipp Storm, ((cute, little, fuzzy pony, fur)), (high quality, detailed, beautiful), shiny, adorable face, detailed beautiful eyes, diadema, sunlight, realistic, outstanding, countershading, detailed soft lighting, ear fluff, hoof on face, cinematic vintage photography\"",
+        "Unprompted Enabled": "True",
+        "Unprompted Negative Prompt": ""
+      }
+    },
+    {
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/dd8d8a1d-5106-411d-a7ba-996d77d6ff0e/width=896/5293056.jpeg",
+      "width": 896,
+      "height": 1152,
+      "hash": "UBAdZcMy00x]_NRjMxW.4TR*.TRPR5S2ozr=",
+      "meta": {
+        "Size": "896x1152",
+        "seed": 4212032008,
+        "Model": "v6",
+        "steps": 30,
+        "prompt": "score_9, score_8_up, score_7_up, score_6_up, score_5_up, score_4_up, source_furry, beautiful female anthro shark portrait, dramatic lighting, dark background",
+        "Version": "v1.6.1",
+        "sampler": "Euler a",
+        "cfgScale": 8.5,
+        "resources": [],
+        "Model hash": "",
+        "Unprompted Seed": "4212032008",
+        "Unprompted Prompt": "\"score_9, score_8_up, score_7_up, score_6_up, score_5_up, score_4_up, source_furry, beautiful female anthro shark portrait, dramatic lighting, dark background\"",
+        "Unprompted Enabled": "True",
+        "Unprompted Negative Prompt": ""
+      }
+    },
+    {
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/878ee113-8db8-4155-8967-4f77cfc4ab8c/width=896/5306585.jpeg",
+      "width": 896,
+      "height": 1152,
+      "hash": "UALN-yH6_L{.EpS50+M$3-br]hxrGaw4]ioy",
+      "meta": {
+        "Size": "896x1152",
+        "seed": 2679842406,
+        "Model": "v6",
+        "steps": 30,
+        "prompt": "score_9, score_8_up, score_7_up, score_6_up, score_5_up, score_4_up, rating_safe, minimalist lineless art, pony, fluttershy, (wearing a green hoodie)",
+        "Version": "v1.6.1",
+        "sampler": "Euler a",
+        "cfgScale": 8.5,
+        "resources": [],
+        "Model hash": "",
+        "Unprompted Seed": "3315247808",
+        "Unprompted Prompt": "\"score_9, score_8_up, score_7_up, score_6_up, score_5_up, score_4_up, rating_safe, minimalist lineless art, pony, fluttershy, (wearing a green hoodie)\"",
+        "Unprompted Enabled": "True",
+        "Unprompted Negative Prompt": ""
+      }
+    },
+    {
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/2134a392-39f6-4127-bba8-3c7d3cbb4f30/width=896/5293520.jpeg",
+      "width": 896,
+      "height": 1152,
+      "hash": "UVJQ+wbJY4t4~AkWJWS5sRofRpbbX9r=niOF",
+      "meta": {
+        "Size": "896x1152",
+        "seed": 1029115117,
+        "Model": "v6",
+        "steps": 30,
+        "prompt": "score_9, score_8_up, score_7_up, score_6_up, score_5_up, score_4_up, anthro mouse gadget hackwrench, blonde hair",
+        "Version": "v1.6.1",
+        "sampler": "Euler a",
+        "cfgScale": 8.5,
+        "Model hash": "",
+        "Unprompted Seed": "3586796225",
+        "Unprompted Prompt": "\"score_9, score_8_up, score_7_up, score_6_up, score_5_up, score_4_up, anthro mouse gadget hackwrench, blonde hair\"",
+        "Unprompted Enabled": "True",
+        "Unprompted Negative Prompt": ""
+      }
+    },
+    {
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/4b1d4162-4d60-4309-8644-01bd3e35cf57/width=1152/5307413.jpeg",
+      "width": 1152,
+      "height": 896,
+      "hash": "UAHU:~4=?@.60nxZ56SKI.NHDk9at+ox=|aL",
+      "meta": {
+        "Size": "1152x896",
+        "seed": 2180310718,
+        "Model": "v6",
+        "steps": 30,
+        "prompt": "score_9, score_8_up, score_7_up, score_6_up, score_5_up, score_4_up, score_9, feral, future twilight sparkle, eyepatch",
+        "Version": "v1.6.1",
+        "sampler": "Euler a",
+        "cfgScale": 8.5,
+        "resources": [],
+        "Model hash": "",
+        "Unprompted Seed": "2180310718",
+        "Unprompted Prompt": "\"score_9, score_8_up, score_7_up, score_6_up, score_5_up, score_4_up, score_9, feral, future twilight sparkle, eyepatch\"",
+        "Unprompted Enabled": "True",
+        "Unprompted Negative Prompt": ""
+      }
+    },
+    {
+      "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b3839da7-2486-4c01-9318-33a0d271f555/width=896/5293063.jpeg",
+      "width": 896,
+      "height": 1152,
+      "hash": "UJE:SltS.TtlJ=V@IURkD%I9M_o#Vu%gt7og",
+      "meta": {
+        "Size": "896x1152",
+        "seed": 4212032010,
+        "Model": "v6",
+        "steps": 30,
+        "prompt": "score_9, score_8_up, score_7_up, score_6_up, score_5_up, score_4_up, source_furry, beautiful female anthro shark in bikini on a beach",
+        "Version": "v1.6.1",
+        "sampler": "Euler a",
+        "cfgScale": 8.5,
+        "resources": [],
+        "Model hash": "",
+        "Unprompted Seed": "4212032008",
+        "Unprompted Prompt": "\"score_9, score_8_up, score_7_up, score_6_up, score_5_up, score_4_up, source_furry, beautiful female anthro shark in bikini on a beach\"",
+        "Unprompted Enabled": "True",
+        "Unprompted Negative Prompt": ""
+      }
+    }
+  ],
+  "downloadUrl": "https://civitai.com/api/download/models/290640"
+}

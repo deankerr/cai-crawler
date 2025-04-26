@@ -1,0 +1,1356 @@
+{
+  "items": [
+    {
+      "id": 257749,
+      "name": "Pony Diffusion V6 XL",
+      "description": "<p><a target=\"_blank\" rel=\"ugc\" href=\"https://fictional.ai/?ref=v6-card\"><img src=\"https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/0061ed7a-2afa-4513-b855-e0e82d78b3cb/width=525/0061ed7a-2afa-4513-b855-e0e82d78b3cb.jpeg\" /></a>(and don't worry, coming to your computer very soon - Astra)</p><p></p><h2 id=\"pony-diffusion-v6-is-a-versatile-sdxl-finetune-capable-of-producing-stunning-sfw-and-nsfw-visuals-of-various-anthro-feral-or-humanoids-species-and-their-interactions-based-on-simple-natural-language-prompts.-9rf16zav8\">Pony Diffusion V6 is a versatile SDXL finetune capable of producing stunning SFW and NSFW visuals of various anthro, feral, or humanoids species and their interactions based on simple natural language prompts.</h2><p>CHECK \"ABOUT THIS VERSION\" ON THE RIGHT IF YOU ARE NOT ON \"V6\" FOR IMPORTANT INFORMATION.</p><p></p><p><a target=\"_blank\" rel=\"ugc\" href=\"https://discord.gg/pYsdjMfu3q\">Please join our Discord Server to support development of new versions of this model and get access to free SD bot </a>and <a target=\"_blank\" rel=\"ugc\" href=\"https://purplesmart.ai/collection/top?nsfw=0&amp;page=1&amp;model=11&amp;order=created_desc\">check out more examples of this model capabilities on our prompt sharing website </a>or <a target=\"_blank\" rel=\"ugc\" href=\"https://twitter.com/AstraliteHeart\">follow the author on Twitter</a>.</p><h2 id=\"important-information-rzlb1z46m\">Important information</h2><p></p><p><strong>Make sure you load this model with clip skip 2 (or -2 in some software), otherwise you will be getting low quality blobs.</strong></p><p></p><p><span style=\"color:rgb(219, 222, 225)\">This model supports a wide array of styles and aesthetics but provides an opinionated default prompt template that allows generation of high quality samples with no negative prompt and otherwise default settings</span></p><pre><code>score_9, score_8_up, score_7_up, score_6_up, score_5_up, score_4_up, just describe what you want, tag1, tag2</code></pre><p>(previous Pony Diffusion models used a simpler <code>score_9</code> quality modifier, the longer version of V6 XL version is a training issue that was too late to correct during training, you can still use <code>score_9</code> but it has a much weaker effect compared to full string. You can learn more about these tags <a target=\"_blank\" rel=\"ugc\" href=\"https://civitai.com/articles/4248\">here</a>).</p><p></p><p>The model is designed to not need negative prompts in most cases and does not need other quality modifiers like \"hd\", \"masterpiece\", etc...</p><p></p><p>Other special data selection tags include, 'source_pony', 'source_furry', 'source_cartoon' and 'source_anime' and ratings of 'rating_safe', 'rating_questionable' and 'rating_explicit'.</p><p></p><p><strong>This model is capable of recognizing many popular and obscure characters and series.</strong></p><p></p><p>If you are looking specifically for pony style, I recommend using one of the two following templates `anthro/feral pony, rest of the prompt` or `source_pony, rest of the prompt`.</p><p></p><p>This model is trained on combination of natural language prompts and tags and is capable of understanding both, so describing intended result using normal language works in most cases, although you can add some tags after the main prompt to boost them.</p><p></p><p>Using Euler a with 25 steps and resolution of 1024px is recommended although model generally can do most supported SDXL resolution.</p><p></p><p>This model will sometimes generate pseudo signatures that are hard to remove even with negative prompts, this is unfortunately a training issue that would be corrected in future models. If that's an issue for you I suggest trying V5.5 or inpainting.</p><p></p><h2 id=\"special-thanks-a8immpgql\">Special thanks</h2><ul><li><p><strong>Iceman</strong> for helping to procure necessary training resources</p></li><li><p><strong>Haru</strong> for assistance with captioning efforts</p></li><li><p><strong>Cookie</strong> for technical expertise in training</p></li><li><p><strong>PSAI Server Subscribers</strong> for supporting the project costs</p></li><li><p><strong>PSAI Server Moderators</strong> for being vigilant and managing the community</p></li></ul><h2 id=\"technical-details-jb1ydvwaq\">Technical details</h2><p>The model has been trained on ~2.6M images aesthetically ranked based on authors personal preferences, with roughly 1:1 ratio between anime/cartoon/furry/pony datasets and 1:1 ratio between safe/questionable/explicit ratings. About 50% of all images has been captioned with high quality detailed captions, which results in very strong natural language capabilities.</p><p></p><p>All images has been trained with both captions (when available) and tags, artists' names have been removed and source data has been filtered based on our Opt-in/Opt-out <a target=\"_blank\" rel=\"ugc\" href=\"https://purplesmart.ai/artist\">program</a>. Any explicit content involving underage characters has been filtered out.</p><h2 id=\"license-ubky7ouqn\">License</h2><p>This model is licensed under a modified <span style=\"color:rgb(193, 194, 197)\">Fair AI Public License 1.0-SD</span><a target=\"_blank\" rel=\"ugc\" href=\"https://freedevproject.org/faipl-1.0-sd/\"> </a><span style=\"color:rgb(193, 194, 197)\">(</span><a target=\"_blank\" rel=\"ugc\" href=\"https://freedevproject.org/faipl-1.0-sd/\">https://freedevproject.org/faipl-1.0-sd/</a><span style=\"color:rgb(193, 194, 197)\">) license</span>.</p><p></p><p><strong>The following modifications have been added to <span style=\"color:rgb(193, 194, 197)\">Fair AI Public License</span>:</strong></p><p>You are not permitted to run inference of this model on websites or applications allowing any form of monetization (paid inference, faster tiers, etc.). This applies to any derivative models or model merges.</p><p>If you want to use this model commercially, please reach us at <a target=\"_blank\" rel=\"ugc\" href=\"mailto:contact@purplesmart.ai\">contact@purplesmart.ai</a>.</p><p>Explicit permission for commercial inference has been granted to <a target=\"_blank\" rel=\"ugc\" href=\"https://civitai.com/\">CivitAi </a>and <a target=\"_blank\" rel=\"ugc\" href=\"https://huggingface.co/\"><u>Hugging Face</u></a>.</p><p></p>",
+      "type": "Checkpoint",
+      "poi": false,
+      "nsfw": false,
+      "allowNoCredit": false,
+      "allowCommercialUse": [
+        "Image",
+        "RentCivit"
+      ],
+      "allowDerivatives": true,
+      "allowDifferentLicense": false,
+      "stats": {
+        "downloadCount": 640925,
+        "favoriteCount": 0,
+        "commentCount": 1452,
+        "ratingCount": 0,
+        "rating": 0
+      },
+      "creator": {
+        "username": "PurpleSmartAI",
+        "image": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/60a1a061-10ef-4bf5-a081-13a1a578fbc6/width=96/PurpleSmartAI.jpeg"
+      },
+      "tags": [
+        "western art",
+        "my little pony",
+        "base model"
+      ],
+      "modelVersions": [
+        {
+          "id": 290640,
+          "name": "V6 (start with this one)",
+          "description": null,
+          "trainedWords": [],
+          "baseModel": "Pony",
+          "downloadUrl": "https://civitai.com/api/download/models/290640",
+          "stats": {
+            "downloadCount": 582794,
+            "ratingCount": 1095,
+            "rating": 4.93
+          },
+          "files": [
+            {
+              "name": "ponyDiffusionV6XL_v6StartWithThisOne.safetensors",
+              "id": 228616,
+              "sizeKB": 6775430.712890625,
+              "type": "Model",
+              "metadata": {
+                "fp": "fp16",
+                "size": "pruned",
+                "format": "SafeTensor"
+              },
+              "pickleScanResult": "Success",
+              "pickleScanMessage": "No Pickle imports",
+              "virusScanResult": "Success",
+              "scannedAt": "2024-01-08T04:52:42.578Z",
+              "hashes": {
+                "AutoV1": "E577480D",
+                "AutoV2": "67AB2FD8EC",
+                "SHA256": "67AB2FD8EC439A89B3FEDB15CC65F54336AF163C7EB5E4F2ACC98F090A29B0B3",
+                "CRC32": "CFAD6694",
+                "BLAKE3": "E0BB278C0127A4AC4267498174E0226D6A0A77A636BDF82B770CF05D5B85D3CA",
+                "AutoV3": "E023C143436D"
+              },
+              "downloadUrl": "https://civitai.com/api/download/models/290640",
+              "primary": true
+            },
+            {
+              "name": "sdxl_vae.safetensors",
+              "id": 233666,
+              "sizeKB": 326798.009765625,
+              "type": "VAE",
+              "metadata": {
+                "fp": null,
+                "size": null,
+                "format": "SafeTensor"
+              },
+              "pickleScanResult": "Success",
+              "pickleScanMessage": "No Pickle imports",
+              "virusScanResult": "Success",
+              "scannedAt": "2024-01-12T23:21:01.892Z",
+              "hashes": {
+                "AutoV1": "584F63AB",
+                "AutoV2": "235745AF8D",
+                "SHA256": "235745AF8D86BF4A4C1B5B4F529868B37019A10F7C0B2E79AD0ABCA3A22BC6E1",
+                "CRC32": "5BB75FB4",
+                "BLAKE3": "D46EB6988A26BCAF9E9CFA5E5C6264C4EE1A70F2018F33B8BC2DD7CA0681B490",
+                "AutoV3": "55F20A1016E7"
+              },
+              "downloadUrl": "https://civitai.com/api/download/models/290640?type=VAE&format=SafeTensor"
+            }
+          ],
+          "images": [
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/4790674c-e16d-4dc7-b384-af4381fcfa3f/width=1200/5706937.jpeg",
+              "width": 1200,
+              "height": 1600,
+              "hash": "UAGtHoRs0dxUKH;^J8OG0z%N{goN0MwM$%V="
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/ca18d37e-be8b-4a32-99d4-24e25b061a97/width=950/5275260.jpeg",
+              "width": 950,
+              "height": 950,
+              "hash": "UVM7fUEM~pv}_NRPxaxurC%1NHX9_3x]S$Mx"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/f1d3824f-5dae-4139-86cc-ad755fb93463/width=1152/5305869.jpeg",
+              "width": 1152,
+              "height": 896,
+              "hash": "U9IEqd9F_M=v00tQ0gD+_LozM|xaTdRk=_-n"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/7a167c45-98c0-4bb2-a752-d0c2f59416bb/width=896/5306294.jpeg",
+              "width": 896,
+              "height": 1152,
+              "hash": "UCHny#N200s:01xVrxof_5s:tVR-9mRoS~Rk"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/227f8314-1d23-47f6-a0a9-64c2f99b221d/width=896/5295116.jpeg",
+              "width": 896,
+              "height": 1152,
+              "hash": "UaH-y5~VSNWU$+-p-:t7Rit7t2x[T0ocjYfP"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/dd8d8a1d-5106-411d-a7ba-996d77d6ff0e/width=896/5293056.jpeg",
+              "width": 896,
+              "height": 1152,
+              "hash": "UBAdZcMy00x]_NRjMxW.4TR*.TRPR5S2ozr="
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/878ee113-8db8-4155-8967-4f77cfc4ab8c/width=896/5306585.jpeg",
+              "width": 896,
+              "height": 1152,
+              "hash": "UALN-yH6_L{.EpS50+M$3-br]hxrGaw4]ioy"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/2134a392-39f6-4127-bba8-3c7d3cbb4f30/width=896/5293520.jpeg",
+              "width": 896,
+              "height": 1152,
+              "hash": "UVJQ+wbJY4t4~AkWJWS5sRofRpbbX9r=niOF"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/4b1d4162-4d60-4309-8644-01bd3e35cf57/width=1152/5307413.jpeg",
+              "width": 1152,
+              "height": 896,
+              "hash": "UAHU:~4=?@.60nxZ56SKI.NHDk9at+ox=|aL"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/07d7eba1-e02f-462c-ad77-a5e91c257a3c/width=1152/5307774.jpeg",
+              "width": 1152,
+              "height": 896,
+              "hash": "UEJt#b4:~V?b%g%2i^9GR5xaD%E2_3MxRk?b"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/2bd1880d-309d-41f6-93de-57e401a19742/width=896/5308042.jpeg",
+              "width": 896,
+              "height": 1152,
+              "hash": "UKH_lQ4:?GIU_2Io?HxusptQ4.%2~qX9MxnO"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/da94cb58-2410-4ab1-b0cd-17d76ee0bbe0/width=896/5294967.jpeg",
+              "width": 896,
+              "height": 1152,
+              "hash": "UNIEX}JA_MM_-:tlS$v}Xmn$%2Rk%1%LoLkW"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/a51d187c-b96c-4ca6-9f4b-40ac2ce33063/width=896/5305274.jpeg",
+              "width": 896,
+              "height": 1152,
+              "hash": "UUIq+FS#?]$%tPV@oLozS$jZeTX7^*oyM|aL"
+            }
+          ]
+        },
+        {
+          "id": 298112,
+          "name": "V6 Turbo DPO merge",
+          "description": "<p>A merge of Pony Diffusion and SDXL Turbo + DPO done by Zatochu.</p><p>May degrade some of the PD character/composition understanding and makes things brighter but improves speed 2-3 times.</p><p>Use Euler A at 10-15 steps and Scale of 2 to 3.</p>",
+          "trainedWords": [],
+          "baseModel": "Pony",
+          "downloadUrl": "https://civitai.com/api/download/models/298112",
+          "stats": {
+            "downloadCount": 16701,
+            "ratingCount": 3319,
+            "rating": 5
+          },
+          "files": [
+            {
+              "name": "ponyDiffusionV6XL_v6TurboDPOMerge.safetensors",
+              "id": 234948,
+              "sizeKB": 6776592.689453125,
+              "type": "Model",
+              "metadata": {
+                "fp": "fp16",
+                "size": "full",
+                "format": "SafeTensor"
+              },
+              "pickleScanResult": "Success",
+              "pickleScanMessage": "No Pickle imports",
+              "virusScanResult": "Success",
+              "scannedAt": "2024-01-14T06:32:40.656Z",
+              "hashes": {
+                "AutoV1": "16ECF898",
+                "AutoV2": "9322F9D91B",
+                "SHA256": "9322F9D91B28ABF09E4137BC02EC806AF23510221A164E71B81778E61CC3B4B2",
+                "CRC32": "BA201CAC",
+                "BLAKE3": "65B4E5A1E83C6A0133C1981C464E2F2D1ACA7ADE10BBC661C3C9EA63A848FE06",
+                "AutoV3": "85C6CF1A3114"
+              },
+              "downloadUrl": "https://civitai.com/api/download/models/298112",
+              "primary": true
+            }
+          ],
+          "images": [
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/00e26c84-de8b-4c24-bafa-6954fd1714a7/width=1024/5476477.jpeg",
+              "width": 1024,
+              "height": 1024,
+              "hash": "U8Kcw$%fUaxs%3of-6i{ozNHM{S5xuwcOXbb"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/ff4454f0-993f-46be-80b1-fc808e166350/width=896/5476647.jpeg",
+              "width": 896,
+              "height": 1152,
+              "hash": "U5HKbDnF0J%9Nxs97EVux}THDe4=}@9tOU=f"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/4301a4ee-adf3-41be-8e45-8e7155a73082/width=1024/5476479.jpeg",
+              "width": 1024,
+              "height": 1024,
+              "hash": "U7IXNvD*LN?G#jNGrDo}.mtltRt7N4of%eW?"
+            }
+          ]
+        },
+        {
+          "id": 297100,
+          "name": "V6 Turbo merge",
+          "description": "<p>A merge of Pony Diffusion and SDXL turbo done by Zatochu.</p><p>May degrade some of the PD character/composition understanding but twice as fast.</p><p>Use DPM++ SDE sampler with 6-8 steps and 3-5 CFG.</p>",
+          "trainedWords": [],
+          "baseModel": "SDXL Turbo",
+          "downloadUrl": "https://civitai.com/api/download/models/297100",
+          "stats": {
+            "downloadCount": 16089,
+            "ratingCount": 74,
+            "rating": 5
+          },
+          "files": [
+            {
+              "name": "ponyDiffusionV6XL_v6TurboMerge.safetensors",
+              "id": 234073,
+              "sizeKB": 6776590.845703125,
+              "type": "Model",
+              "metadata": {
+                "fp": "fp16",
+                "size": "pruned",
+                "format": "SafeTensor"
+              },
+              "pickleScanResult": "Success",
+              "pickleScanMessage": "No Pickle imports",
+              "virusScanResult": "Success",
+              "scannedAt": "2024-01-13T10:03:06.596Z",
+              "hashes": {
+                "AutoV1": "90B65B83",
+                "AutoV2": "7555AC941F",
+                "SHA256": "7555AC941F3A767833830BA5CC9A4508A9777CBF97B487B6BAF0400AB7000587",
+                "CRC32": "E6CC9BC0",
+                "BLAKE3": "D95F9AD55421D99EF9F39D9A85CF91366514737B26BE52E467A328517C645B94",
+                "AutoV3": "5A9B17308254"
+              },
+              "downloadUrl": "https://civitai.com/api/download/models/297100",
+              "primary": true
+            }
+          ],
+          "images": [
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/a572453e-dbe4-481f-b2e6-045e55406c8f/width=1024/5454057.jpeg",
+              "width": 1024,
+              "height": 1024,
+              "hash": "UGKJ[Q%M~AjE=^VsOYkqxVrq9vOs%Mx[VsRP"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/6e1cd406-3913-4350-bfc9-93b29c53dad4/width=1024/5454069.jpeg",
+              "width": 1024,
+              "height": 1024,
+              "hash": "URKv{gjF};NI,pNeOXxC-o$LE3KP?EWCRkX8"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/1c105319-045d-46b6-b542-1ea23b0c992c/width=1024/5455119.jpeg",
+              "width": 1024,
+              "height": 1024,
+              "hash": "UMF}.qN_~9xa,B-nxts:xuNbkCaf-PIpXAso"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/bced85d5-1aa9-4811-9be0-cfcf468bf91a/width=1024/5457749.jpeg",
+              "width": 1024,
+              "height": 1024,
+              "hash": "UIF#{-~pEdNf?SI.9cn.D$MyVvV?Itj^xtk7"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/c59b05f8-fbf1-4c27-a0ce-250a007cad8d/width=1024/5470967.jpeg",
+              "width": 1024,
+              "height": 1024,
+              "hash": "U2B:Hgn1DNgQ00?a00RV0K4n~Wxv8^_3~q4m"
+            }
+          ]
+        },
+        {
+          "id": 297064,
+          "name": "V6-1.5",
+          "description": "<p>A SD1.5 based 768px version of V6 model, trained on the same dataset as XL version.</p><p><strong>YOU SHOULD TRY XL MODEL FIRST, IT IS ALSO POSSIBLE THAT v5.5 WOULD WORK BETTER FOR YOU.</strong></p><p>This version is a byproduct of experiments in training and XL evaluation, hence it is not the primary V6 model. While trained in very similar manner it should not be used for 1.5 vs XL comparisons, nor will it produce similar images for same seeds and prompts.</p><p>Use at you own risk, it may produce poor results or overburned ones.</p><p>Most XL notes apply to this model but it reacts well both to short and long form of score tags, i.e. <code>score_9</code> alone works good in this model.</p>",
+          "trainedWords": [],
+          "baseModel": "SD 1.5",
+          "downloadUrl": "https://civitai.com/api/download/models/297064",
+          "stats": {
+            "downloadCount": 25341,
+            "ratingCount": 7,
+            "rating": 4.71
+          },
+          "files": [
+            {
+              "name": "ponyDiffusionV6XL_v615.safetensors",
+              "id": 234029,
+              "sizeKB": 2082642.022460938,
+              "type": "Model",
+              "metadata": {
+                "fp": "fp16",
+                "size": "pruned",
+                "format": "SafeTensor"
+              },
+              "pickleScanResult": "Success",
+              "pickleScanMessage": "No Pickle imports",
+              "virusScanResult": "Success",
+              "scannedAt": "2024-01-13T08:51:52.906Z",
+              "hashes": {
+                "AutoV1": "B832426C",
+                "AutoV2": "2130162F1B",
+                "SHA256": "2130162F1B5660401FDA01FF07C22249F2673BC22C3E43C36CFC5583B5A802AE",
+                "CRC32": "B4E127A6",
+                "BLAKE3": "0501A74F91EAA4D67AF7B25F8C8AF2870CF0A28B99438D9F4B4818BA43C3D3EE",
+                "AutoV3": "F1219017A507"
+              },
+              "downloadUrl": "https://civitai.com/api/download/models/297064",
+              "primary": true
+            },
+            {
+              "name": "kl-f8-anime.ckpt",
+              "id": 87194,
+              "sizeKB": 395173.7822265625,
+              "type": "VAE",
+              "metadata": {
+                "fp": null,
+                "size": null,
+                "format": "Other"
+              },
+              "pickleScanResult": "Success",
+              "pickleScanMessage": "No Pickle imports",
+              "virusScanResult": "Success",
+              "scannedAt": "2023-04-10T22:52:08.458Z",
+              "hashes": {
+                "AutoV1": "975B2546",
+                "AutoV2": "4D3BE146D6",
+                "SHA256": "4D3BE146D621226AB3871422000C9073AB1D7991218D3B1FDD6B15F3D90EADE3",
+                "CRC32": "78ABB8A5",
+                "BLAKE3": "58C5003E9151020DCC66587EF0A69F8806812CB3E270D6F7E57FCF9BD9E73CCB"
+              },
+              "downloadUrl": "https://civitai.com/api/download/models/297064?type=VAE&format=Other"
+            }
+          ],
+          "images": [
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/ac7a4b11-d476-4c39-b57a-8a0867dbebce/width=768/5442448.jpeg",
+              "width": 768,
+              "height": 768,
+              "hash": "UsKduLt8?wxayCSKrsn+tSkCsBf8xvnjs:kB"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 43331,
+      "name": "majicMIX realistic 麦橘写实",
+      "description": "<p>V7 is here. So far so good for me.</p><h3 id=\"asian-alert!-n3n8dvt66\"><strong><span style=\"color:rgb(250, 82, 82)\">ASIAN ALERT!</span></strong></h3><h2 id=\"recommended-parameters-for-v7:-2wbt1xre9\"><span style=\"color:rgb(253, 126, 20)\">推荐参数 Recommended Parameters for V7:</span></h2><p>Sampler: <strong>Euler a, Euler, restart</strong></p><p>Steps: 20~40</p><p>Hires upscaler: <strong>ESRGAN 4x or 4x-UltraSharp or 8x_NMKD-Superscale_150000_G</strong></p><p>Hires upscale: 2+</p><p>Hires steps: 15+</p><p>Hires denoising strength: 0.05~0.5</p><p><strong>clip skip 2</strong></p><p></p><h3 id=\"after-detailer.-sy61gp8o5\"><strong>如果要修复脸部，请使用after detailer.</strong></h3><h3 id=\"if-your-face-comes-out-badly-use-after-detailer-instead-of-face-restoration.-032yvj7g2\"><strong>If your face comes out badly, use after detailer instead of face restoration.</strong></h3><p><a target=\"_blank\" rel=\"ugc\" href=\"https://github.com/Bing-su/adetailer\"><strong>https://github.com/Bing-su/adetailer</strong></a></p><p></p><h3 id=\"dynamic-thresholdingcfg1~20-jn2df8b47\"><strong>我习惯开启Dynamic Thresholding来更好控制cfg值，1~20都可以尝试一下。</strong></h3><h3 id=\"use-dynmaic-thresholding-to-control-cfg.-you-can-try-from-1~20.-2tq8t65mn\"><strong>Use Dynmaic Thresholding to control CFG. You can try from 1~20.</strong></h3><p><a target=\"_blank\" rel=\"ugc\" href=\"https://github.com/mcmonkeyprojects/sd-dynamic-thresholding\">https://github.com/mcmonkeyprojects/sd-dynamic-thresholding</a></p><p></p><h3 id=\"bmab.-xwemseufr\"><strong>如果要添加滤镜效果、噪点，请使用BMAB.</strong></h3><h3 id=\"if-you-want-to-add-noise-like-me-use-bmab.-bozbavi5z\"><strong>If you want to add noise like me, use BMAB.</strong></h3><p><a target=\"_blank\" rel=\"ugc\" href=\"https://github.com/portu-sim/sd-webui-bmab\">GitHub - portu-sim/sd-webui-bmab: Auto masking and inpainting for person, face, hand. Resizing image using detection model.</a></p><p></p><hr /><p><strong>v2.5 is here</strong>. Note that this is not v7, but an upgrade for v2. V7 may need to address more issues, which I am still trying to do. In the process, I have created a model worth sharing.</p><p>This model can restore the light and shadow of the original majicmix v2, but with increased realism while still keeping the basic aesthetic of the face. I have tested other face loras and they work fine. Please use adetailer and put the face lora in it.</p><p>请注意，这不是v7，而是对v2的修缮。v7可能需要突破更多问题，这个目前我还在尝试。在这个过程中我融合出一个模型，我认为也值得分享。</p><p>本模型可以还原初代majicmix的光影，但是增加写实度，脸部还是保持基本调性的审美，我测试了其他脸部lora都没问题。请使用adetailer然后把脸部lora放在里面使用。</p><p></p><hr /><p>v5对我来说不够好，对你们来说也是的，而且不够写实。所以v6很迫切需要。用Euler画特写，用euler a 画其他的。不要！不要！不要开脸部修复！用adetailer来修脸。我的例图都用了。</p><p><strong>v6 is here</strong>. v5 is not good as I played for a while and see the results from yours. Therefore a v6 is urgent.</p><p>Use Euler for close up, and Euler a for others. Again, don't use facial restoration, use After detailer instead! All my samples used adetailer without lora.</p><p></p><hr /><p>第五版先行版来了，先把赛博永生小姐姐娜乌斯嘉融进来做个例子，也算是公测吧。</p><p>5th edtion is coming soon. I've posted a preview version with the face of nwsj.</p><p>推荐使用Euler作为采样器。</p><p>Use Euler as sampler.</p><p></p><hr /><h2 id=\"-ak6ows6o8\"><span style=\"color:rgb(250, 82, 82)\">听我一句劝，不要开脸部修复！</span></h2><h2 id=\"please-don't-use-face-restoration!-a55utx8rw\"><strong><span style=\"color:rgb(250, 82, 82)\">Please don't use Face Restoration!</span></strong></h2><p><strong>如果要修复脸部，请使用after detailer.</strong></p><p><strong>If your face comes out badly, use after detailer instead.</strong></p><p><a target=\"_blank\" rel=\"ugc\" href=\"https://github.com/Bing-su/adetailer\"><strong>https://github.com/Bing-su/adetailer</strong></a></p><p></p><p><strong>我习惯开启Dynamic Thresholding来更好控制cfg值，1~20都可以尝试一下。</strong></p><p><strong>Use Dynmaic Thresholding to control CFG. You can try from 1~20.</strong></p><p><a target=\"_blank\" rel=\"ugc\" href=\"https://github.com/mcmonkeyprojects/sd-dynamic-thresholding\">https://github.com/mcmonkeyprojects/sd-dynamic-thresholding</a></p><p>很抱歉在之前的例图中我使用了分层的lora让大家困惑，也让大家复刻我的例图变得困难。所以新一版的例图我没有使用任何lora。想了解lora分层的可以参考：<a target=\"_blank\" rel=\"ugc\" href=\"https://github.com/hako-mikan/sd-webui-lora-block-weight\">GitHub - hako-mikan/sd-webui-lora-block-weight</a></p><p>I apologize for using lora block weight in the example images of the previous edition, which confused most of you and made it difficult for you to replicate my examples. Therefore, in the newer editions, I did not use any lora in my showcase. If you would like to learn about lora block weight, please refer to: <a target=\"_blank\" rel=\"ugc\" href=\"https://github.com/hako-mikan/sd-webui-lora-block-weight\">https://github.com/hako-mikan/sd-webui-lora-block-weight</a></p><p></p><p></p><hr /><p><br />融合了多种模型，可以生成好看的脸部，也能有效应对暗部处理。远距离脸部需要inpaint以达成最好效果。也可以使用after detailer.</p><p>A good looking model, suitable for NSFW and dark scene (because I added noiseoffset). long-range facial detail require inpainting to achieve the best results. You can also use after detailer.<br /><br />推荐关键词 recommended positive prompts: <em>Best quality, masterpiece, ultra high res, (photorealistic:1.4), 1girl</em><br /><br />如果想要更暗的图像 if you want darker picture, add: <em>in the dark, deep shadow, low key</em>, etc.<br /><br />负面关键词 use <a target=\"_blank\" rel=\"ugc\" href=\"https://civitai.com/models/4629/deep-negative-v1x\"><em>ng_deepnegative_v1_75t</em> </a>and <a target=\"_blank\" rel=\"ugc\" href=\"https://civitai.com/models/16993/badhandv4-animeillustdiffusion\"><em>badhandv4</em> </a>in negative prompt</p><p><br /><strong>I've used a bug-fixed version of DPM++ 2M Karras, you can check this out: </strong><a target=\"_blank\" rel=\"ugc\" href=\"https://civitai.com/models/35966/dpm-2m-alt-karras-sampler\">https://civitai.com/models/35966/dpm-2m-alt-karras-sampler</a></p><p>推荐参数Recommended Parameters:</p><p>Sampler: Euler a, Euler, DPM++ 2M Karras (bug-fixed) or DPM++ SDE Karras</p><p>Steps: 20~40</p><p>Hires upscaler: R-ESRGAN 4x+ or 4x-UltraSharp</p><p>Hires upscale: 2</p><p>Hires steps: 15</p><p>Denoising strength: 0.2~0.5</p><p>CFG scale: 6-8</p><p>clip skip 2<br /><br />basic formula:<br /><a target=\"_blank\" rel=\"ugc\" href=\"https://civitai.com/models/24591/kanpiromix\"><strong>KanPiroMix</strong></a> + <a target=\"_blank\" rel=\"ugc\" href=\"https://civitai.com/models/31473/xsmix\"><strong>XSMix</strong></a> + <a target=\"_blank\" rel=\"ugc\" href=\"https://civitai.com/models/9871/chikmix\"><strong>ChikMix</strong></a></p><p><strong>关注我的TG频道看更多例图：</strong><a target=\"_blank\" rel=\"ugc\" href=\"https://t.me/majic_NSFW\"><strong>https://t.me/majic_NSFW</strong></a></p>",
+      "type": "Checkpoint",
+      "poi": false,
+      "nsfw": false,
+      "allowNoCredit": true,
+      "allowCommercialUse": [
+        "Image",
+        "RentCivit",
+        "Rent"
+      ],
+      "allowDerivatives": true,
+      "allowDifferentLicense": true,
+      "stats": {
+        "downloadCount": 1021901,
+        "favoriteCount": 0,
+        "commentCount": 504,
+        "ratingCount": 0,
+        "rating": 0
+      },
+      "creator": {
+        "username": "Merjic",
+        "image": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/9c74a0f1-166e-4b81-9ab6-1f5084adfc25/width=96/Merjic.jpeg"
+      },
+      "tags": [
+        "base model",
+        "asian",
+        "realistic",
+        "photoralistic"
+      ],
+      "modelVersions": [
+        {
+          "id": 176425,
+          "name": "v7",
+          "description": null,
+          "trainedWords": [],
+          "baseModel": "SD 1.5",
+          "downloadUrl": "https://civitai.com/api/download/models/176425",
+          "stats": {
+            "downloadCount": 445921,
+            "ratingCount": 2325,
+            "rating": 4.97
+          },
+          "files": [
+            {
+              "name": "majicmixRealistic_v7.safetensors",
+              "id": 134792,
+              "sizeKB": 2082642.474609375,
+              "type": "Model",
+              "metadata": {
+                "fp": "fp16",
+                "size": "pruned",
+                "format": "SafeTensor"
+              },
+              "pickleScanResult": "Success",
+              "pickleScanMessage": "No Pickle imports",
+              "virusScanResult": "Success",
+              "scannedAt": "2023-10-05T12:16:37.487Z",
+              "hashes": {
+                "AutoV1": "C45EB528",
+                "AutoV2": "7C819B6D13",
+                "SHA256": "7C819B6D13663ED720C2254F4FE18373107DFEF2448D337913C8FC545640881E",
+                "CRC32": "D3C1CE6B",
+                "BLAKE3": "6516D85337C819C33AF609918ECA45D1DB43CAFC705163BCA927892EB8A8330C"
+              },
+              "downloadUrl": "https://civitai.com/api/download/models/176425",
+              "primary": true
+            }
+          ],
+          "images": [
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/4fd40408-f963-4d2d-8caa-8d3f176139cf/width=1024/2805533.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "UHLD}qMe.A?wOaIU%MxuMx%1xZM|pIo~MxxZ"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/23f3d38a-a9f0-4932-ac06-2cf336cbc77e/width=1024/2805528.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "UeLeKC-7}9R,-oniS2NwNGjZt7R*wvS4kCni"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/c33755c9-2548-4142-91fe-6855a84c2d31/width=1024/2805532.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "UPK^+}x].T-V4UNeNH~W?bs:-;M{tlV@%LD%"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/ef703f09-f596-4715-8672-4633559bfdbb/width=1024/2807615.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "UNLNJe8^*0RQE1ELNHoe9F%2$%RiI:D%jZR+"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/17b8e647-80b6-419b-8fc5-ca5f146802a6/width=1024/2805534.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "UhKm|cxZ?wt6g4kD%MW=E2jYs.n%bbIoxut6"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/be706282-2978-42a0-aaa2-73881aad94e9/width=1024/2805535.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "UNMjdg?H.9tR0MIU?woz?vxuMdxt_3WV%Mof"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/d414ed66-f6f0-42f9-a172-af6010c4bae2/width=1024/2805537.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "UXMjaX-:_4bcyERj-=t7NGNGMxxaxut7slWB"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/f410d945-291f-477f-ae7f-d7a105a35523/width=1024/2805538.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "UlLqR#M{?w%2Ndofn$kCtSt7M{Rj?bj[ayoz"
+            }
+          ]
+        },
+        {
+          "id": 221343,
+          "name": "v7 inpainting",
+          "description": "<p>Uploaded an inpainting model so that I can appear on the leaderboard.<br />What a good way to update models lol.</p>",
+          "trainedWords": [],
+          "baseModel": "SD 1.5",
+          "downloadUrl": "https://civitai.com/api/download/models/221343",
+          "stats": {
+            "downloadCount": 22254,
+            "ratingCount": 3115,
+            "rating": 5
+          },
+          "files": [
+            {
+              "name": "majicmixRealistic_v7-inpainting.safetensors",
+              "id": 170564,
+              "sizeKB": 2082719.755859375,
+              "type": "Model",
+              "metadata": {
+                "fp": "fp16",
+                "size": "pruned",
+                "format": "SafeTensor"
+              },
+              "pickleScanResult": "Success",
+              "pickleScanMessage": "No Pickle imports",
+              "virusScanResult": "Success",
+              "scannedAt": "2023-11-11T15:06:50.187Z",
+              "hashes": {
+                "AutoV1": "5A775227",
+                "AutoV2": "B65F69645C",
+                "SHA256": "B65F69645C4A02F66C163DAB7201EF92F61260C6A8031BC1A7D028A14D916034",
+                "CRC32": "A17EDC1E",
+                "BLAKE3": "157786F3097C02744B6864CBDEC7CAF92848733DC16380C0FD50E3194DF8C3B3",
+                "AutoV3": "5376065129AA"
+              },
+              "downloadUrl": "https://civitai.com/api/download/models/221343",
+              "primary": true
+            }
+          ],
+          "images": [
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/8590f685-1020-495f-b004-b1f1e22b394b/width=715/3572813.jpeg",
+              "width": 715,
+              "height": 1075,
+              "hash": "UYKnJD_49tbHIoIUxani4nM_ofNGWCWARiWV"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/79b5f2e1-d055-4290-95b4-dadeb61c7a0e/width=1024/3572814.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "UWH_xx_N%ga#tRIUNFjEE1MxIURkNGRjjEoM"
+            }
+          ]
+        },
+        {
+          "id": 126470,
+          "name": "BETTER v2 = v2.5",
+          "description": "<p>Note that this is not v7, but a fix for v2. V7 may need to address more issues, which I am still trying to do. In the process, I have created a model that may not be better than v6, but I think it is worth sharing.</p><p>This model can restore the light and shadow of the original majicmix v2, but with increased realism while still keeping the basic aesthetic of the face. I have tested other face loras and they work fine. Please use adetailer and put the face lora in it.</p><p>请注意，这不是v7，而是对v2的修缮。v7可能需要突破更多问题，这个目前我还在尝试。在这个过程中我融合出一个模型，可能甚至没有v6好，但我认为也值得分享。</p><p>本模型可以还原初代majicmix的光影，但是增加写实度，脸部还是保持基本调性的审美，我测试了其他脸部lora都没问题。请使用adetailer然后把脸部lora放在里面使用。</p>",
+          "trainedWords": [],
+          "baseModel": "SD 1.5",
+          "downloadUrl": "https://civitai.com/api/download/models/126470",
+          "stats": {
+            "downloadCount": 111925,
+            "ratingCount": 3802,
+            "rating": 4.99
+          },
+          "files": [
+            {
+              "name": "majicmixRealistic_betterV2V25.safetensors",
+              "id": 91395,
+              "sizeKB": 2343789.345703125,
+              "type": "Model",
+              "metadata": {
+                "fp": "fp16",
+                "size": "pruned",
+                "format": "SafeTensor"
+              },
+              "pickleScanResult": "Success",
+              "pickleScanMessage": "No Pickle imports",
+              "virusScanResult": "Success",
+              "scannedAt": "2023-07-26T16:21:42.653Z",
+              "hashes": {
+                "AutoV1": "EAD12EF6",
+                "AutoV2": "D7E2AC2F4A",
+                "SHA256": "D7E2AC2F4A1F8853A327E38EC8B8FABC000205D17722AD055D84F2507C84B9AC",
+                "CRC32": "E3282FA9",
+                "BLAKE3": "891FED4CEDC4902F8448A70FB0CF0E2D048AA2277BA7C79603E0B22E2FF47988"
+              },
+              "downloadUrl": "https://civitai.com/api/download/models/126470",
+              "primary": true
+            }
+          ],
+          "images": [
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/a768b16f-41b0-4eb7-89f0-5f6dbdfb0687/width=1024/1733579.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "UTH27h^+JAbH~pxu%2t7E1E1sloeslRj9ZRj"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/e052afb3-c916-4cc2-8c53-42d56f433ef0/width=1024/1733580.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "U68plm~A5R0f9uV[R*Rk56Io={-oNGbb-V-o"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/2613dc48-f2d5-467c-b8bf-b80013828545/width=1024/1733574.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "U7E33TDi01pH00xu~VIU.kD*v~sA^mIUM|%3"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/2b67a7f0-5b5a-41ce-aff3-f9470bf3b6ab/width=1024/1733578.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "U38NFIWA00e.00ozIVRj~qay9ajZ~Aj[0LRj"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/a913d601-181e-4739-a37d-a8ca6a006385/width=1024/1733569.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "U35qnpjt0gNa~ARjEMxtxtofIVn%tQt6E2NG"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/10c4e09a-55dc-4b91-8bd6-09dc34d317d5/width=1024/1733571.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "U4Ac9+0015m,tk9a~AEL0gxG-U-n-TNIEN^O"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/6a7513e1-1cce-45e5-9e26-e1e0c2cb8f62/width=1024/1733576.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "U69Zy90257~U$KxuE3M{9EofNext^+M{Rkog"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/7fe76d8b-bd90-44ae-bcd2-0bf9b9f9c4d0/width=1024/1733568.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "U8Frhb^+0~0000E2IAD%E1M_bc-;EN~p#+IU"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/ed99d32c-f0c3-4aa6-aaa8-039f9ef0f85c/width=1024/1733575.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "UNGb}0$x?v.8KS$$n$xvpy%Mxuj?M}X9I9R5"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/8aae248e-200d-4e4f-af2d-6a3766f1be1f/width=1024/1733572.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "UFEC:{00pJ^*PX-o%gE1F$%LMxt6NNt7IAt6"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/5cd4cce7-f5d8-41d1-9188-a520c6a3b43b/width=1024/1758738.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "U46j?+?G9ZE2~Vt74.9Z%gt74:IV%MofDjIU"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/1bfe3826-0d9a-4d72-b897-799c283ceebb/width=1024/1758808.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "ULFFa300_NH?,nITxui^OYt7rWM|S~xabwNa"
+            }
+          ]
+        },
+        {
+          "id": 94640,
+          "name": "v6",
+          "description": "<p>v5是垃圾，v6我还是强调一下写实。</p><p>v5 is not satisfactory. v6 is based on v4, more realistic.</p>",
+          "trainedWords": [],
+          "baseModel": "SD 1.5",
+          "downloadUrl": "https://civitai.com/api/download/models/94640",
+          "stats": {
+            "downloadCount": 237984,
+            "ratingCount": 8617,
+            "rating": 4.99
+          },
+          "files": [
+            {
+              "name": "majicmixRealistic_v6.safetensors",
+              "id": 65516,
+              "sizeKB": 2343789.345703125,
+              "type": "Model",
+              "metadata": {
+                "fp": "fp16",
+                "size": "pruned",
+                "format": "SafeTensor"
+              },
+              "pickleScanResult": "Success",
+              "pickleScanMessage": "No Pickle imports",
+              "virusScanResult": "Success",
+              "scannedAt": "2023-06-12T16:57:15.325Z",
+              "hashes": {
+                "AutoV1": "1D5A534E",
+                "AutoV2": "E4A30E4607",
+                "SHA256": "E4A30E4607FAEB06B5D590B2ED8E092690C631DA0B2BECB6224D4BB5327104B7",
+                "CRC32": "EBDB94D4",
+                "BLAKE3": "E69C451D8540D26A5896103AAC6E0C93DE125356DA24FA3626D89269B94A25CE"
+              },
+              "downloadUrl": "https://civitai.com/api/download/models/94640",
+              "primary": true
+            }
+          ],
+          "images": [
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/02497375-3648-4e7c-961c-0f8b14981fbd/width=1024/1121967.jpeg",
+              "width": 1024,
+              "height": 1024,
+              "hash": "UPDIg=560f~CxtRjjZofNGt7WVRjayWVbHs:"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/d748fcfd-29f1-4fe1-95e2-d34765bccca9/width=1024/1121958.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "UAF~El^*00~q4T.8_ND%4mxZ.9_N-;%N-ot5"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b40abb54-c7ca-4efc-803b-f77ef0929eca/width=1536/1121960.jpeg",
+              "width": 1536,
+              "height": 1024,
+              "hash": "UEG8l]01Av}@4T%g4.?vXn$%nh4.ozxu_3WC"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/9388093d-8386-425f-a652-2e1b831670a2/width=1536/1121947.jpeg",
+              "width": 1536,
+              "height": 1024,
+              "hash": "UDAch~~B5701oe%MjZIU9uIVxa-psmofR*R*"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/383e99b6-c96b-4535-8866-f843f6daa429/width=1536/1121962.jpeg",
+              "width": 1536,
+              "height": 1024,
+              "hash": "UECF@m00o#^+~V4.NG-p-;IV%2s:tRRPt7kC"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/8ea86192-6db5-4a89-b8e8-d1fc06032999/width=1536/1121963.jpeg",
+              "width": 1536,
+              "height": 1024,
+              "hash": "UIFFET~V~W-:?H?HR*WA009GD%RPkD9Z%1xt"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/367a8a25-ff63-41b3-8be5-db69735ad2f8/width=1536/1121964.jpeg",
+              "width": 1536,
+              "height": 1024,
+              "hash": "UFD+h~00~q01-;9F^+E1S4ofV@ofIUflae%2"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/66820fd3-98f2-4fbb-b904-0507de39c36a/width=1024/1121966.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "UIFF88M|E2tS9Z4oof%Mx]NGV@?G~WIofl%2"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/df193753-bca5-4d9b-9db2-ff9b969f3ae3/width=1024/1121970.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "UJE.-1~pt60KIoIn9Zt6RiRiIUxt-;-;M|R*"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b7a7cecd-1727-4ad0-b4f3-928570719703/width=1024/1177204.jpeg",
+              "width": 1024,
+              "height": 1360,
+              "hash": "UHF$Ff00~p00$xD%x^WBDhxvofozo~-;IAR*"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/a5b348c9-7b5b-4235-a943-834eec84a17a/width=1024/1275862.jpeg",
+              "width": 1024,
+              "height": 1816,
+              "hash": "U6D[tq~C0000]g-Af-jd_M?bD%8_M{IAxu_3"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/30a00c47-5102-404f-975b-ec9e5f4ab6e6/width=1800/1177549.jpeg",
+              "width": 1856,
+              "height": 2716,
+              "hash": "UFL{hyrV9vMy57S$t6-p0159-oSg~Vs:D*IU"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/cfb601e4-2b54-4f99-8094-8dedc4084a32/width=1240/1177548.jpeg",
+              "width": 1240,
+              "height": 1836,
+              "hash": "UGGQ^C9u0fxC9tNG-pRkRijF$*o}~Bf+IpRk"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/a7c2cda7-d2de-4603-9c54-8bb174a62556/width=1024/1177557.jpeg",
+              "width": 1024,
+              "height": 1450,
+              "hash": "UIAv%%Ip9t-o~WRkIoxtoyoLaKj[WBofaeae"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/9934e6ad-ee56-4828-8a63-cd536a2ad7a1/width=1351/1177558.jpeg",
+              "width": 1351,
+              "height": 1592,
+              "hash": "U6BL^o0#9Zt7=x$%EM-V01xFxuw]I;5R}@Nb"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/49cfd50e-a0e4-463a-8926-cf32400360ad/width=1024/1177573.jpeg",
+              "width": 1024,
+              "height": 1360,
+              "hash": "UBAc#sD%0exu~X%M4.WB9t?HRPIoELWB-VNG"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/a1573403-c044-4b85-a045-8b37734c04bd/width=1024/1177574.jpeg",
+              "width": 1024,
+              "height": 1360,
+              "hash": "U69@L^000K-:-A_400n$Io?bRP9EpID$?HIo"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/3f1d3897-2f6d-4eb3-a26e-500984476f41/width=1024/1177572.jpeg",
+              "width": 1024,
+              "height": 1360,
+              "hash": "U9Eo#@4m00?cwH~q00x]0eSN^k4TF2D%-Uxu"
+            }
+          ]
+        },
+        {
+          "id": 82446,
+          "name": "v5",
+          "description": null,
+          "trainedWords": [],
+          "baseModel": "SD 1.5",
+          "downloadUrl": "https://civitai.com/api/download/models/82446",
+          "stats": {
+            "downloadCount": 86104,
+            "ratingCount": 5737,
+            "rating": 4.99
+          },
+          "files": [
+            {
+              "name": "majicmixRealistic_v5.safetensors",
+              "id": 56446,
+              "sizeKB": 2343789.345703125,
+              "type": "Model",
+              "metadata": {
+                "fp": "fp16",
+                "size": "pruned",
+                "format": "SafeTensor"
+              },
+              "pickleScanResult": "Success",
+              "pickleScanMessage": "No Pickle imports",
+              "virusScanResult": "Success",
+              "scannedAt": "2023-05-27T06:22:24.411Z",
+              "hashes": {
+                "AutoV1": "CBDD62B4",
+                "AutoV2": "33C9F6DFCB",
+                "SHA256": "33C9F6DFCBD3B86E76FFDFC58253EE73F6C1B513238481DCD5D6A27B7AD3DF0F",
+                "CRC32": "8F061882",
+                "BLAKE3": "295D12D5663E30D7F84F192E1C9B7E2F98270497ED9B397E42DAB44E47E4639F"
+              },
+              "downloadUrl": "https://civitai.com/api/download/models/82446",
+              "primary": true
+            }
+          ],
+          "images": [
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/463df9c6-9e44-449a-b1a4-337c6631e15f/width=1280/928127.jpeg",
+              "width": 1280,
+              "height": 1704,
+              "hash": "UEFrO-0LI:^*~pt7D%%L%~s:VsWV?bM|D*%1"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/c516583e-f641-4324-bbf1-b57adf3669ee/width=1280/927871.jpeg",
+              "width": 1280,
+              "height": 1704,
+              "hash": "U8FFdEs:010K009F_3xa00%MW=t7%MIoMx~p"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/33b04423-953f-43e5-b3e0-1fc5d572a0af/width=1024/928057.jpeg",
+              "width": 1024,
+              "height": 1360,
+              "hash": "U6Dli@00E0?G00%M10%L~pjbMde.00xa=|SO"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/d8f3884e-2ee0-456a-8504-636c91e78cbf/width=1024/928701.jpeg",
+              "width": 1024,
+              "height": 1360,
+              "hash": "UCEerk9v0z~V01=|jYM{0LNG-U9t~VWVxaxu"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/60344845-a444-4bde-9c34-476ca355c9d8/width=1024/928702.jpeg",
+              "width": 1024,
+              "height": 1360,
+              "hash": "ULHe5x~Wb_Nf?v.8WBRkO@o}t7kCM_kCofae"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b38925a2-2f45-48ae-9693-8f900cbbe768/width=1280/929334.jpeg",
+              "width": 1280,
+              "height": 1920,
+              "hash": "U7FPd3~q_Nx]%~IU57NGDjyD%1s+5pobR5%g"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/cb71b573-ee95-42db-9d82-8fb2c63b318b/width=1280/929336.jpeg",
+              "width": 1280,
+              "height": 1920,
+              "hash": "U4D,o]-=O@?^-;IAD*S$00?vx[I903E0$$tS"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/3c0db383-ab50-4d9b-a6b3-8005da1b525d/width=1280/929335.jpeg",
+              "width": 1280,
+              "height": 1920,
+              "hash": "U2D0+H~CClS]T|000Koe00?b^1?G0N9tm,xa"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/5917bf5e-ad62-4947-a68f-cea03e84cf8e/width=1280/929333.jpeg",
+              "width": 1280,
+              "height": 1920,
+              "hash": "UECQfH%gITWD.TkXbwV?M}o#%Mt6R,aeROtR"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/deeaa7a9-46f5-4fbe-87db-c278815c0688/width=1280/929342.jpeg",
+              "width": 1280,
+              "height": 1920,
+              "hash": "U29aEW-U00Ee_1oMIpW=00tR_Na0KRRinht8"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/3275e960-96e9-4dbb-b32c-206c7cdf38f2/width=1280/929345.jpeg",
+              "width": 1280,
+              "height": 1920,
+              "hash": "U59j+Os:00D*_Nof8_kWN{RknhxZxvadMwbJ"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/396adfed-b539-478f-b00f-e89c104b2de1/width=1280/929341.jpeg",
+              "width": 1280,
+              "height": 1920,
+              "hash": "U48}3=%N00M_yZWYMxjEEMoJ-pWA%$aeI9od"
+            }
+          ]
+        },
+        {
+          "id": 79068,
+          "name": "v5 preview",
+          "description": null,
+          "trainedWords": [],
+          "baseModel": "SD 1.5",
+          "downloadUrl": "https://civitai.com/api/download/models/79068",
+          "stats": {
+            "downloadCount": 20955,
+            "ratingCount": 1420,
+            "rating": 5
+          },
+          "files": [
+            {
+              "name": "majicmixRealistic_v5Preview.safetensors",
+              "id": 54322,
+              "sizeKB": 2343789.345703125,
+              "type": "Model",
+              "metadata": {
+                "fp": "fp16",
+                "size": "pruned",
+                "format": "SafeTensor"
+              },
+              "pickleScanResult": "Success",
+              "pickleScanMessage": "No Pickle imports",
+              "virusScanResult": "Success",
+              "scannedAt": "2023-05-23T17:38:28.281Z",
+              "hashes": {
+                "AutoV1": "CBDD62B4",
+                "AutoV2": "A38FA861A2",
+                "SHA256": "A38FA861A24F4F4C6E0F68289101E645DD9CA1E93E1049CC8A4F2A77513FAD52",
+                "CRC32": "6B2A9DA0",
+                "BLAKE3": "B11373AD1ACBC298298170D9FDDA4AD8E3EC4AFE0303CDD3129065CFE1FF790E"
+              },
+              "downloadUrl": "https://civitai.com/api/download/models/79068",
+              "primary": true
+            }
+          ],
+          "images": [
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/1836b090-f607-48c3-9cfe-5d2026e2b1d9/width=1024/886533.jpeg",
+              "width": 1024,
+              "height": 1360,
+              "hash": "UBHLMF9FKi0000$*Sg%g0z-=I9xa~UNGNGni"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/8c498de8-4571-49e9-bffb-cd0fc83f0a0e/width=1024/886532.jpeg",
+              "width": 1024,
+              "height": 1360,
+              "hash": "UKIF9{?HpyXTTfaK.8xvIqWBZ~aeo~xuIUM{"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/4a9d6820-16c5-4e6b-aba3-4f5e1042d9e9/width=1024/886485.jpeg",
+              "width": 1024,
+              "height": 1360,
+              "hash": "UGFh^w-p00WB00IU?bbcWW%MniRP~qWAIUog"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/ce9a628a-8754-4036-8855-18c499ca2fc2/width=1024/886484.jpeg",
+              "width": 1024,
+              "height": 1360,
+              "hash": "UFDvAv~p009F004.-:xuXSxu-pxt?btQD%IU"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/a8e3db1f-3140-41fb-ad0c-c0da2288ee5e/width=1280/896149.jpeg",
+              "width": 1280,
+              "height": 1920,
+              "hash": "U48W{i00yD=|~q01TKNI57eT^*M{OsRO?Gad"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/17230872-8176-4009-9438-2610f26bb557/width=1024/896150.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "U98qEIgOD*IU~q%gD%Ri%g%MIUV@tRaKR*NG"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/f4f5951e-d7e5-4dfc-82c2-7fabcd8ac3b9/width=1024/896152.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "UDB:mZIoS$-;~pe-NH%M%#jYV?t7_3Io%1t7"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/820718ae-e68d-4466-84df-1f52b375d793/width=1024/896155.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "U58D|dSP00-n?w-;Mw9FFM%MwH9Z.SR*I9%2"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/506248c7-3920-484f-b2ac-682e3b88d334/width=1024/896159.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "U8A,az009a?a_N8_IV-;~WWBIUtR9]IUxFa}"
+            }
+          ]
+        },
+        {
+          "id": 55911,
+          "name": "v4",
+          "description": null,
+          "trainedWords": [],
+          "baseModel": "SD 1.5",
+          "downloadUrl": "https://civitai.com/api/download/models/55911",
+          "stats": {
+            "downloadCount": 57049,
+            "ratingCount": 9425,
+            "rating": 5
+          },
+          "files": [
+            {
+              "name": "majicmixRealistic_v4.safetensors",
+              "id": 40121,
+              "sizeKB": 2343789.3515625,
+              "type": "Model",
+              "metadata": {
+                "fp": "fp16",
+                "size": "pruned",
+                "format": "SafeTensor"
+              },
+              "pickleScanResult": "Success",
+              "pickleScanMessage": "No Pickle imports",
+              "virusScanResult": "Success",
+              "scannedAt": "2023-04-26T13:32:07.601Z",
+              "hashes": {
+                "AutoV1": "29D0DE58",
+                "AutoV2": "D819C8BE6B",
+                "SHA256": "D819C8BE6BC2A15307640A7EB069FA92E4C69C84289D8309273760EE7394E5F0",
+                "CRC32": "6EECB758",
+                "BLAKE3": "0F1E5A7A8FC5174D329B08269B8DA604379335F94AB14722E7CECC8276EA5022"
+              },
+              "downloadUrl": "https://civitai.com/api/download/models/55911",
+              "primary": true
+            }
+          ],
+          "images": [
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/1aa63751-f037-4e35-c777-a14ed1b2a900/width=1280/607576.jpeg",
+              "width": 1280,
+              "height": 1704,
+              "hash": "UADu}O~V010L00WVaeWB_3bH%2WB00Myozt7"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/d109a50b-3a16-4586-8264-4fc3723df500/width=1280/607570.jpeg",
+              "width": 1280,
+              "height": 1704,
+              "hash": "U4GRn{0000Mg0000RN?H_4~V=zo_00%M^+4p"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/e7a49cb2-cc76-474c-7aa8-52ff304b5500/width=1024/607516.jpeg",
+              "width": 1024,
+              "height": 1360,
+              "hash": "UPF=%RyZo~D*ESNg%N%2XAs:r=s.xFRPMxWA"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/9b9826af-4e82-40a3-e423-08572a8c3500/width=1280/607513.jpeg",
+              "width": 1280,
+              "height": 1704,
+              "hash": "UFDlpA~W010L00M|_3%M%gxuxaxaxaR+IVWB"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/51fc752f-d96a-44b1-f542-1858a1424300/width=1280/607515.jpeg",
+              "width": 1280,
+              "height": 1704,
+              "hash": "U6C$=o?w5=R5z,9F00xvF0IU#k9G*0tm^,?a"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/0ff293c7-6a99-4c4e-0b89-3a391087dc00/width=1280/607518.jpeg",
+              "width": 1280,
+              "height": 1704,
+              "hash": "U9CF#BDj9t014:NHxuaz4:%Ma0~VE1Ioxvs:"
+            }
+          ]
+        },
+        {
+          "id": 55620,
+          "name": "v3",
+          "description": null,
+          "trainedWords": [],
+          "baseModel": "SD 1.5",
+          "downloadUrl": "https://civitai.com/api/download/models/55620",
+          "stats": {
+            "downloadCount": 5612,
+            "ratingCount": 172,
+            "rating": 5
+          },
+          "files": [
+            {
+              "name": "majicmixRealistic_v3.safetensors",
+              "id": 39967,
+              "sizeKB": 2343789.3515625,
+              "type": "Model",
+              "metadata": {
+                "fp": "fp16",
+                "size": "pruned",
+                "format": "SafeTensor"
+              },
+              "pickleScanResult": "Success",
+              "pickleScanMessage": "No Pickle imports",
+              "virusScanResult": "Success",
+              "scannedAt": "2023-04-26T05:11:35.235Z",
+              "hashes": {
+                "AutoV1": "15A3181C",
+                "AutoV2": "69BC54FC2C",
+                "SHA256": "69BC54FC2CAC49ECB1D0202C1078BCEEB1C9423D71D54242FD966CCD5B693AEA",
+                "CRC32": "15591307",
+                "BLAKE3": "76855D9AF778657996A879468BDDA9352C8CC1986A3DB79F79EBADA1A7EC7856"
+              },
+              "downloadUrl": "https://civitai.com/api/download/models/55620",
+              "primary": true
+            }
+          ],
+          "images": [
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/02eebd01-e19f-49ee-ba27-8139baca6d00/width=1024/602872.jpeg",
+              "width": 1024,
+              "height": 1024,
+              "hash": "U7Am9%-o009a9u?Ht7Io9tE2~C%M4:xaozj@"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/935fae90-8691-468a-9f1a-a36e7f2fba00/width=1024/602869.jpeg",
+              "width": 1024,
+              "height": 1024,
+              "hash": "UDEo0$0M-.^k~BxI~AIq-nRk~BNHoboe%2ae"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/d78157a4-eb60-4f90-6582-7bbfbf699000/width=1024/602875.jpeg",
+              "width": 1024,
+              "height": 1024,
+              "hash": "U8D9I?D%X,0K0100-:-p_2~W-V9G0K9Z%Nt7"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/4bbe70f6-7086-436d-1a92-de3e0af9dc00/width=1024/602874.jpeg",
+              "width": 1024,
+              "height": 1024,
+              "hash": "U7Cs2D009Y-V-;9Z~CE26UROIAWB0h=^57-;"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/99647dc6-5ce0-4d5b-a690-6d1ceb54d500/width=1024/602870.jpeg",
+              "width": 1024,
+              "height": 1024,
+              "hash": "UEDlTW};_2s:S*E1I[Rk0gR-IqbF^%$y?Goe"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/02d82ea1-8800-447d-ef4d-a84196d6d400/width=1024/602868.jpeg",
+              "width": 1024,
+              "height": 1024,
+              "hash": "UBD+uZ=r~q-:t.V@S%t802JB9ZIo^*-S?Ft7"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/2a2144e6-dea0-4a1a-cd03-dbabccff3200/width=1024/602871.jpeg",
+              "width": 1024,
+              "height": 1024,
+              "hash": "U8CF@nx_9]5QDg0KDirq0%~V%gxv00%0smM|"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/35f3e0d2-420d-4fe2-8d63-7e671c277300/width=1024/602876.jpeg",
+              "width": 1024,
+              "height": 1024,
+              "hash": "UA9GaQ~A5Q0ga{R*WBo00zE2%2-oNafkxaof"
+            }
+          ]
+        },
+        {
+          "id": 48289,
+          "name": "v2",
+          "description": "<p>better body and lighting</p>",
+          "trainedWords": [],
+          "baseModel": "SD 1.5",
+          "downloadUrl": "https://civitai.com/api/download/models/48289",
+          "stats": {
+            "downloadCount": 32163,
+            "ratingCount": 2411,
+            "rating": 4.99
+          },
+          "files": [
+            {
+              "name": "majicmixRealistic_v2.safetensors",
+              "id": 35725,
+              "sizeKB": 2343789.344726562,
+              "type": "Model",
+              "metadata": {
+                "fp": "fp16",
+                "size": "pruned",
+                "format": "SafeTensor"
+              },
+              "pickleScanResult": "Success",
+              "pickleScanMessage": "No Pickle imports",
+              "virusScanResult": "Success",
+              "scannedAt": "2023-04-17T18:01:42.503Z",
+              "hashes": {
+                "AutoV1": "6AEF0C03",
+                "AutoV2": "5D22B29ECD",
+                "SHA256": "5D22B29ECD83431792709576F32A608072E3D8F61C1BE941CA159794DF90CCEC",
+                "CRC32": "9868ED5D",
+                "BLAKE3": "08E4DD8C7FD5209C9611452BA6E36D339FF135F0EA05F84397FED762FDC18DCF"
+              },
+              "downloadUrl": "https://civitai.com/api/download/models/48289",
+              "primary": true
+            }
+          ],
+          "images": [
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/64d8f783-b700-4acb-1a16-e991fd32e500/width=1024/519072.jpeg",
+              "width": 1024,
+              "height": 1360,
+              "hash": "U7AJQPE201NG0f~CNG0eSe9a=|?G0eNG-p=|"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/0ca4c467-2a58-49c8-3d4b-a8ab4587eb00/width=1024/519071.jpeg",
+              "width": 1024,
+              "height": 1360,
+              "hash": "UEDSXa~qAEIV5Sx]%f?H?b%M-pS2OE-pt7WB"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/3119c183-2fa6-4d52-1187-18a258226800/width=1024/519075.jpeg",
+              "width": 1024,
+              "height": 1360,
+              "hash": "U9B{fWX800^j009aof%2~V-o$%R*00ae-:E2"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/6e4a34a7-01bb-4fb7-f80c-343402294900/width=1024/519074.jpeg",
+              "width": 1024,
+              "height": 1360,
+              "hash": "U5A]jJ0L00^*00~V^j4:x]9a~Cxt0exaIp%1"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/30c3af34-47bf-4115-02df-ad39175af100/width=1024/550907.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "U69Zl,-:000KslR*S5s:0KRjxux]0KRj~Cxu"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/5b419c10-6fd5-44ed-b575-2f378c5a2d00/width=1024/550909.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "UACi%L00%f-pIpoJWBIo00~qM|bb9Z-;xuRj"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/40a67c5b-1650-4a10-828d-18a7cfe24900/width=1024/550911.jpeg",
+              "width": 1024,
+              "height": 1360,
+              "hash": "U39Z+S00~TIU9Gfl01~V-QD%-=?G9Z?HMyxr"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/250551d9-30ba-43b2-1940-b8ddf1d99300/width=1024/550906.jpeg",
+              "width": 1024,
+              "height": 1536,
+              "hash": "U296{,5800oz4.4:~A0e.R0g^kNG^OE35SRj"
+            }
+          ]
+        },
+        {
+          "id": 47968,
+          "name": "v1",
+          "description": null,
+          "trainedWords": [],
+          "baseModel": "SD 1.5",
+          "downloadUrl": "https://civitai.com/api/download/models/47968",
+          "stats": {
+            "downloadCount": 1934,
+            "ratingCount": 150,
+            "rating": 5
+          },
+          "files": [
+            {
+              "name": "majicmixRealistic_v1.safetensors",
+              "id": 35536,
+              "sizeKB": 2343789.344726562,
+              "type": "Model",
+              "metadata": {
+                "fp": "fp16",
+                "size": "pruned",
+                "format": "SafeTensor"
+              },
+              "pickleScanResult": "Success",
+              "pickleScanMessage": "No Pickle imports",
+              "virusScanResult": "Success",
+              "scannedAt": "2023-04-17T10:52:22.966Z",
+              "hashes": {
+                "AutoV1": "6AEF0C03",
+                "AutoV2": "A7A000AD88",
+                "SHA256": "A7A000AD88470511B286FB2388B5CD4D59E525A1B08C0BB256B0E833913B1C18",
+                "CRC32": "612DB1BE",
+                "BLAKE3": "19C51D268ED4FD365FEF3E0C9B21AF903C1B12A541DD8FB1C50776C151B39102"
+              },
+              "downloadUrl": "https://civitai.com/api/download/models/47968",
+              "primary": true
+            }
+          ],
+          "images": [
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/1fd7e33e-af1b-45ed-071d-0a7ad4696200/width=1024/517054.jpeg",
+              "width": 1024,
+              "height": 1360,
+              "hash": "UIEyMZ9a0K$f00skxuWX?wM{%2IoWUt6e.WA"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/4d5f62fb-541a-4aef-d776-0092df027600/width=1024/517062.jpeg",
+              "width": 1024,
+              "height": 1360,
+              "hash": "U9Db]3yEAc?cO@%M0Moz~VD%n4?G-:4n9Fs."
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b384ff35-26ea-439b-01cc-9d7283a51f00/width=1024/517061.jpeg",
+              "width": 1024,
+              "height": 1360,
+              "hash": "UHEoSu8w_N01K54:X8Rj9F-;Z~-;RjoLt6oz"
+            },
+            {
+              "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/580ad452-e481-43e1-2c83-adc3a7046300/width=1024/517056.jpeg",
+              "width": 1024,
+              "height": 1360,
+              "hash": "UDG*~74V%b00?t9GR+R#_4oyDk?E_LMxjID%"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "nextPage": "https://civitai.com/api/v1/models?limit=2&types=Checkpoint&cursor=59018%7C1021901%7C43331",
+    "nextCursor": "59018|1021901|43331"
+  }
+}

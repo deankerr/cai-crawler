@@ -1,0 +1,51 @@
+{
+  "items": [
+    {
+      "name": "character",
+      "link": "https://civitai.com/api/v1/models?tag=character"
+    },
+    {
+      "name": "anime",
+      "link": "https://civitai.com/api/v1/models?tag=anime"
+    },
+    {
+      "name": "woman",
+      "link": "https://civitai.com/api/v1/models?tag=woman"
+    },
+    {
+      "name": "style",
+      "link": "https://civitai.com/api/v1/models?tag=style"
+    },
+    {
+      "name": "girls",
+      "link": "https://civitai.com/api/v1/models?tag=girls"
+    },
+    {
+      "name": "celebrity",
+      "link": "https://civitai.com/api/v1/models?tag=celebrity"
+    },
+    {
+      "name": "concept",
+      "link": "https://civitai.com/api/v1/models?tag=concept"
+    },
+    {
+      "name": "photorealistic",
+      "link": "https://civitai.com/api/v1/models?tag=photorealistic"
+    },
+    {
+      "name": "realistic",
+      "link": "https://civitai.com/api/v1/models?tag=realistic"
+    },
+    {
+      "name": "game character",
+      "link": "https://civitai.com/api/v1/models?tag=game character"
+    }
+  ],
+  "metadata": {
+    "totalItems": 139831,
+    "currentPage": 1,
+    "pageSize": 10,
+    "totalPages": 13984,
+    "nextPage": "https://civitai.com/api/v1/tags?limit=10&page=2"
+  }
+}
