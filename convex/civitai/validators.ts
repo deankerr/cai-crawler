@@ -73,11 +73,6 @@ export const ImagesResponse = z.object({
   metadata: CursorMetadata,
 })
 
-export const RawImagesResponse = z.object({
-  items: z.array(z.unknown()),
-  metadata: CursorMetadata,
-})
-
 // models
 export const ModelSort = z.enum(['Highest Rated', 'Most Downloaded', 'Newest'])
 

@@ -105,15 +105,14 @@ export default defineSchema(
       .index('by_createdAt', ['createdAt']),
 
     apiResults: defineTable({
-      endpoint,
-      params: v.optional(v.string()), // JSON-stringified query params
+      query: v.string(),
       entityType,
       entityId: v.number(), // e.g., imageId, modelId, modelVersionId
       parentId: v.optional(v.number()), // e.g., modelId for modelVersion
       result: v.string(), // stringified JSON blob for this entity
     })
       .index('by_entity', ['entityType', 'entityId'])
-      .index('by_endpoint', ['endpoint']),
+      .index('by_query', ['query']),
   },
   // If you ever get an error about schema mismatch
   // between your data and your schema, and you cannot

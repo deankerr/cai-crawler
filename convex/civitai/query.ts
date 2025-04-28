@@ -1,57 +1,109 @@
 import type { ImageQueryParams } from './validators'
+import { up } from 'up-fetch'
 import { z } from 'zod'
 import { internal } from '../_generated/api'
 import { internalAction, internalMutation } from '../_generated/server'
 import schema from '../schema'
-import { RawImagesResponse } from './validators'
+import { CursorMetadata } from './validators'
 
-export const CIVITAI_API_BASE = 'https://civitai.com/api/v1'
 const apiKey = process.env.CIVITAI_API_KEY
 
-function createQueryUrl(endpoint: string, params: Record<string, any>) {
-  const url = new URL(CIVITAI_API_BASE + endpoint)
+const upFetch = up(fetch, () => ({
+  baseUrl: 'https://civitai.com/api/v1',
+  headers: {
+    Authorization: apiKey ? `Bearer ${apiKey}` : undefined,
+  },
+  timeout: 10000,
+  retry: {
+    attempts: 5,
+    delay: ctx => ctx.attempt ** 2 * 1000,
+  },
+}))
+
+function buildQuery(path: string, params: Record<string, any> = {}) {
+  const searchParams = new URLSearchParams()
   Object.entries(params).forEach(([key, value]) => {
-    if (value !== undefined) {
-      url.searchParams.append(key, String(value))
+    if (value !== undefined && value !== null) {
+      searchParams.append(key, String(value))
     }
   })
-  url.searchParams.sort()
-  return url
+  searchParams.sort()
+  return searchParams.size ? `${path}?${searchParams.toString()}` : path
 }
 
-function createHeaders() {
-  const headers = new Headers()
-  headers.set('Content-Type', 'application/json')
-  if (apiKey)
-    headers.set('Authorization', `Bearer ${apiKey}`)
-  return headers
-}
-
+// /images
 export const images = internalAction({
   handler: async (ctx, args: ImageQueryParams) => {
-    const url = createQueryUrl('/images', args)
-    const response = await fetch(url, { headers: createHeaders() })
+    const query = buildQuery('/images', args)
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch from Civitai API: ${response.status} ${response.statusText}`)
-    }
+    const result = await upFetch(query, {
+      schema: z.object({
+        items: z.array(z.object({ id: z.number() }).passthrough()),
+        metadata: CursorMetadata,
+      }),
+    })
 
-    const rawResults = RawImagesResponse.parse(await response.json())
-
-    for (const item of rawResults.items) {
-      const imageId = z.object({ id: z.number() }).parse(item)
-      await ctx.runMutation(internal.civitai.query.appendResult, {
-        endpoint: '/images',
-        params: url.searchParams.toString(),
+    for (const item of result.items) {
+      await ctx.runMutation(internal.civitai.query.insertResult, {
+        query,
         entityType: 'image',
-        entityId: imageId.id,
+        entityId: item.id,
         result: JSON.stringify(item),
       })
     }
   },
 })
 
-export const appendResult = internalMutation({
+// /models/:modelId
+export const model = internalAction({
+  handler: async (ctx, { modelId }: { modelId: number }) => {
+    const query = buildQuery(`/models/${modelId}`)
+
+    const result = await upFetch(query, {
+      schema: z.object({ id: z.number(), modelVersions: z.array(z.object({ id: z.number() }).passthrough()) }).passthrough(),
+    })
+
+    // Store the model result
+    await ctx.runMutation(internal.civitai.query.insertResult, {
+      query,
+      entityType: 'model',
+      entityId: result.id,
+      result: JSON.stringify(result),
+    })
+
+    // Store each modelVersion result
+    for (const version of result.modelVersions) {
+      const versionId = z.object({ id: z.number() }).parse(version)
+      await ctx.runMutation(internal.civitai.query.insertResult, {
+        query,
+        entityType: 'modelVersion',
+        entityId: versionId.id,
+        parentId: result.id,
+        result: JSON.stringify(version),
+      })
+    }
+  },
+})
+
+// /model-versions/:versionId
+export const modelVersion = internalAction({
+  handler: async (ctx, { versionId }: { versionId: number }) => {
+    const query = buildQuery(`/model-versions/${versionId}`)
+
+    const result = await upFetch(query, {
+      schema: z.object({ id: z.number() }).passthrough(),
+    })
+
+    await ctx.runMutation(internal.civitai.query.insertResult, {
+      query,
+      entityType: 'modelVersion',
+      entityId: result.id,
+      result: JSON.stringify(result),
+    })
+  },
+})
+
+export const insertResult = internalMutation({
   args: schema.tables.apiResults.validator,
   handler: async (ctx, args) => {
     return await ctx.db.insert('apiResults', args)
