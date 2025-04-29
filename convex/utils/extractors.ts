@@ -75,7 +75,7 @@ function extractFromCivitaiResources(meta: Record<string, any>): ModelReference[
       ) {
         references.push({
           type: resource.type.toLowerCase(),
-          versionId: resource.modelVersionId,
+          versionId: Number(resource.modelVersionId),
           name: resource.modelVersionName,
         })
       }

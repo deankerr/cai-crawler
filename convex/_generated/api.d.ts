@@ -16,7 +16,7 @@ import type {
 import type * as civitai_images from "../civitai/images.js";
 import type * as civitai_query from "../civitai/query.js";
 import type * as civitai_validators from "../civitai/validators.js";
-import type * as demo from "../demo.js";
+import type * as http from "../http.js";
 import type * as myFunctions from "../myFunctions.js";
 import type * as run from "../run.js";
 import type * as storage from "../storage.js";
@@ -35,7 +35,7 @@ declare const fullApi: ApiFromModules<{
   "civitai/images": typeof civitai_images;
   "civitai/query": typeof civitai_query;
   "civitai/validators": typeof civitai_validators;
-  demo: typeof demo;
+  http: typeof http;
   myFunctions: typeof myFunctions;
   run: typeof run;
   storage: typeof storage;
