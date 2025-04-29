@@ -3,7 +3,6 @@ import { defineSchema, defineTable } from 'convex/server'
 import { v } from 'convex/values'
 
 const entityType = literals('image', 'model', 'modelVersion')
-const endpoint = literals('/images', '/models/:modelId', '/model-versions/:versionId', '/model-versions/by-hash/:hash')
 
 export default defineSchema(
   {
@@ -18,6 +17,11 @@ export default defineSchema(
       postId: v.optional(v.number()),
       blurHash: v.string(),
       username: v.string(),
+
+      // R2 storage information
+      storageKey: v.optional(v.string()),
+      storedUrl: v.optional(v.string()),
+      storedSize: v.optional(v.number()),
 
       // References to other entities
       models: v.array(
@@ -40,9 +44,11 @@ export default defineSchema(
         commentCount: v.number(),
       }),
 
+      apiResultId: v.id('apiResults'),
     })
       .index('by_imageId', ['imageId'])
-      .index('by_createdAt', ['createdAt']),
+      .index('by_createdAt', ['createdAt'])
+      .index('by_storageStatus', ['storageKey']),
 
     models: defineTable({
       modelId: v.number(),

@@ -8,11 +8,10 @@
 
 // Types for model references
 export interface ModelReference {
+  modelId?: number
+  versionId?: number
   type: string
   name?: string
-  id?: number
-  versionId?: number
-  weight?: number
   hash?: string
 }
 
@@ -78,7 +77,6 @@ function extractFromCivitaiResources(meta: Record<string, any>): ModelReference[
           type: resource.type.toLowerCase(),
           versionId: resource.modelVersionId,
           name: resource.modelVersionName,
-          weight: resource.weight,
         })
       }
     }
@@ -111,9 +109,8 @@ function extractFromResources(meta: Record<string, any>): ModelReference[] {
         references.push({
           type: resource.type?.toLowerCase() === 'model' ? 'checkpoint' : resource.type?.toLowerCase(),
           name: resource.name,
-          id: resource.modelId,
+          modelId: resource.modelId,
           versionId: resource.modelVersionId,
-          weight: resource.weight,
           hash: resource.hash,
         })
       }
@@ -205,7 +202,6 @@ function extractFromPrompt(meta: Record<string, any>): ModelReference[] {
           references.push({
             type: 'lora',
             name: parts[1],
-            weight: Number.parseFloat(parts[2]),
           })
         }
       }
@@ -235,8 +231,8 @@ function consolidateReferences(references: ModelReference[]): ModelReference[] {
     }
 
     // Try to identify by model ID
-    if (ref.id) {
-      keys.push(`id:${ref.id}`)
+    if (ref.modelId) {
+      keys.push(`modelId:${ref.modelId}`)
     }
 
     // Try to identify by hash
@@ -290,12 +286,11 @@ function mergeReferences(a: ModelReference, b: ModelReference): ModelReference {
     type: a.type || b.type,
 
     // Prefer IDs and hashes from either source
-    id: a.id || b.id,
+    modelId: a.modelId || b.modelId,
     versionId: a.versionId || b.versionId,
     hash: a.hash || b.hash,
 
     // For name and weight, prefer a if it exists
     name: a.name || b.name,
-    weight: a.weight ?? b.weight,
   }
 }

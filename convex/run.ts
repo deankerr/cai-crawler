@@ -1,7 +1,7 @@
 import type { ImageQueryParams } from './civitai/validators'
 import { literals } from 'convex-helpers/validators'
 import { v } from 'convex/values'
-import { internal } from './_generated/api'
+import { api, internal } from './_generated/api'
 import { action } from './_generated/server'
 import { fetchImages } from './civitai/query'
 import { getPathAndQuery } from './utils/url'
@@ -60,12 +60,16 @@ export const startImageCrawl = action({
 
       // Store each item in the batch
       for (const item of items) {
-        await ctx.runMutation(internal.civitai.query.insertResult, {
+        const result = JSON.stringify(item)
+        const apiResultId = await ctx.runMutation(internal.civitai.query.insertResult, {
           query: getPathAndQuery(query),
           entityType: 'image',
           entityId: item.id,
-          result: JSON.stringify(item),
+          result,
         })
+
+        // This will create the image record in our database, with URL information
+        await ctx.runMutation(internal.civitai.images.create, { apiResultId, result })
       }
 
       if (totalFetched >= MAX_CRAWLED_ITEMS) {
