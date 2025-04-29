@@ -8,6 +8,7 @@ const endpoint = literals('/images', '/models/:modelId', '/model-versions/:versi
 export default defineSchema(
   {
     images: defineTable({
+      imageId: v.number(),
       url: v.string(),
       width: v.number(),
       height: v.number(),
@@ -15,23 +16,19 @@ export default defineSchema(
       nsfwLevel: v.string(),
       createdAt: v.string(),
       postId: v.optional(v.number()),
-      hash: v.string(),
+      blurHash: v.string(),
       username: v.string(),
 
       // References to other entities
-      referencedModels: v.array(
+      models: v.array(
         v.object({
-          type: v.string(), // "checkpoint", "lora", etc.
-          id: v.optional(v.number()),
+          modelId: v.optional(v.number()),
           versionId: v.optional(v.number()),
-          weight: v.optional(v.number()),
-          hash: v.optional(v.string()),
+          type: v.string(), // "checkpoint", "lora", etc.
           name: v.optional(v.string()),
+          hash: v.optional(v.string()),
         }),
       ),
-
-      // Storage reference
-      storageId: v.optional(v.string()),
 
       // Stats for sorting
       totalReactions: v.number(),
@@ -44,8 +41,7 @@ export default defineSchema(
       }),
 
     })
-      .index('by_hash', ['hash'])
-      .index('by_username', ['username'])
+      .index('by_imageId', ['imageId'])
       .index('by_createdAt', ['createdAt']),
 
     models: defineTable({
@@ -74,7 +70,6 @@ export default defineSchema(
       versionIds: v.array(v.number()),
     })
       .index('by_modelId', ['modelId'])
-      .index('by_creator', ['creatorUsername'])
       .index('by_type', ['type']),
 
     modelVersions: defineTable({

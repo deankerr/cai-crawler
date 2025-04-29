@@ -5,11 +5,12 @@ import { internal } from '../_generated/api'
 import { internalAction, internalMutation } from '../_generated/server'
 import schema from '../schema'
 import { CursorMetadata } from './validators'
+import { buildURL, getPathAndQuery } from '../utils/url'
 
+const baseUrl = 'https://civitai.com/api/v1'
 const apiKey = process.env.CIVITAI_API_KEY
 
 const upFetch = up(fetch, () => ({
-  baseUrl: 'https://civitai.com/api/v1',
   headers: {
     Authorization: apiKey ? `Bearer ${apiKey}` : undefined,
   },
@@ -20,44 +21,41 @@ const upFetch = up(fetch, () => ({
   },
 }))
 
-function buildQuery(path: string, params: Record<string, any> = {}) {
-  const searchParams = new URLSearchParams()
-  Object.entries(params).forEach(([key, value]) => {
-    if (value !== undefined && value !== null) {
-      searchParams.append(key, String(value))
-    }
+export async function fetchImages(args: ImageQueryParams) {
+  const query = buildURL(baseUrl, ['images'], args)
+
+  const result = await upFetch(query, {
+    schema: z.object({
+      items: z.array(z.object({ id: z.number() }).passthrough()),
+      metadata: CursorMetadata,
+    }),
   })
-  searchParams.sort()
-  return searchParams.size ? `${path}?${searchParams.toString()}` : path
+
+  return { result, query }
 }
 
 // /images
 export const images = internalAction({
   handler: async (ctx, args: ImageQueryParams) => {
-    const query = buildQuery('/images', args)
-
-    const result = await upFetch(query, {
-      schema: z.object({
-        items: z.array(z.object({ id: z.number() }).passthrough()),
-        metadata: CursorMetadata,
-      }),
-    })
+    const { result, query } = await fetchImages(args)
 
     for (const item of result.items) {
       await ctx.runMutation(internal.civitai.query.insertResult, {
-        query,
+        query: getPathAndQuery(query),
         entityType: 'image',
         entityId: item.id,
         result: JSON.stringify(item),
       })
     }
+
+    return result.metadata
   },
 })
 
 // /models/:modelId
 export const model = internalAction({
   handler: async (ctx, { modelId }: { modelId: number }) => {
-    const query = buildQuery(`/models/${modelId}`)
+    const query = buildURL(baseUrl, ['models', modelId])
 
     const result = await upFetch(query, {
       schema: z.object({ id: z.number(), modelVersions: z.array(z.object({ id: z.number() }).passthrough()) }).passthrough(),
@@ -65,7 +63,7 @@ export const model = internalAction({
 
     // Store the model result
     await ctx.runMutation(internal.civitai.query.insertResult, {
-      query,
+      query: getPathAndQuery(query),
       entityType: 'model',
       entityId: result.id,
       result: JSON.stringify(result),
@@ -75,7 +73,7 @@ export const model = internalAction({
     for (const version of result.modelVersions) {
       const versionId = z.object({ id: z.number() }).parse(version)
       await ctx.runMutation(internal.civitai.query.insertResult, {
-        query,
+        query: getPathAndQuery(query),
         entityType: 'modelVersion',
         entityId: versionId.id,
         parentId: result.id,
@@ -88,14 +86,14 @@ export const model = internalAction({
 // /model-versions/:versionId
 export const modelVersion = internalAction({
   handler: async (ctx, { versionId }: { versionId: number }) => {
-    const query = buildQuery(`/model-versions/${versionId}`)
+    const query = buildURL(baseUrl, ['model-versions', versionId])
 
     const result = await upFetch(query, {
       schema: z.object({ id: z.number() }).passthrough(),
     })
 
     await ctx.runMutation(internal.civitai.query.insertResult, {
-      query,
+      query: getPathAndQuery(query),
       entityType: 'modelVersion',
       entityId: result.id,
       result: JSON.stringify(result),

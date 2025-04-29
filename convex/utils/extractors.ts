@@ -19,10 +19,10 @@ export interface ModelReference {
 /**
  * Main extraction function that combines all specialized extractors
  *
- * @param imageData Raw image data from Civitai API
+ * @param meta Raw image meta data from Civitai API
  * @returns Combined array of model references from all sources
  */
-export function extractModelReferences(imageData: any): ModelReference[] {
+export function extractModelReferences(meta: Record<string, unknown>): ModelReference[] {
   // Run all extractors and collect their results
   const extractors = [
     extractFromCivitaiResources,
@@ -36,9 +36,12 @@ export function extractModelReferences(imageData: any): ModelReference[] {
   // Run each extractor and collect all references
   const allReferences: ModelReference[] = []
 
+  // Cast meta to Record<string, any> for extractors
+  const metaObj = meta as Record<string, any>
+
   for (const extractor of extractors) {
     try {
-      const references = extractor(imageData)
+      const references = extractor(metaObj)
       if (references.length > 0) {
         allReferences.push(...references)
       }
@@ -56,17 +59,17 @@ export function extractModelReferences(imageData: any): ModelReference[] {
 /**
  * Extract model references from civitaiResources array
  *
- * Pattern: imageData.meta.civitaiResources array of objects with:
+ * Pattern: meta.civitaiResources array of objects with:
  * - type: "checkpoint" or "lora"
  * - modelVersionId: numeric ID
  * - modelVersionName: string version name
  * - weight (optional): numeric weight for LoRAs
  */
-function extractFromCivitaiResources(imageData: any): ModelReference[] {
+function extractFromCivitaiResources(meta: Record<string, any>): ModelReference[] {
   const references: ModelReference[] = []
 
-  if (imageData.meta?.civitaiResources && Array.isArray(imageData.meta.civitaiResources)) {
-    for (const resource of imageData.meta.civitaiResources) {
+  if (meta.civitaiResources && Array.isArray(meta.civitaiResources)) {
+    for (const resource of meta.civitaiResources) {
       if (
         resource.type?.toLowerCase() === 'checkpoint'
         || resource.type?.toLowerCase() === 'lora'
@@ -87,18 +90,18 @@ function extractFromCivitaiResources(imageData: any): ModelReference[] {
 /**
  * Extract model references from resources array
  *
- * Pattern: imageData.meta.resources array of objects with:
+ * Pattern: meta.resources array of objects with:
  * - type: "lora" or other model type
  * - name: string name of model
  * - hash: string hash identifier
  * - modelId (optional): numeric model ID
  * - modelVersionId (optional): numeric version ID
  */
-function extractFromResources(imageData: any): ModelReference[] {
+function extractFromResources(meta: Record<string, any>): ModelReference[] {
   const references: ModelReference[] = []
 
-  if (imageData.meta?.resources && Array.isArray(imageData.meta.resources)) {
-    for (const resource of imageData.meta.resources) {
+  if (meta.resources && Array.isArray(meta.resources)) {
+    for (const resource of meta.resources) {
       // Only include checkpoints and loras
       if (
         resource.type?.toLowerCase() === 'checkpoint'
@@ -123,21 +126,21 @@ function extractFromResources(imageData: any): ModelReference[] {
 /**
  * Extract main model reference from Model field
  *
- * Pattern: imageData.meta.Model string field with model name
- * May also have imageData.meta["Model hash"] with hash
+ * Pattern: meta.Model string field with model name
+ * May also have meta["Model hash"] with hash
  */
-function extractFromModelField(imageData: any): ModelReference[] {
+function extractFromModelField(meta: Record<string, any>): ModelReference[] {
   const references: ModelReference[] = []
 
-  if (imageData.meta?.Model) {
+  if (meta.Model) {
     const reference: ModelReference = {
       type: 'checkpoint',
-      name: imageData.meta.Model,
+      name: meta.Model,
     }
 
     // Try to find hash if it exists
-    if (imageData.meta?.['Model hash']) {
-      reference.hash = imageData.meta['Model hash']
+    if (meta['Model hash']) {
+      reference.hash = meta['Model hash']
     }
 
     references.push(reference)
@@ -149,15 +152,15 @@ function extractFromModelField(imageData: any): ModelReference[] {
 /**
  * Extract model references from hashes object
  *
- * Pattern: imageData.meta.hashes object with:
+ * Pattern: meta.hashes object with:
  * - model: hash for main model
  * - lora:name: hash for each lora
  */
-function extractFromHashes(imageData: any): ModelReference[] {
+function extractFromHashes(meta: Record<string, any>): ModelReference[] {
   const references: ModelReference[] = []
 
-  if (imageData.meta?.hashes && typeof imageData.meta.hashes === 'object') {
-    const hashes = imageData.meta.hashes
+  if (meta.hashes && typeof meta.hashes === 'object') {
+    const hashes = meta.hashes
 
     // Process main model hash
     if (hashes.model) {
@@ -186,15 +189,15 @@ function extractFromHashes(imageData: any): ModelReference[] {
 /**
  * Extract LoRA references from prompt text
  *
- * Pattern: <lora:model_name:weight> in imageData.meta.prompt
+ * Pattern: <lora:model_name:weight> in meta.prompt
  */
-function extractFromPrompt(imageData: any): ModelReference[] {
+function extractFromPrompt(meta: Record<string, any>): ModelReference[] {
   const references: ModelReference[] = []
 
-  if (imageData.meta?.prompt) {
+  if (meta.prompt) {
     // Parse LoRA references from prompt
     // Format is typically <lora:model_name:weight>
-    const loraMatches = imageData.meta.prompt.match(/<lora:([^:]+):([^>]+)>/g)
+    const loraMatches = meta.prompt.match(/<lora:([^:]+):([^>]+)>/g)
     if (loraMatches) {
       for (const match of loraMatches) {
         const parts = match.match(/<lora:([^:]+):([^>]+)>/)

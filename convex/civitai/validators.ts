@@ -27,7 +27,7 @@ export const ItemsResponse = z.object({
 export const TimePeriod = z.enum(['AllTime', 'Year', 'Month', 'Week', 'Day'])
 
 // images
-export const NSFWLevel = z.enum(['None', 'Soft', 'Mature', 'X'])
+export const NSFWLevel = z.enum(['None', 'Soft', 'Mature', 'X', 'XXX'])
 export const SortOrder = z.enum(['Most Reactions', 'Most Comments', 'Newest'])
 
 export const ImageQueryParams = z.object({
@@ -40,6 +40,7 @@ export const ImageQueryParams = z.object({
   sort: SortOrder.optional(),
   period: TimePeriod.optional(),
   page: z.number().optional(),
+  // cursor: z.string().optional(),
 })
 export type ImageQueryParams = z.infer<typeof ImageQueryParams>
 
