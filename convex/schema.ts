@@ -20,8 +20,6 @@ export default defineSchema(
 
       // R2 storage information
       storageKey: v.optional(v.string()),
-      storedUrl: v.optional(v.string()),
-      storedSize: v.optional(v.number()),
 
       // References to other entities
       models: v.array(
@@ -47,8 +45,7 @@ export default defineSchema(
       apiResultId: v.id('apiResults'),
     })
       .index('by_imageId', ['imageId'])
-      .index('by_createdAt', ['createdAt'])
-      .index('by_storageStatus', ['storageKey']),
+      .index('by_createdAt', ['createdAt']),
 
     models: defineTable({
       modelId: v.number(),

@@ -1,13 +1,14 @@
 import type { ImageQueryParams } from './civitai/validators'
+import { asyncMap } from 'convex-helpers'
 import { literals } from 'convex-helpers/validators'
 import { v } from 'convex/values'
-import { api, internal } from './_generated/api'
+import { internal } from './_generated/api'
 import { action, internalMutation } from './_generated/server'
 import { fetchImages } from './civitai/query'
 import schema from './schema'
 import { getPathAndQuery } from './utils/url'
 
-const MAX_CRAWLED_ITEMS = 100000
+const MAX_CRAWLED_ITEMS = 100000 // safety limit during dev
 const IMAGE_PAGE_SIZE = 50
 
 const vTimePeriod = literals('AllTime', 'Year', 'Month', 'Week', 'Day')
@@ -63,30 +64,20 @@ export const startImageCrawl = action({
         metadata: result.metadata,
       })
 
-      // Store each item in the batch
-      for (const item of items) {
-        // Attempt to insert the raw API result, checking for duplicates
-        const apiResultId = await ctx.runMutation(internal.run.insertResult, {
-          query: getPathAndQuery(query),
-          entityType: 'image',
-          entityId: item.id,
-          result: JSON.stringify(item), // Store the full result
-        })
+      const res1 = await ctx.runMutation(internal.run.insertResults, { items: items.map(item => ({
+        entityId: item.id,
+        entityType: 'image' as const,
+        query: getPathAndQuery(query),
+        result: JSON.stringify(item), // result payload
+      })) })
 
-        if (!apiResultId)
-          continue
-        // Only proceed if it's a new, unique result
+      const newItems = res1.filter(item => item.inserted).map(({ docId, result }) => ({ apiResultId: docId, result }))
+      const res2 = await ctx.runMutation(internal.images.createImages, { items: newItems })
 
-        await ctx.runMutation(internal.civitai.images.create, {
-          apiResultId,
-          result: JSON.stringify(item), // Pass the result again
-        })
-        newImagesCreated++ // Increment only when a new image is actually created
-      }
+      newImagesCreated = newImagesCreated + res2.filter(r => r.success).length
 
-      // Check if we hit the new image limit *after* processing the batch
       if (newImagesCreated >= maxNewImages) {
-        break // Exit the outer while loop
+        break
       }
 
       // Safety break based on new images created
@@ -115,13 +106,27 @@ export const startImageCrawl = action({
   },
 })
 
-export const insertResult = internalMutation({
-  args: schema.tables.apiResults.validator,
-  handler: async (ctx, args) => {
-    const existing = await ctx.db.query('apiResults').withIndex('by_entity', q => q.eq('entityType', args.entityType).eq('entityId', args.entityId)).first()
-    if (existing) {
-      return null
-    }
-    return await ctx.db.insert('apiResults', args)
+export const insertResults = internalMutation({
+  args: { items: v.array(schema.tables.apiResults.validator) },
+  handler: async (ctx, { items }) => {
+    const results = await asyncMap(items, async (arg) => {
+      const existing = await ctx.db.query('apiResults').withIndex('by_entity', q => q.eq('entityType', arg.entityType).eq('entityId', arg.entityId)).first()
+      if (existing) {
+        return ({
+          ...arg,
+          inserted: false,
+          docId: existing._id,
+        })
+      }
+
+      const docId = await ctx.db.insert('apiResults', arg)
+      return ({
+        ...arg,
+        inserted: true,
+        docId,
+      })
+    })
+
+    return results
   },
 })

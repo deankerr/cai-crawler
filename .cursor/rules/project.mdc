@@ -31,6 +31,7 @@ See [civitai-crawler-system-design.md](mdc:demo/civitai-crawler-system-design.md
 
 - If you encounter a circular type dependancy issue, then STOP! Only a user can fix this issue. You must stop an ask the user for assistance - trying to code around it will NEVER WORK, and will only make the problem WORSE.
 - Actions should almost always be internal, unless you want and end user to use them directly (this is rare).
+- asyncMap from convex-helpers is a convenience wrapper around Promise.all. We should use it whenever we need to run multiple db calls at once (like when storing batches)
 
 # CivitAI
 

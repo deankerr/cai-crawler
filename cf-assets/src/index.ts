@@ -91,15 +91,15 @@ export default {
 
   /**
    * Handles messages consumed from the Queue.
+   * Fetches the asset, stores it in R2, and acknowledges the message.
+   * No callback to Convex is performed here.
    */
   async queue(
-    // Cast batch to the specific type we expect, overriding the default 'unknown'
     batch: MessageBatch<unknown>,
-    env: Env, // Use ambient Env type
+    env: Env,
+    ctx: ExecutionContext,
   ): Promise<void> {
     console.log(`Processing batch of ${batch.messages.length} messages from queue ${batch.queue}`)
-
-    // Cast the batch again inside the handler if needed for mapping/iteration type safety
     const typedBatch = batch as MessageBatch<StorageTask>
 
     const promises = typedBatch.messages.map(async (message) => {
@@ -108,7 +108,8 @@ export default {
 
       try {
         // 1. Fetch the asset from the source URL
-        const assetResponse = await fetch(task.sourceUrl)
+        console.log(`Fetching ${task.sourceUrl}...`)
+        const assetResponse = await fetch(task.sourceUrl, { headers: { 'User-Agent': 'CivitaiCrawler/1.0' } }) // Add User-Agent
         if (!assetResponse.ok) {
           throw new Error(
             `Failed to fetch asset from ${task.sourceUrl}: ${assetResponse.status} ${assetResponse.statusText}`,
@@ -118,64 +119,30 @@ export default {
           throw new Error(`Fetch response from ${task.sourceUrl} has no body`)
         }
 
-        // 2. Store the asset in R2 using ambient BUCKET binding
+        // 2. Store the asset in R2 using streaming upload
+        console.log(`Storing ${task.storageKey} in R2...`)
         const r2Object = await env.BUCKET.put(task.storageKey, assetResponse.body, {
           httpMetadata: assetResponse.headers,
         })
 
         if (!r2Object || !r2Object.key) {
-          throw new Error(`Failed to put object to R2 for key ${task.storageKey}. R2 returned null or missing key.`)
+          throw new Error(`Failed to put object to R2 for key ${task.storageKey}. R2 put returned null or missing key.`)
         }
 
-        console.log(`Successfully stored ${r2Object.key} (Size: ${r2Object.size}) in R2.`)
+        console.log(`Successfully stored ${r2Object.key} (Size: ${r2Object.size}) in R2 for imageId ${task.imageId}.`)
 
-        // 3. Call back to Convex HTTP endpoint using ambient env vars
-        const baseUrl = `https://cai-assets.r2.cloudflarestorage.com` // Using the fallback URL as per user's edit
-        const storedUrl = `${baseUrl.replace(/\/$/, '')}/${r2Object.key}`
-
-        const callbackPayload = {
-          imageId: task.imageId,
-          storageKey: r2Object.key,
-          storedUrl,
-          size: r2Object.size,
-          secret: env.ASSETS_SECRET, // Use ambient ASSETS_SECRET
-        }
-
-        if (!env.CONVEX_HTTP_ENDPOINT) {
-          console.error('CONVEX_HTTP_ENDPOINT environment variable is not set in Worker.')
-          throw new Error('Worker configuration error: Missing Convex callback URL')
-        }
-
-        const callbackResponse = await fetch(env.CONVEX_HTTP_ENDPOINT, { // Use ambient CONVEX_HTTP_ENDPOINT
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(callbackPayload),
-        })
-
-        if (!callbackResponse.ok) {
-          const errorBody = await callbackResponse.text()
-          console.error(
-            `Failed to call back Convex for imageId ${task.imageId} (Key: ${r2Object.key}): ${callbackResponse.status} ${callbackResponse.statusText} - ${errorBody}`,
-          )
-          // Decide if queue message should retry on callback failure.
-          // Retrying risks duplicate R2 uploads. Consider DLQ for callback issues.
-          throw new Error(`Convex callback failed: ${callbackResponse.status}`) // Force retry for now, may adjust later
-        }
-        else {
-          console.log(`Successfully sent callback to Convex for imageId ${task.imageId} (Key: ${r2Object.key})`)
-        }
-
-        // Acknowledge the message after successful R2 upload AND successful callback initiation
+        // 3. Acknowledge the message - Success!
         message.ack()
+        console.log(`Acknowledged message for imageId ${task.imageId}`)
       }
       catch (error: any) {
         console.error(
-          `Error processing storage task for imageId ${task.imageId} (Key: ${task.storageKey}):`,
+          `FAILED processing storage task for imageId ${task.imageId} (Key: ${task.storageKey}):`,
           error.message,
         )
-        message.retry() // Explicitly tell the queue to retry later on any caught error
+        // Explicitly retry the message on any caught error during fetch or put
+        message.retry()
+        console.log(`Retrying message for imageId ${task.imageId}`)
       }
     })
 
