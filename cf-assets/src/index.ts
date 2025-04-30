@@ -80,18 +80,17 @@ export default {
     }
 
     try {
-      // Enqueue each task individually
-      const sendPromises = payload.tasks.map(task => env.QUEUE.send(task)) // QUEUE binding sends AssetStorageTask
-      const results = await Promise.allSettled(sendPromises)
+      // Prepare messages for batch sending
+      const messages = payload.tasks.map(task => ({ body: task }))
 
-      const failedSends = results.filter(r => r.status === 'rejected')
-      if (failedSends.length > 0) {
-        console.error(`Failed to send ${failedSends.length} out of ${payload.tasks.length} messages to the queue.`, failedSends)
-        // Return partial success or failure? For now, report overall failure if any send fails.
-        return new Response('Internal Server Error: Failed to enqueue some tasks', { status: 500 })
-      }
+      // Send the entire batch to the queue
+      await env.QUEUE.sendBatch(messages)
 
-      console.log(`Successfully enqueued batch of ${payload.tasks.length} tasks.`)
+      // Note: sendBatch does not return detailed results per message like individual sends with Promise.allSettled.
+      // It throws an error if the batch operation fails entirely.
+      // We assume success if no error is thrown.
+
+      console.log(`Successfully sent batch of ${payload.tasks.length} tasks to queue.`)
       return new Response(JSON.stringify({ success: true, enqueuedCount: payload.tasks.length }), {
         headers: { 'Content-Type': 'application/json' },
       })
