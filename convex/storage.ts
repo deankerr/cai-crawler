@@ -1,4 +1,4 @@
-import { HeadObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
+import { HeadObjectCommand, /* PutObjectCommand, */ S3Client } from '@aws-sdk/client-s3'
 import { v } from 'convex/values'
 import { action } from './_generated/server'
 
@@ -69,13 +69,8 @@ export const checkAsset = action({
   },
 })
 
-/**
- * Store an asset from a source URL to R2
- * @param key - The storage key (path) in R2
- * @param sourceUrl - The source URL to download from
- * @param skipIfExists - Whether to check if the asset already exists before uploading (default: false)
- * @returns Object with success status and storage info
- */
+// Removed storeAsset action as it's now handled by the Cloudflare Worker
+/*
 export const storeAsset = action({
   args: {
     key: v.string(),
@@ -83,74 +78,19 @@ export const storeAsset = action({
     skipIfExists: v.optional(v.boolean()),
   },
   handler: async (ctx, { key, sourceUrl, skipIfExists = false }) => {
-    try {
-      // Optionally check if the asset already exists
-      if (skipIfExists) {
-        const existingAsset = await checkAssetExists(key)
-
-        if (existingAsset.exists) {
-          console.log(`Asset ${key} already exists in R2, skipping upload`)
-          return {
-            success: true,
-            key,
-            etag: existingAsset.etag,
-            size: existingAsset.size || 0,
-            url: existingAsset.url,
-            skipped: true,
-          }
-        }
-      }
-
-      // Fetch the image as a stream
-      const response = await fetch(sourceUrl)
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch asset: ${response.status} ${response.statusText}`)
-      }
-
-      // Get the data as arrayBuffer (better for binary data than text)
-      const assetData = await response.arrayBuffer()
-
-      // Extract content type from response
-      const contentType = response.headers.get('content-type') || 'application/octet-stream'
-
-      // Upload to R2
-      const command = new PutObjectCommand({
-        Bucket: BUCKET_NAME,
-        Key: key,
-        Body: new Uint8Array(assetData),
-        ContentType: contentType,
-      })
-
-      const result = await s3Client.send(command)
-
-      return {
-        success: true,
-        key,
-        etag: result.ETag,
-        size: assetData.byteLength,
-        url: `https://${BUCKET_NAME}.r2.cloudflarestorage.com/${key}`,
-        skipped: false,
-      }
-    }
-    catch (error) {
-      console.error('Error storing asset:', error)
-      return {
-        success: false,
-        key,
-        error: error instanceof Error ? error.message : String(error),
-      }
-    }
+    // ... implementation removed ...
   },
 })
+*/
 
 /**
  * Generate a storage key for a specific content type and ID
  *
  * @param contentType - The type of content (e.g., 'images', 'models')
- * @param id - The entity ID
+ * @param id - The entity ID (using number here based on previous code, ensure consistency with imageId type)
  * @returns A storage key for R2
  */
 export function generateStorageKey(contentType: string, id: number): string {
+  // Consider if the ID should be string to align with Convex _id type if needed
   return `${contentType}/${id}`
 }

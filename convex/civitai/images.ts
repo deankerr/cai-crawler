@@ -1,5 +1,5 @@
 import type { Doc, Id } from '../_generated/dataModel'
-import type { MutationCtx } from '../_generated/server'
+import type { ActionCtx, MutationCtx } from '../_generated/server'
 import { v } from 'convex/values'
 import { api, internal } from '../_generated/api'
 import { action, internalMutation, internalQuery, mutation } from '../_generated/server'
@@ -81,84 +81,115 @@ export const getUnstoredImages = internalQuery({
 })
 
 /**
- * Process a batch of unstored images, storing them in R2
- * This function handles the actual processing and storage, and schedules itself
- * for the next batch if there are more images to process
+ * Sends a task to the Cloudflare Worker endpoint to enqueue image storage processing.
+ */
+async function enqueueStorageTaskViaWorker(ctx: ActionCtx, image: Doc<'images'>) {
+  const workerEnqueueUrl = process.env.ASSETS_WORKER_ENQUEUE_URL
+  const workerSecret = process.env.ASSETS_SECRET // Shared secret
+
+  if (!workerEnqueueUrl) {
+    throw new Error('ASSETS_WORKER_ENQUEUE_URL environment variable not set in Convex')
+  }
+  if (!workerSecret) {
+    throw new Error('ASSETS_SECRET environment variable not set in Convex')
+  }
+
+  // Ensure image.url exists before proceeding
+  if (!image.url) {
+    console.warn(`Skipping enqueue for image ${image._id} due to missing URL.`)
+    return { success: false, error: 'Missing source URL' }
+  }
+
+  const storageKey = generateStorageKey('images', image.imageId)
+  const payload = {
+    imageId: image._id,
+    sourceUrl: image.url,
+    storageKey,
+  }
+
+  try {
+    const response = await fetch(workerEnqueueUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // Use the shared secret for authentication
+        'Authorization': `Bearer ${workerSecret}`,
+      },
+      // Send the payload directly (not nested under "messages")
+      body: JSON.stringify(payload),
+    })
+
+    if (!response.ok) {
+      const errorBody = await response.text()
+      // Log specific error from worker if available
+      console.error(`Worker endpoint returned error: ${response.status} ${response.statusText} - ${errorBody}`)
+      // Throw to indicate failure to the calling action
+      throw new Error(`Failed to send task to worker endpoint: ${response.status}`)
+    }
+
+    console.log(`Successfully sent storage task to worker for image ${image._id}`)
+    return { success: true }
+  }
+  catch (error) {
+    console.error(`Error sending task to worker for image ${image._id}:`, error)
+    // Propagate error to indicate failure
+    return { success: false, error: error instanceof Error ? error.message : String(error) }
+  }
+}
+
+/**
+ * Process a batch of unstored images, sending tasks to a Worker for enqueueing.
+ * This function handles getting unstored images and schedules itself
+ * for the next batch if there are more images to process.
  */
 export const processUnstoredImages = action({
   args: v.object({
     limit: v.optional(v.number()),
     delaySeconds: v.optional(v.number()),
     cursor: v.union(v.string(), v.null()),
-
   }),
   handler: async (ctx, { limit = 10, delaySeconds = 5, cursor }) => {
-    // Get unstored images
     const { page, isDone, continueCursor } = await ctx.runQuery(internal.civitai.images.getUnstoredImages, { numItems: limit, cursor })
 
     const results = {
-      total: page.length,
-      success: 0,
-      failed: 0,
-      processed: [] as Array<{ id: string, success: boolean, error?: string }>,
+      totalQueried: page.length,
+      enqueued: 0,
+      failedToEnqueue: 0,
+      processed: [] as Array<{ id: string, success: boolean, error?: string }>, // Tracks enqueue attempts
     }
 
-    // Process each image
+    // Send task to worker for each image
     for (const image of page) {
-      try {
-        // Generate storage key for the image
-        const storageKey = generateStorageKey('images', image.imageId)
+      // enqueueStorageTaskViaWorker now handles the URL check internally
+      const enqueueResult = await enqueueStorageTaskViaWorker(ctx, image)
 
-        // Call the store asset action
-        const storageResult = await ctx.runAction(api.storage.storeAsset, {
-          key: storageKey,
-          sourceUrl: image.url,
-          skipIfExists: true,
-        })
-
-        if (storageResult.success) {
-          // Update database with storage info
-          await ctx.runMutation(internal.civitai.images.updateStorage, {
-            imageId: image._id,
-            storageKey,
-            size: storageResult.size || 0,
-            storedUrl: storageResult.url || '',
-          })
-
-          results.success++
-          results.processed.push({ id: image._id, success: true })
-        }
-        else {
-          results.failed++
-          results.processed.push({
-            id: image._id,
-            success: false,
-            error: storageResult.error || 'Unknown error',
-          })
-        }
+      if (enqueueResult.success) {
+        results.enqueued++
+        results.processed.push({ id: image._id, success: true })
       }
-      catch (error) {
-        results.failed++
+      else {
+        results.failedToEnqueue++
         results.processed.push({
           id: image._id,
           success: false,
-          error: error instanceof Error ? error.message : String(error),
+          error: enqueueResult.error || 'Unknown worker communication error',
         })
       }
     }
 
-    if (!results.success) {
-      console.error('Failed to process a batch of images', results)
-      throw new Error('Failed to process a batch of images')
+    console.log('Worker task submission results:', results)
+
+    if (results.totalQueried > 0 && results.enqueued === 0) {
+      console.error('Failed to send any tasks to the worker in this batch', results)
+      throw new Error('Failed to send any tasks to the worker. Check Worker endpoint and configuration.')
     }
 
-    // Schedule the next batch if there were results
-    if (!isDone) {
-      // Use the current function reference to schedule next run
-      await ctx.scheduler.runAfter(delaySeconds, api.civitai.images.processUnstoredImages, { limit, cursor: continueCursor })
-    }
+    // TODO: Uncomment
+    // if (!isDone) {
+    //   await ctx.scheduler.runAfter(delaySeconds * 1000, api.civitai.images.processUnstoredImages, { limit, delaySeconds, cursor: continueCursor })
+    // }
 
-    console.log('Processed images', results)
+    console.log(`Completed batch processing. Sent to worker: ${results.enqueued}, Failed: ${results.failedToEnqueue}. More batches: ${!isDone}`)
   },
 })
 
