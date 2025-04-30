@@ -4,7 +4,7 @@
  */
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "cf-assets",
+  "name": "cai-assets-manager",
   "main": "src/index.ts",
   "compatibility_date": "2025-04-29",
   "observability": {
@@ -13,7 +13,8 @@
   "queues": {
     "consumers": [
       {
-        "queue": "cai-asset-storage"
+        "queue": "cai-asset-storage",
+        "max_concurrency": 5
       }
     ],
     "producers": [

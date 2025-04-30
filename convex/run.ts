@@ -64,17 +64,17 @@ export const startImageCrawl = action({
         metadata: result.metadata,
       })
 
-      const res1 = await ctx.runMutation(internal.run.insertResults, { items: items.map(item => ({
+      const entitySnapshotResults = await ctx.runMutation(internal.run.insertEntitySnapshots, { items: items.map(item => ({
         entityId: item.id,
         entityType: 'image' as const,
-        query: getPathAndQuery(query),
-        result: JSON.stringify(item), // result payload
+        queryKey: getPathAndQuery(query),
+        rawData: JSON.stringify(item), // result payload
       })) })
 
-      const newItems = res1.filter(item => item.inserted).map(({ docId, result }) => ({ apiResultId: docId, result }))
-      const res2 = await ctx.runMutation(internal.images.createImages, { items: newItems })
+      const newItems = entitySnapshotResults.filter(item => item.inserted).map(({ entitySnapshotId, rawData }) => ({ entitySnapshotId, rawData }))
+      const imageResults = await ctx.runMutation(internal.images.insertImages, { items: newItems })
 
-      newImagesCreated = newImagesCreated + res2.filter(r => r.success).length
+      newImagesCreated = newImagesCreated + imageResults.filter(r => r.success).length
 
       if (newImagesCreated >= maxNewImages) {
         break
@@ -106,24 +106,24 @@ export const startImageCrawl = action({
   },
 })
 
-export const insertResults = internalMutation({
-  args: { items: v.array(schema.tables.apiResults.validator) },
+export const insertEntitySnapshots = internalMutation({
+  args: { items: v.array(schema.tables.entitySnapshots.validator) },
   handler: async (ctx, { items }) => {
     const results = await asyncMap(items, async (arg) => {
-      const existing = await ctx.db.query('apiResults').withIndex('by_entity', q => q.eq('entityType', arg.entityType).eq('entityId', arg.entityId)).first()
+      const existing = await ctx.db.query('entitySnapshots').withIndex('by_entity', q => q.eq('entityType', arg.entityType).eq('entityId', arg.entityId)).first()
       if (existing) {
         return ({
           ...arg,
           inserted: false,
-          docId: existing._id,
+          entitySnapshotId: existing._id,
         })
       }
 
-      const docId = await ctx.db.insert('apiResults', arg)
+      const entitySnapshotId = await ctx.db.insert('entitySnapshots', arg)
       return ({
         ...arg,
         inserted: true,
-        docId,
+        entitySnapshotId,
       })
     })
 

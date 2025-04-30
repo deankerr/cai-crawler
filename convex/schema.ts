@@ -42,7 +42,7 @@ export default defineSchema(
         commentCount: v.number(),
       }),
 
-      apiResultId: v.id('apiResults'),
+      entitySnapshotId: v.id('entitySnapshots'),
     })
       .index('by_imageId', ['imageId'])
       .index('by_createdAt', ['createdAt']),
@@ -102,15 +102,14 @@ export default defineSchema(
       .index('by_modelId', ['modelId'])
       .index('by_createdAt', ['createdAt']),
 
-    apiResults: defineTable({
-      query: v.string(),
+    entitySnapshots: defineTable({
       entityType,
       entityId: v.number(), // e.g., imageId, modelId, modelVersionId
       parentId: v.optional(v.number()), // e.g., modelId for modelVersion
-      result: v.string(), // stringified JSON blob for this entity
+      queryKey: v.string(),
+      rawData: v.string(), // stringified JSON blob for this entity
     })
-      .index('by_entity', ['entityType', 'entityId'])
-      .index('by_query', ['query']),
+      .index('by_entity', ['entityType', 'entityId']),
   },
   // If you ever get an error about schema mismatch
   // between your data and your schema, and you cannot

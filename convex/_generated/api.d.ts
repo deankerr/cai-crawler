@@ -13,7 +13,6 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
-import type * as civitai_images from "../civitai/images.js";
 import type * as civitai_query from "../civitai/query.js";
 import type * as civitai_validators from "../civitai/validators.js";
 import type * as http from "../http.js";
@@ -33,7 +32,6 @@ import type * as utils_url from "../utils/url.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
-  "civitai/images": typeof civitai_images;
   "civitai/query": typeof civitai_query;
   "civitai/validators": typeof civitai_validators;
   http: typeof http;
