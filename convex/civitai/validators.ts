@@ -66,7 +66,7 @@ export const Image = z.object({
   postId: z.number(),
   stats: ImageStats,
   meta: ImageMeta,
-  username: z.string(),
+  username: z.string().nullable(),
 })
 
 export const ImagesResponse = z.object({

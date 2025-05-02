@@ -16,7 +16,7 @@ export default defineSchema(
       createdAt: v.string(),
       postId: v.optional(v.number()),
       blurHash: v.string(),
-      username: v.string(),
+      username: v.union(v.string(), v.null()),
 
       // R2 storage information
       storageKey: v.optional(v.string()),
@@ -108,8 +108,10 @@ export default defineSchema(
       parentId: v.optional(v.number()), // e.g., modelId for modelVersion
       queryKey: v.string(),
       rawData: v.string(), // stringified JSON blob for this entity
+      processedDocumentId: v.optional(v.string()), // Link to the processed doc (image, model, etc.)
     })
-      .index('by_entity', ['entityType', 'entityId']),
+      .index('by_entity', ['entityType', 'entityId'])
+      .index('by_entityType_unprocessed', ['entityType', 'processedDocumentId']),
   },
   // If you ever get an error about schema mismatch
   // between your data and your schema, and you cannot

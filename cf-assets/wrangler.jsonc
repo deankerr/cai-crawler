@@ -14,7 +14,7 @@
     "consumers": [
       {
         "queue": "cai-asset-storage",
-        "max_concurrency": 5
+        "max_concurrency": 1
       }
     ],
     "producers": [

@@ -71,10 +71,20 @@ export const startImageCrawl = action({
         rawData: JSON.stringify(item), // result payload
       })) })
 
-      const newItems = entitySnapshotResults.filter(item => item.inserted).map(({ entitySnapshotId, rawData }) => ({ entitySnapshotId, rawData }))
-      const imageResults = await ctx.runMutation(internal.images.insertImages, { items: newItems })
+      // Filter for *only* the newly inserted snapshots to process
+      const newItemsToProcess = entitySnapshotResults
+        .filter(result => result.inserted)
+        .map(({ entitySnapshotId, rawData }) => ({ entitySnapshotId, rawData }))
 
-      newImagesCreated = newImagesCreated + imageResults.filter(r => r.success).length
+      if (newItemsToProcess.length > 0) {
+        console.debug(`Processing ${newItemsToProcess.length} new image snapshots...`)
+        const imageResults = await ctx.runMutation(internal.images.insertImages, { items: newItemsToProcess })
+        // Update the count based on *newly processed* images in this batch
+        newImagesCreated = newImagesCreated + imageResults.filter(r => r.success).length
+      }
+      else {
+        console.debug('No new image snapshots to process in this batch.')
+      }
 
       if (newImagesCreated >= maxNewImages) {
         break
@@ -86,7 +96,7 @@ export const startImageCrawl = action({
         break
       }
 
-      if (!nextCursor || items.length === 0) {
+      if (!nextCursor) {
         console.log('No next cursor or no items in batch, stopping crawl.')
         break
       }
@@ -130,3 +140,68 @@ export const insertEntitySnapshots = internalMutation({
     return results
   },
 })
+
+export const linkSnapshot = internalMutation({
+  args: {
+    entitySnapshotId: v.id('entitySnapshots'),
+    processedDocumentId: v.string(),
+  },
+  handler: async (ctx, { entitySnapshotId, processedDocumentId }) => {
+    await ctx.db.patch(entitySnapshotId, { processedDocumentId })
+    console.debug(`Linked snapshot ${entitySnapshotId} to document ${processedDocumentId}`)
+  },
+})
+
+const UNPROCESSED_BATCH_SIZE = 100
+
+export const processUnlinkedSnapshots = internalMutation(
+  {
+    args: { cursor: v.optional(v.string()), entityType: v.literal('image') }, // Start with images
+    handler: async (ctx, { cursor, entityType }) => {
+      const results = await ctx.db
+        .query('entitySnapshots')
+        .withIndex('by_entityType_unprocessed', q =>
+          q.eq('entityType', entityType).eq('processedDocumentId', undefined))
+        .order('asc') // Or 'desc' if preferred
+        .paginate({ numItems: UNPROCESSED_BATCH_SIZE, cursor: cursor ?? null })
+
+      console.log(
+        `Processing batch of ${results.page.length} unlinked '${entityType}' snapshots...`,
+      )
+
+      // Prepare batch for insertImages mutation
+      const itemsToProcess = results.page.map(snapshot => ({
+        entitySnapshotId: snapshot._id,
+        rawData: snapshot.rawData,
+      }))
+
+      // Call insertImages directly if there are items
+      if (itemsToProcess.length > 0) {
+        const results = await ctx.runMutation(internal.images.insertImages, { items: itemsToProcess })
+        await asyncMap(results, async (result) => {
+          if ('docId' in result && result.docId) {
+            await ctx.runMutation(internal.run.linkSnapshot, {
+              entitySnapshotId: result.entitySnapshotId,
+              processedDocumentId: result.docId,
+            })
+          }
+        })
+      }
+      else {
+        console.log('No unlinked snapshots found in this batch.')
+      }
+
+      // Schedule the next batch if needed
+      if (!results.isDone) {
+        await ctx.scheduler.runAfter(
+          0,
+          internal.run.processUnlinkedSnapshots,
+          { cursor: results.continueCursor, entityType },
+        )
+      }
+      else {
+        console.log(`Finished processing all unlinked '${entityType}' snapshots.`)
+      }
+    },
+  },
+)

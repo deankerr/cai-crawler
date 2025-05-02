@@ -2,7 +2,7 @@ import type { ActionCtx } from './_generated/server'
 import { asyncMap } from 'convex-helpers'
 import { v } from 'convex/values'
 import { internal } from './_generated/api'
-import { internalAction, internalMutation } from './_generated/server'
+import { internalAction, internalMutation, internalQuery } from './_generated/server'
 import { Image } from './civitai/validators'
 import { generateStorageKey } from './storage'
 import { extractModelReferences } from './utils/extractors'
@@ -35,7 +35,7 @@ export const insertImages = internalMutation({
 
         const existing = await ctx.db.query('images').withIndex('by_imageId', q => q.eq('imageId', imageId)).first()
         if (existing) {
-          return { entitySnapshotId, success: false, error: `imageId already exists: ${existing._id}` }
+          return { entitySnapshotId, success: false, sourceUrl: url, storageKey: existing.storageKey, docId: existing._id }
         }
 
         const models = extractModelReferences(meta ?? {})
@@ -50,6 +50,12 @@ export const insertImages = internalMutation({
           totalReactions: imageData.stats.likeCount + imageData.stats.heartCount + imageData.stats.laughCount + imageData.stats.cryCount + imageData.stats.commentCount,
           models,
           storageKey,
+        })
+
+        // Link the snapshot to the newly created image document
+        await ctx.runMutation(internal.run.linkSnapshot, {
+          entitySnapshotId,
+          processedDocumentId: docId,
         })
 
         // Return necessary info for the enqueue step
