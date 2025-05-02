@@ -8,8 +8,8 @@ import { fetchImages } from './civitai/query'
 import schema from './schema'
 import { getPathAndQuery } from './utils/url'
 
-const MAX_CRAWLED_ITEMS = 100000 // safety limit during dev
-const IMAGE_PAGE_SIZE = 50
+const MAX_CRAWLED_ITEMS = 100000
+const IMAGE_PAGE_SIZE = 200
 
 const vTimePeriod = literals('AllTime', 'Year', 'Month', 'Week', 'Day')
 const vSortOrder = literals('Most Reactions', 'Most Comments', 'Newest')
@@ -22,47 +22,72 @@ const vImageQueryParams = v.object({
   nsfw: v.optional(v.boolean()),
   sort: v.optional(vSortOrder),
   period: v.optional(vTimePeriod),
-  cursor: v.optional(v.string()),
+  startCursor: v.optional(v.string()),
   // page and limit are managed internally
 
-  maxItems: v.number(), // Renamed to maxNewImages internally for clarity
+  maxNewImages: v.optional(v.number()),
 })
 
-export const startImageCrawl = action({
+export const runImageCrawl = action({
   args: vImageQueryParams,
-  handler: async (ctx, { maxItems: maxNewImages, cursor, ...args }) => {
+  handler: async (ctx, { maxNewImages, startCursor, ...restArgs }) => {
+    const args = {
+      nsfw: true,
+      sort: 'Most Reactions' as const,
+      period: 'AllTime' as const,
+      ...restArgs,
+    }
+
     let totalFetched = 0
-    let newImagesCreated = 0 // Counter for newly created image records
-    let nextCursor: string | undefined = cursor
+    let newImagesCreated = 0
+    let nextCursor: string | undefined = startCursor
     let lastMetadata: any = null
 
-    console.debug('Starting image crawl', {
+    console.log('Starting image crawl', {
       maxNewImages,
       args,
+      MAX_CRAWLED_ITEMS,
     })
 
-    // Loop until the desired number of *new* images are created
-    while (newImagesCreated < maxNewImages) {
+    // Loop until max crawled items reached
+    while (totalFetched < MAX_CRAWLED_ITEMS) {
+      // Calculate remaining items needed, considering both limits
+      const remainingForMaxNew = maxNewImages ? maxNewImages - newImagesCreated : Infinity
+      const remainingForTotal = MAX_CRAWLED_ITEMS - totalFetched
+      const limit = Math.min(IMAGE_PAGE_SIZE, remainingForTotal, remainingForMaxNew)
+
+      // Break if limit becomes 0 or negative (edge case)
+      if (limit <= 0) {
+        console.log('Limit calculated as <= 0, stopping crawl.', { limit, remainingForMaxNew, remainingForTotal })
+        break
+      }
+
       // Prepare query params for this batch
       const queryParams: ImageQueryParams = {
         ...args,
-        limit: Math.min(IMAGE_PAGE_SIZE, maxNewImages - totalFetched),
+        limit,
         ...(nextCursor ? { cursor: nextCursor } : {}),
       }
 
       const { result, query } = await fetchImages(queryParams)
       const items = result.items || []
+      const batchSize = items.length
       lastMetadata = result.metadata
-      totalFetched += items.length // Still track total fetched for logging/debugging
+      totalFetched += batchSize // Update total fetched count
       nextCursor = result.metadata?.nextCursor
 
-      console.debug('Crawl progress:', {
+      console.log('Crawl progress:', {
         query: getPathAndQuery(query),
         totalFetched,
-        batchSize: items.length,
-        newImagesCreated, // Log new images count
+        batchSize,
+        newImagesCreated,
         metadata: result.metadata,
       })
+
+      if (batchSize === 0) {
+        console.log('Received 0 items in batch, assuming end of results.')
+        break
+      }
 
       const entitySnapshotResults = await ctx.runMutation(internal.run.insertEntitySnapshots, { items: items.map(item => ({
         entityId: item.id,
@@ -77,27 +102,28 @@ export const startImageCrawl = action({
         .map(({ entitySnapshotId, rawData }) => ({ entitySnapshotId, rawData }))
 
       if (newItemsToProcess.length > 0) {
-        console.debug(`Processing ${newItemsToProcess.length} new image snapshots...`)
+        console.log(`Processing ${newItemsToProcess.length} new image snapshots...`)
         const imageResults = await ctx.runMutation(internal.images.insertImages, { items: newItemsToProcess })
-        // Update the count based on *newly processed* images in this batch
-        newImagesCreated = newImagesCreated + imageResults.filter(r => r.success).length
+        newImagesCreated += imageResults.filter(r => r.success).length
       }
       else {
-        console.debug('No new image snapshots to process in this batch.')
+        console.log('No new image snapshots to process in this batch.')
       }
 
-      if (newImagesCreated >= maxNewImages) {
+      // Check optional maxNewImages limit if provided
+      if (maxNewImages !== undefined && newImagesCreated >= maxNewImages) {
+        console.log(`Reached maxNewImages limit (${maxNewImages}), stopping crawl.`)
         break
       }
 
-      // Safety break based on new images created
-      if (newImagesCreated >= MAX_CRAWLED_ITEMS) {
-        console.warn(`Reached MAX_CRAWLED_ITEMS limit (${MAX_CRAWLED_ITEMS}) based on new images created, stopping crawl`)
+      // Primary break condition based on total fetched
+      if (totalFetched >= MAX_CRAWLED_ITEMS) {
+        console.warn(`Reached MAX_CRAWLED_ITEMS limit (${MAX_CRAWLED_ITEMS}), stopping crawl`)
         break
       }
 
       if (!nextCursor) {
-        console.log('No next cursor or no items in batch, stopping crawl.')
+        console.log('No next cursor, stopping crawl.')
         break
       }
     }

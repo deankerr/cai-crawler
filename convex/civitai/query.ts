@@ -1,5 +1,5 @@
 import type { ImageQueryParams } from './validators'
-import { up } from 'up-fetch'
+import { isResponseError, up } from 'up-fetch'
 import { z } from 'zod'
 import { buildURL } from '../utils/url'
 import { CursorMetadata } from './validators'
@@ -19,16 +19,24 @@ const upFetch = up(fetch, () => ({
 }))
 
 export async function fetchImages(args: ImageQueryParams) {
-  const query = buildURL(baseUrl, ['images'], args)
+  try {
+    const query = buildURL(baseUrl, ['images'], args)
 
-  const result = await upFetch(query, {
-    schema: z.object({
-      items: z.array(z.object({ id: z.number() }).passthrough()),
-      metadata: CursorMetadata,
-    }),
-  })
+    const result = await upFetch(query, {
+      schema: z.object({
+        items: z.array(z.object({ id: z.number() }).passthrough()),
+        metadata: CursorMetadata,
+      }),
+    })
 
-  return { result, query }
+    return { result, query }
+  }
+  catch (err) {
+    if (isResponseError(err)) {
+      console.error(err.status, err.name, err.message, err.data, err.response.headers)
+    }
+    throw err
+  }
 }
 
 // /images
