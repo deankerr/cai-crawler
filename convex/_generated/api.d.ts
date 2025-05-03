@@ -15,6 +15,7 @@ import type {
 } from "convex/server";
 import type * as civitai_query from "../civitai/query.js";
 import type * as civitai_validators from "../civitai/validators.js";
+import type * as entitySnapshots from "../entitySnapshots.js";
 import type * as http from "../http.js";
 import type * as images from "../images.js";
 import type * as myFunctions from "../myFunctions.js";
@@ -22,6 +23,7 @@ import type * as run from "../run.js";
 import type * as storage from "../storage.js";
 import type * as utils_extractors from "../utils/extractors.js";
 import type * as utils_url from "../utils/url.js";
+import type * as utils from "../utils.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -34,6 +36,7 @@ import type * as utils_url from "../utils/url.js";
 declare const fullApi: ApiFromModules<{
   "civitai/query": typeof civitai_query;
   "civitai/validators": typeof civitai_validators;
+  entitySnapshots: typeof entitySnapshots;
   http: typeof http;
   images: typeof images;
   myFunctions: typeof myFunctions;
@@ -41,6 +44,7 @@ declare const fullApi: ApiFromModules<{
   storage: typeof storage;
   "utils/extractors": typeof utils_extractors;
   "utils/url": typeof utils_url;
+  utils: typeof utils;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,

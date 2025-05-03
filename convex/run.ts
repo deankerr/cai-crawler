@@ -1,11 +1,9 @@
 import type { ImageQueryParams } from './civitai/validators'
-import { asyncMap } from 'convex-helpers'
 import { literals } from 'convex-helpers/validators'
 import { v } from 'convex/values'
 import { internal } from './_generated/api'
 import { action, internalMutation } from './_generated/server'
 import { fetchImages } from './civitai/query'
-import schema from './schema'
 import { getPathAndQuery } from './utils/url'
 
 const MAX_CRAWLED_ITEMS = 100000
@@ -89,7 +87,7 @@ export const runImageCrawl = action({
         break
       }
 
-      const entitySnapshotResults = await ctx.runMutation(internal.run.insertEntitySnapshots, { items: items.map(item => ({
+      const entitySnapshotResults = await ctx.runMutation(internal.entitySnapshots.insertEntitySnapshots, { items: items.map(item => ({
         entityId: item.id,
         entityType: 'image' as const,
         queryKey: getPathAndQuery(query),
@@ -104,7 +102,7 @@ export const runImageCrawl = action({
       if (newItemsToProcess.length > 0) {
         console.log(`Processing ${newItemsToProcess.length} new image snapshots...`)
         const imageResults = await ctx.runMutation(internal.images.insertImages, { items: newItemsToProcess })
-        newImagesCreated += imageResults.filter(r => r.success).length
+        newImagesCreated += imageResults.filter(r => r.inserted).length
       }
       else {
         console.log('No new image snapshots to process in this batch.')
@@ -142,53 +140,18 @@ export const runImageCrawl = action({
   },
 })
 
-export const insertEntitySnapshots = internalMutation({
-  args: { items: v.array(schema.tables.entitySnapshots.validator) },
-  handler: async (ctx, { items }) => {
-    const results = await asyncMap(items, async (arg) => {
-      const existing = await ctx.db.query('entitySnapshots').withIndex('by_entity', q => q.eq('entityType', arg.entityType).eq('entityId', arg.entityId)).first()
-      if (existing) {
-        return ({
-          ...arg,
-          inserted: false,
-          entitySnapshotId: existing._id,
-        })
-      }
-
-      const entitySnapshotId = await ctx.db.insert('entitySnapshots', arg)
-      return ({
-        ...arg,
-        inserted: true,
-        entitySnapshotId,
-      })
-    })
-
-    return results
-  },
-})
-
-export const linkSnapshot = internalMutation({
-  args: {
-    entitySnapshotId: v.id('entitySnapshots'),
-    processedDocumentId: v.string(),
-  },
-  handler: async (ctx, { entitySnapshotId, processedDocumentId }) => {
-    await ctx.db.patch(entitySnapshotId, { processedDocumentId })
-    console.debug(`Linked snapshot ${entitySnapshotId} to document ${processedDocumentId}`)
-  },
-})
-
 const UNPROCESSED_BATCH_SIZE = 100
 
 export const processUnlinkedSnapshots = internalMutation(
   {
-    args: { cursor: v.optional(v.string()), entityType: v.literal('image') }, // Start with images
+    args: { cursor: v.optional(v.string()), entityType: v.literal('image') },
     handler: async (ctx, { cursor, entityType }) => {
+      // paginate entitySnapshots which lack processedDocumentIds
       const results = await ctx.db
         .query('entitySnapshots')
-        .withIndex('by_entityType_unprocessed', q =>
+        .withIndex('by_entityType_processedDocumentId', q =>
           q.eq('entityType', entityType).eq('processedDocumentId', undefined))
-        .order('asc') // Or 'desc' if preferred
+        .order('asc')
         .paginate({ numItems: UNPROCESSED_BATCH_SIZE, cursor: cursor ?? null })
 
       console.log(
@@ -203,15 +166,7 @@ export const processUnlinkedSnapshots = internalMutation(
 
       // Call insertImages directly if there are items
       if (itemsToProcess.length > 0) {
-        const results = await ctx.runMutation(internal.images.insertImages, { items: itemsToProcess })
-        await asyncMap(results, async (result) => {
-          if ('docId' in result && result.docId) {
-            await ctx.runMutation(internal.run.linkSnapshot, {
-              entitySnapshotId: result.entitySnapshotId,
-              processedDocumentId: result.docId,
-            })
-          }
-        })
+        await ctx.runMutation(internal.images.insertImages, { items: itemsToProcess })
       }
       else {
         console.log('No unlinked snapshots found in this batch.')

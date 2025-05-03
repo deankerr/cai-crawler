@@ -1,139 +1,91 @@
-import type { ActionCtx } from './_generated/server'
+import type { Id } from './_generated/dataModel'
+import type { MutationCtx, QueryCtx } from './_generated/server'
 import { asyncMap } from 'convex-helpers'
-import { v } from 'convex/values'
+import { ConvexError, v } from 'convex/values'
 import { internal } from './_generated/api'
-import { internalAction, internalMutation } from './_generated/server'
+import { internalMutation } from './_generated/server'
 import { Image } from './civitai/validators'
-import { generateStorageKey } from './storage'
+import { backlinkProcessedDocument, getEntitySnapshot } from './entitySnapshots'
 import { extractModelReferences } from './utils/extractors'
 
-// Define the structure expected by the worker's /enqueue endpoint for a single task
-const assetStorageTaskValidator = v.object({
-  sourceUrl: v.string(),
-  storageKey: v.string(),
-})
+export async function getImageByImageId(ctx: QueryCtx, { imageId }: { imageId: number }) {
+  return await ctx.db.query('images').withIndex('by_imageId', q => q.eq('imageId', imageId)).first()
+}
 
-// Validator for the batch argument to the enqueue action
-const enqueueBatchArgsValidator = v.object({
-  tasks: v.array(assetStorageTaskValidator),
-})
+export async function requireImageByImageId(ctx: QueryCtx, { imageId }: { imageId: number }) {
+  const image = await getImageByImageId(ctx, { imageId })
+  if (!image)
+    throw new ConvexError({ message: 'required', imageId, image })
+  return image
+}
 
 export const insertImages = internalMutation({
   args: {
     items: v.array(v.object({ entitySnapshotId: v.id('entitySnapshots'), rawData: v.string() })),
   },
   handler: async (ctx, { items }) => {
-    const results = await asyncMap(items, async ({ entitySnapshotId, rawData }) => {
+    const processedResults = await asyncMap(items, async ({ entitySnapshotId }) => {
       try {
-        const parsed = Image.safeParse(JSON.parse(rawData))
-        if (!parsed.success) {
-          console.error('Failed to parse image data', parsed.error.flatten(), JSON.parse(rawData))
-          return { entitySnapshotId, success: false, error: parsed.error.flatten() }
-        }
-
-        const { id: imageId, hash: blurHash, meta, url, ...imageData } = parsed.data
-
-        const existing = await ctx.db.query('images').withIndex('by_imageId', q => q.eq('imageId', imageId)).first()
-        if (existing) {
-          return { entitySnapshotId, success: false, sourceUrl: url, storageKey: existing.storageKey, docId: existing._id }
-        }
-
-        const models = extractModelReferences(meta ?? {})
-        const storageKey = generateStorageKey('images', imageId)
-
-        const docId = await ctx.db.insert('images', {
-          imageId,
-          entitySnapshotId,
-          url, // Keep original URL for reference
-          ...imageData,
-          blurHash,
-          totalReactions: imageData.stats.likeCount + imageData.stats.heartCount + imageData.stats.laughCount + imageData.stats.cryCount + imageData.stats.commentCount,
-          models,
-          storageKey,
-        })
-
-        // Link the snapshot to the newly created image document
-        await ctx.runMutation(internal.run.linkSnapshot, {
-          entitySnapshotId,
-          processedDocumentId: docId,
-        })
-
-        // Return necessary info for the enqueue step
-        return ({ entitySnapshotId, success: true, sourceUrl: url, storageKey, docId })
+        return await processEntityToImage(ctx, { entitySnapshotId })
       }
       catch (error) {
-        console.error(`Error processing snapshot ${entitySnapshotId}:`, error)
-        return { entitySnapshotId, success: false, error: error instanceof Error ? error.message : String(error) }
+        return { entitySnapshotId, inserted: false, error }
       }
     })
 
-    // Filter successful inserts and prepare tasks for the worker
-    const successfulTasks = results
-      .filter(r => r.success && r.sourceUrl && r.storageKey)
-      .map(r => ({ sourceUrl: r.sourceUrl!, storageKey: r.storageKey! }))
+    const imageEntityPairs = processedResults.filter(e => 'image' in e)
 
-    if (successfulTasks.length > 0) {
-      console.log(`Scheduling enqueue action for ${successfulTasks.length} images.`)
-      // Schedule the internal action to send the batch to the worker
-      await ctx.scheduler.runAfter(0, internal.images.enqueueImageStorageBatch, { tasks: successfulTasks })
-    }
+    await ctx.scheduler.runAfter(0, internal.storage.enqueue, {
+      tasks: imageEntityPairs.map(e => ({
+        sourceUrl: e.image.url,
+        storageKey: e.image.storageKey!,
+      })),
+    })
 
-    // Return the results of the image creation attempts
-    return results.map(({ sourceUrl: _su, storageKey: _sk, ...rest }) => rest) // Don't return sourceUrl/storageKey in final result
+    return processedResults
   },
 })
 
-/**
- * Internal Action: Sends a batch of storage tasks to the Cloudflare Worker.
- */
-export const enqueueImageStorageBatch = internalAction({
-  args: enqueueBatchArgsValidator,
-  handler: async (ctx: ActionCtx, { tasks }) => {
-    const workerEnqueueUrl = process.env.ASSETS_WORKER_ENQUEUE_URL
-    const workerSecret = process.env.ASSETS_SECRET
+async function processEntityToImage(ctx: MutationCtx, { entitySnapshotId }: { entitySnapshotId: Id<'entitySnapshots'> }) {
+  const entitySnapshot = await getEntitySnapshot(ctx, entitySnapshotId)
+  if (!entitySnapshot)
+    throw new ConvexError({ message: 'Invalid entitySnapshotId', entitySnapshotId })
 
-    if (!workerEnqueueUrl || !workerSecret) {
-      console.error('Worker enqueue URL or secret not configured in Convex environment.')
-      // Fail the action if config is missing
-      throw new Error('Worker communication environment variables not set.')
+  const parsed = Image.safeParse(JSON.parse(entitySnapshot.rawData))
+  if (!parsed.success)
+    throw new ConvexError({ message: 'Failed to parse entity as image', entitySnapshotId, error: parsed.error.flatten() })
+
+  const existingImage = await getImageByImageId(ctx, { imageId: parsed.data.id })
+  if (existingImage) {
+    if (entitySnapshot.processedDocumentId !== existingImage._id) {
+      await backlinkProcessedDocument(ctx, { entitySnapshotId, processedDocumentId: existingImage._id })
     }
+    // return existing
+    return { entitySnapshotId, entitySnapshot, inserted: false, image: existingImage }
+  }
 
-    // The worker expects the tasks array nested under a "tasks" key
-    const payload = { tasks }
+  const { id: imageId, hash: blurHash, meta, url, ...imageData } = parsed.data
+  const models = extractModelReferences(meta ?? {})
+  const storageKey = generateStorageKey('images', imageId)
 
-    try {
-      const headers = {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${workerSecret}`,
-        'User-Agent': 'ConvexCivitaiCrawler/1.0',
-      }
+  // insert new image
+  await ctx.db.insert('images', {
+    imageId,
+    entitySnapshotId,
+    url,
+    ...imageData,
+    blurHash,
+    totalReactions: imageData.stats.likeCount + imageData.stats.heartCount + imageData.stats.laughCount + imageData.stats.cryCount + imageData.stats.commentCount,
+    models,
+    storageKey,
+  })
 
-      console.log(`Sending batch of ${tasks.length} tasks to worker: ${workerEnqueueUrl}`)
-      const response = await fetch(workerEnqueueUrl, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(payload),
-      })
+  // enforce imageId uniqueness
+  const image = (await ctx.db.query('images').withIndex('by_imageId', q => q.eq('imageId', imageId)).unique())!
+  await backlinkProcessedDocument(ctx, { entitySnapshotId, processedDocumentId: image._id })
+  return ({ entitySnapshotId, entitySnapshot, inserted: true, image })
+}
 
-      if (!response.ok) {
-        const errorBody = await response.text()
-        console.error(`Worker endpoint returned error: ${response.status} ${response.statusText} - ${errorBody}`)
-        throw new Error(`Failed to send batch to worker endpoint: Status ${response.status}`)
-      }
-
-      const responseJson = await response.json()
-      if (!responseJson.success) {
-        console.warn(`Worker endpoint reported failure for batch`, responseJson)
-        throw new Error(`Worker endpoint reported batch failure.`)
-      }
-
-      console.log(`Successfully sent batch of ${responseJson.enqueuedCount || tasks.length} tasks to worker.`)
-      return { success: true, sentCount: responseJson.enqueuedCount || tasks.length }
-    }
-    catch (error) {
-      console.error(`Error sending batch to worker:`, error)
-      // Throw the error so the action fails and potentially gets retried by Convex
-      throw error
-    }
-  },
-})
+export function generateStorageKey(contentType: string, id: number): string {
+  return `${contentType}/${id}`
+}

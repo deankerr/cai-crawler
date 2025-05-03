@@ -111,7 +111,7 @@ export default defineSchema(
       processedDocumentId: v.optional(v.string()), // Link to the processed doc (image, model, etc.)
     })
       .index('by_entity', ['entityType', 'entityId'])
-      .index('by_entityType_unprocessed', ['entityType', 'processedDocumentId']),
+      .index('by_entityType_processedDocumentId', ['entityType', 'processedDocumentId']),
   },
   // If you ever get an error about schema mismatch
   // between your data and your schema, and you cannot

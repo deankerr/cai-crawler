@@ -29,6 +29,7 @@ export async function fetchImages(args: ImageQueryParams) {
       }),
     })
 
+    console.debug('fetchImages', { result, query })
     return { result, query }
   }
   catch (err) {

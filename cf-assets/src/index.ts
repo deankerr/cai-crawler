@@ -91,9 +91,7 @@ export default {
       // We assume success if no error is thrown.
 
       console.log(`Successfully sent batch of ${payload.tasks.length} tasks to queue.`)
-      return new Response(JSON.stringify({ success: true, enqueuedCount: payload.tasks.length }), {
-        headers: { 'Content-Type': 'application/json' },
-      })
+      return new Response('OK', { status: 200 })
     }
     catch (e: any) {
       console.error(`Fatal error during batch send to queue: ${e}`)
