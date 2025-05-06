@@ -36,5 +36,4 @@ export const insertEntitySnapshots = internalMutation({
 
 export async function backlinkProcessedDocument(ctx: MutationCtx, { entitySnapshotId, processedDocumentId }: { entitySnapshotId: Id<'entitySnapshots'>, processedDocumentId: string }) {
   await ctx.db.patch(entitySnapshotId, { processedDocumentId })
-  console.debug('linked entitySnapshot', entitySnapshotId, '<-> processedDocument', processedDocumentId)
 }

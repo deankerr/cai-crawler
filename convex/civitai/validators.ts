@@ -162,7 +162,7 @@ export const Model = z.object({
   allowDifferentLicense: z.boolean().optional(),
   stats: ModelStats,
   creator: z.object({
-    username: z.string(),
+    username: z.string().nullable(),
     image: z.string().url().nullable(),
   }),
   tags: z.array(z.object({

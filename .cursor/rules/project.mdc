@@ -13,9 +13,6 @@ alwaysApply: true
 - The goal to be able to query our cache by model/lora etc.
 - Finally, we will add frontend UI.
 
-See [index.ts](mdc:demo/demo-query-client/index.ts) emo Civitai query client, with example results in the output folder
-See [civitai-crawler-system-design.md](mdc:demo/civitai-crawler-system-design.md) for a design proposal
-
 # Philosophy
 
 - This is a new project which we have started today. There is no existing system or data beyond what exists here, locally.

@@ -25,5 +25,5 @@ export default antfu({
     'unused-imports/no-unused-vars': 'warn',
     'node/prefer-global/process': 'off',
   },
-  ignores: ['convex/_generated', '**/*.md'],
+  ignores: ['convex/_generated', '**/*.md', 'docs/**'],
 })

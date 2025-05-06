@@ -2,16 +2,16 @@ import type { ImageQueryParams } from './validators'
 import { isResponseError, up } from 'up-fetch'
 import { z } from 'zod'
 import { buildURL } from '../utils/url'
-import { CursorMetadata } from './validators'
+import { CursorMetadata, Model, ModelVersionWithParent } from './validators'
 
 const baseUrl = 'https://civitai.com/api/v1'
 const apiKey = process.env.CIVITAI_API_KEY
 
-const upFetch = up(fetch, () => ({
+export const civitai = up(fetch, () => ({
   headers: {
     Authorization: apiKey ? `Bearer ${apiKey}` : undefined,
   },
-  timeout: 10000,
+  timeout: 60000,
   retry: {
     attempts: 5,
     delay: ctx => ctx.attempt ** 2 * 1000,
@@ -22,14 +22,14 @@ export async function fetchImages(args: ImageQueryParams) {
   try {
     const query = buildURL(baseUrl, ['images'], args)
 
-    const result = await upFetch(query, {
+    const result = await civitai(query, {
       schema: z.object({
         items: z.array(z.object({ id: z.number() }).passthrough()),
         metadata: CursorMetadata,
       }),
     })
 
-    console.debug('fetchImages', { result, query })
+    // console.debug('fetchImages', { result, query })
     return { result, query }
   }
   catch (err) {
@@ -38,6 +38,22 @@ export async function fetchImages(args: ImageQueryParams) {
     }
     throw err
   }
+}
+
+export async function fetchModel(modelId: number) {
+  const query = buildURL(baseUrl, ['models', modelId])
+  const result = await civitai(query, {
+    schema: Model.passthrough(),
+  })
+  return result
+}
+
+export async function fetchModelVersionById(modelVersionId: number) {
+  const query = buildURL(baseUrl, ['model-versions', modelVersionId])
+  const result = await civitai(query, {
+    schema: ModelVersionWithParent.passthrough(),
+  })
+  return result
 }
 
 // /images

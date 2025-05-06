@@ -18,19 +18,13 @@ const upFetch = up(fetch, () => {
       'Authorization': `Bearer ${workerSecret}`,
       'User-Agent': 'ConvexCivitaiCrawler/1.0',
     },
-    timeout: 10000,
+    timeout: 60000,
     retry: {
       attempts: 5,
       delay: ctx => ctx.attempt ** 2 * 1000,
     },
   }
 })
-
-export async function storeAssets(tasks: { sourceUrl: string, storageKey: string }[]) {
-  await upFetch('/enqueue', {
-    body: { tasks },
-  })
-}
 
 export const enqueue = internalAction({
   args: v.object({
@@ -39,7 +33,23 @@ export const enqueue = internalAction({
       storageKey: v.string(),
     })),
   }),
-  handler: async (ctx, args) => {
-    await storeAssets(args.tasks)
+  handler: async (ctx, { tasks }) => {
+    const BATCH_SIZE = 100 // Maximum 100 items per request
+    const batches = []
+
+    // Split tasks into batches of 100
+    for (let i = 0; i < tasks.length; i += BATCH_SIZE) {
+      const batch = tasks.slice(i, i + BATCH_SIZE)
+      batches.push(batch)
+    }
+
+    // Process all batches in parallel
+    await Promise.allSettled(
+      batches.map(batchTasks =>
+        upFetch('/enqueue', {
+          body: { tasks: batchTasks },
+        }),
+      ),
+    )
   },
 })

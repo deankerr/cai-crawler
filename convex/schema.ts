@@ -54,8 +54,7 @@ export default defineSchema(
       type: v.string(), // "Checkpoint", "LoRA", etc.
       nsfw: v.boolean(),
 
-      // Creator reference
-      creatorUsername: v.string(),
+      username: v.union(v.string(), v.null()),
 
       // Stats
       stats: v.object({
@@ -72,8 +71,7 @@ export default defineSchema(
       // Version references
       versionIds: v.array(v.number()),
     })
-      .index('by_modelId', ['modelId'])
-      .index('by_type', ['type']),
+      .index('by_modelId', ['modelId']),
 
     modelVersions: defineTable({
       versionId: v.number(),
@@ -99,8 +97,7 @@ export default defineSchema(
       imageIds: v.array(v.id('images')),
     })
       .index('by_versionId', ['versionId'])
-      .index('by_modelId', ['modelId'])
-      .index('by_createdAt', ['createdAt']),
+      .index('by_modelId', ['modelId']),
 
     entitySnapshots: defineTable({
       entityType,

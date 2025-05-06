@@ -57,6 +57,7 @@ async function processEntityToImage(ctx: MutationCtx, { entitySnapshotId }: { en
 
   const existingImage = await getImageByImageId(ctx, { imageId: parsed.data.id })
   if (existingImage) {
+    // * link entitySnapshots which failed to be processed previously
     if (entitySnapshot.processedDocumentId !== existingImage._id) {
       await backlinkProcessedDocument(ctx, { entitySnapshotId, processedDocumentId: existingImage._id })
     }
