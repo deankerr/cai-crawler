@@ -28,7 +28,7 @@ export const TimePeriod = z.enum(['AllTime', 'Year', 'Month', 'Week', 'Day'])
 
 // images
 export const NSFWLevel = z.enum(['None', 'Soft', 'Mature', 'X', 'XXX'])
-export const SortOrder = z.enum(['Most Reactions', 'Most Comments', 'Newest'])
+export const SortOrder = z.enum(['Most Reactions', 'Most Collected', 'Most Comments', 'Newest'])
 
 export const ImageQueryParams = z.object({
   limit: z.number().min(0).max(200).optional(),

@@ -1,3 +1,4 @@
+import type { Id } from './_generated/dataModel'
 import type { ImageQueryParams } from './civitai/validators'
 import { literals } from 'convex-helpers/validators'
 import { v } from 'convex/values'
@@ -9,8 +10,11 @@ import { getPathAndQuery } from './utils/url'
 const MAX_CRAWLED_ITEMS = 100000
 const IMAGE_PAGE_SIZE = 200
 
+const MAX_RETRIES = 10
+const MAX_BACKOFF_SECONDS = 300
+
 const vTimePeriod = literals('AllTime', 'Year', 'Month', 'Week', 'Day')
-const vSortOrder = literals('Most Reactions', 'Most Comments', 'Newest')
+const vSortOrder = literals('Most Reactions', 'Most Collected', 'Most Comments', 'Newest')
 
 const vImageQueryParams = v.object({
   postId: v.optional(v.number()),
@@ -33,14 +37,44 @@ const vCrawlState = v.object({
   nextCursor: v.optional(v.string()),
   lastMetadata: v.optional(v.any()),
   maxNewImages: v.optional(v.number()),
+  failureCount: v.number(),
+})
+
+export const startImageCrawl = internalMutation({
+  args: vImageQueryParams,
+  handler: async (ctx, args) => {
+    // Create the initial state object
+    const initialState = {
+      args: {
+        nsfw: args.nsfw ?? true,
+        sort: args.sort ?? 'Most Reactions',
+        period: args.period ?? 'AllTime',
+        postId: args.postId,
+        modelId: args.modelId,
+        modelVersionId: args.modelVersionId,
+        username: args.username,
+      },
+      totalFetched: 0,
+      newImagesCreated: 0,
+      nextCursor: args.startCursor,
+      lastMetadata: null,
+      maxNewImages: args.maxNewImages,
+      failureCount: 0,
+    }
+
+    console.log('Starting image crawl with initial state:', initialState)
+
+    // Schedule the first run
+    await ctx.scheduler.runAfter(0, internal.run.runImageCrawl, { state: initialState })
+  },
 })
 
 export const runImageCrawl = internalAction({
   args: {
     state: vCrawlState,
   },
-  handler: async (ctx, { state }) => {
-    const { args, totalFetched, newImagesCreated, nextCursor, maxNewImages } = state
+  handler: async (ctx, { state }): Promise<typeof state> => {
+    const { args, totalFetched, newImagesCreated, nextCursor, maxNewImages, failureCount } = state
 
     // Check if we've already reached any of our stopping conditions
     if (totalFetched >= MAX_CRAWLED_ITEMS) {
@@ -81,96 +115,106 @@ export const runImageCrawl = internalAction({
       newImagesCreatedSoFar: newImagesCreated,
     })
 
-    // Make a single API call
-    const { result, query } = await fetchImages(queryParams)
-    const items = result.items || []
-    const batchSize = items.length
-    const updatedNextCursor = result.metadata?.nextCursor
-    const updatedTotalFetched = totalFetched + batchSize
+    try {
+      // Make a single API call
+      const { result, query } = await fetchImages(queryParams)
+      const items = result.items || []
+      const batchSize = items.length
+      const updatedNextCursor = result.metadata?.nextCursor
+      const updatedTotalFetched = totalFetched + batchSize
 
-    console.log('Batch results:', {
-      query: getPathAndQuery(query),
-      batchSize,
-      metadata: result.metadata,
-    })
-
-    if (batchSize === 0) {
-      console.log('Received 0 items in batch, finishing crawl.')
-      return {
-        ...state,
-        lastMetadata: result.metadata,
-      }
-    }
-
-    // Process the items
-    const entitySnapshotResults = await ctx.runMutation(internal.entitySnapshots.insertEntitySnapshots, { items: items.map(item => ({
-      entityId: item.id,
-      entityType: 'image' as const,
-      queryKey: getPathAndQuery(query),
-      rawData: JSON.stringify(item),
-    })) })
-
-    const imageResults = await ctx.runMutation(internal.images.insertImages, { items: entitySnapshotResults.map(({ entitySnapshotId, rawData }) => ({ entitySnapshotId, rawData })) })
-    const newBatchImagesCreated = imageResults.filter(r => r.inserted).length
-
-    // Update the state
-    const updatedState = {
-      ...state,
-      totalFetched: updatedTotalFetched,
-      newImagesCreated: newImagesCreated + newBatchImagesCreated,
-      nextCursor: updatedNextCursor,
-      lastMetadata: result.metadata,
-    }
-
-    // Check if we need to schedule another run
-    const shouldContinue
-      = updatedTotalFetched < MAX_CRAWLED_ITEMS
-        && (maxNewImages === undefined || updatedState.newImagesCreated < maxNewImages)
-        && updatedNextCursor !== undefined
-        && batchSize > 0
-
-    if (shouldContinue) {
-      console.log('Scheduling next batch of image crawl.')
-      // Schedule the next run
-      await ctx.scheduler.runAfter(0, internal.run.runImageCrawl, { state: updatedState })
-    }
-    else {
-      console.log('Image crawl finished.', {
-        totalFetched: updatedTotalFetched,
-        newImagesCreated: updatedState.newImagesCreated,
+      console.log('Batch results:', {
+        query: getPathAndQuery(query),
+        batchSize,
         metadata: result.metadata,
       })
+
+      if (batchSize === 0) {
+        console.log('Received 0 items in batch, finishing crawl.')
+        return {
+          ...state,
+          lastMetadata: result.metadata,
+          failureCount: 0, // Reset failure count on success
+        }
+      }
+
+      // Process the items
+      const entitySnapshotResults = await ctx.runMutation(internal.entitySnapshots.insertEntitySnapshots, { items: items.map(item => ({
+        entityId: item.id,
+        entityType: 'image' as const,
+        queryKey: getPathAndQuery(query),
+        rawData: JSON.stringify(item),
+      })) })
+
+      const imageResults = await ctx.runMutation(internal.images.insertImages, {
+        items: entitySnapshotResults.map(({ entitySnapshotId, rawData }: { entitySnapshotId: Id<'entitySnapshots'>, rawData: string }) => ({
+          entitySnapshotId,
+          rawData,
+        })),
+      })
+      const newBatchImagesCreated = imageResults.filter((r: { inserted: boolean }) => r.inserted).length
+
+      // Update the state
+      const updatedState = {
+        ...state,
+        totalFetched: updatedTotalFetched,
+        newImagesCreated: newImagesCreated + newBatchImagesCreated,
+        nextCursor: updatedNextCursor,
+        lastMetadata: result.metadata,
+        failureCount: 0, // Reset failure count on success
+      }
+
+      // Check if we need to schedule another run
+      const shouldContinue
+        = updatedTotalFetched < MAX_CRAWLED_ITEMS
+          && (maxNewImages === undefined || updatedState.newImagesCreated < maxNewImages)
+          && updatedNextCursor !== undefined
+          && batchSize > 0
+
+      if (shouldContinue) {
+        console.log('Scheduling next batch of image crawl.')
+        // Schedule the next run
+        await ctx.scheduler.runAfter(0, internal.run.runImageCrawl, { state: updatedState })
+      }
+      else {
+        console.log('Image crawl finished.', {
+          totalFetched: updatedTotalFetched,
+          newImagesCreated: updatedState.newImagesCreated,
+          metadata: result.metadata,
+        })
+      }
+
+      return updatedState
     }
+    catch (error) {
+      // Handle the failure
+      const newFailureCount = failureCount + 1
+      console.error(`Image crawl batch failed (attempt ${newFailureCount}):`, error)
 
-    // return updatedState
-  },
-})
+      // Calculate backoff time with exponential backoff (1s, 2s, 4s, 8s, etc.)
+      // Cap at 5 minutes (300 seconds)
+      const backoffSeconds = Math.min(2 ** (newFailureCount - 1), MAX_BACKOFF_SECONDS)
+      console.log(`Retrying after ${backoffSeconds} seconds...`)
 
-export const startImageCrawl = internalMutation({
-  args: vImageQueryParams,
-  handler: async (ctx, args) => {
-    // Create the initial state object
-    const initialState = {
-      args: {
-        nsfw: args.nsfw ?? true,
-        sort: args.sort ?? 'Most Reactions',
-        period: args.period ?? 'AllTime',
-        postId: args.postId,
-        modelId: args.modelId,
-        modelVersionId: args.modelVersionId,
-        username: args.username,
-      },
-      totalFetched: 0,
-      newImagesCreated: 0,
-      nextCursor: args.startCursor,
-      lastMetadata: null,
-      maxNewImages: args.maxNewImages,
+      // Max retries - stop after 10 failures
+      if (newFailureCount <= MAX_RETRIES) {
+        // Schedule retry with backoff
+        await ctx.scheduler.runAfter(backoffSeconds, internal.run.runImageCrawl, {
+          state: {
+            ...state,
+            failureCount: newFailureCount,
+          },
+        })
+      }
+      else {
+        console.error(`Exceeded maximum retry attempts (${MAX_RETRIES}), stopping crawl.`)
+      }
+
+      return {
+        ...state,
+        failureCount: newFailureCount,
+      }
     }
-
-    console.log('Starting image crawl with initial state:', initialState)
-
-    // Schedule the first run
-    await ctx.scheduler.runAfter(0, internal.run.runImageCrawl, { state: initialState })
   },
 })
 
