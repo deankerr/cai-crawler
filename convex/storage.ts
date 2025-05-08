@@ -2,6 +2,8 @@ import { v } from 'convex/values'
 import { up } from 'up-fetch'
 import { internalAction } from './_generated/server'
 
+const BATCH_SIZE = 100 // Maximum 100 items per request
+
 const upFetch = up(fetch, () => {
   const workerEnqueueUrl = process.env.ASSETS_WORKER_URL
   const workerSecret = process.env.ASSETS_SECRET
@@ -34,7 +36,6 @@ export const enqueue = internalAction({
     })),
   }),
   handler: async (ctx, { tasks }) => {
-    const BATCH_SIZE = 100 // Maximum 100 items per request
     const batches = []
 
     // Split tasks into batches of 100
@@ -44,12 +45,19 @@ export const enqueue = internalAction({
     }
 
     // Process all batches in parallel
-    await Promise.allSettled(
-      batches.map(batchTasks =>
-        upFetch('/enqueue', {
+    const results = await Promise.allSettled(
+      batches.map(async (batchTasks) => {
+        await upFetch('/enqueue', {
           body: { tasks: batchTasks },
-        }),
-      ),
+        })
+        return batchTasks.length
+      }),
     )
+
+    for (const result of results) {
+      if (result.status !== 'fulfilled') {
+        console.error('[STORAGE] Error enqueuing tasks:', result.reason)
+      }
+    }
   },
 })

@@ -4,6 +4,16 @@ import { v } from 'convex/values'
 
 const entityType = literals('image', 'model', 'modelVersion')
 
+const vModelStats = v.object({
+  downloadCount: v.number(),
+  favoriteCount: v.optional(v.number()),
+  commentCount: v.optional(v.number()),
+  ratingCount: v.optional(v.number()),
+  rating: v.optional(v.number()),
+  thumbsUpCount: v.optional(v.number()),
+  thumbsDownCount: v.optional(v.number()),
+})
+
 export default defineSchema(
   {
     images: defineTable({
@@ -51,25 +61,11 @@ export default defineSchema(
       modelId: v.number(),
       name: v.string(),
       description: v.string(),
+      createdAt: v.string(),
       type: v.string(), // "Checkpoint", "LoRA", etc.
       nsfw: v.boolean(),
-
       username: v.union(v.string(), v.null()),
-
-      // Stats
-      stats: v.object({
-        downloadCount: v.number(),
-        favoriteCount: v.optional(v.number()),
-        commentCount: v.optional(v.number()),
-        ratingCount: v.number(),
-        rating: v.number(),
-      }),
-
-      // Tags
-      tags: v.array(v.string()),
-
-      // Version references
-      versionIds: v.array(v.number()),
+      stats: vModelStats,
     })
       .index('by_modelId', ['modelId']),
 
@@ -78,23 +74,9 @@ export default defineSchema(
       modelId: v.number(),
       name: v.string(),
       createdAt: v.string(),
+      updatedAt: v.string(),
       baseModel: v.string(), // "SD 1.5", "SDXL", etc.
-
-      // Files
-      files: v.array(
-        v.object({
-          id: v.number(),
-          name: v.string(),
-          type: v.string(),
-          sizeKB: v.number(),
-          hashes: v.record(v.string(), v.string()),
-          downloadUrl: v.string(),
-          primary: v.optional(v.boolean()),
-        }),
-      ),
-
-      // Image references
-      imageIds: v.array(v.id('images')),
+      stats: vModelStats,
     })
       .index('by_versionId', ['versionId'])
       .index('by_modelId', ['modelId']),

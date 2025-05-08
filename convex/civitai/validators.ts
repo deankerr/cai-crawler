@@ -13,7 +13,7 @@ export const PaginationMetadata = z.object({
 })
 
 export const CursorMetadata = z.object({
-  nextCursor: z.string().optional(),
+  nextCursor: z.union([z.string(), z.number()]).optional(),
   currentPage: z.number().optional(),
   pageSize: z.number().optional(),
   nextPage: z.string().url().optional(),
