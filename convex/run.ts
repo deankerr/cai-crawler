@@ -154,7 +154,6 @@ export const runImageCrawl = internalAction({
         totalFetched: updatedTotalFetched,
         newImagesCreated: newImagesCreated + newBatchImagesCreated,
         nextCursor: updatedNextCursor,
-        lastMetadata: result.metadata,
         failureCount: 0, // Reset failure count on success
       }
 
