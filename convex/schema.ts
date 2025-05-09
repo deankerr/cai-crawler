@@ -91,6 +91,17 @@ export default defineSchema(
     })
       .index('by_entity', ['entityType', 'entityId'])
       .index('by_entityType_processedDocumentId', ['entityType', 'processedDocumentId']),
+
+    runs: defineTable({
+      status: literals('pending', 'in_progress', 'completed', 'failed', 'stopped'),
+      url: v.string(),
+      priority: v.number(),
+      itemsTarget: v.number(),
+      itemsRead: v.number(),
+      updatedAt: v.number(),
+      finishedAt: v.optional(v.number()),
+      error: v.optional(v.string()),
+    }),
   },
   // If you ever get an error about schema mismatch
   // between your data and your schema, and you cannot

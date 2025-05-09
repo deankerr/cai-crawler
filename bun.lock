@@ -5,6 +5,8 @@
       "name": "civitai-crawler",
       "dependencies": {
         "@aws-sdk/client-s3": "^3.798.0",
+        "@convex-dev/workflow": "^0.2.3",
+        "@convex-dev/workpool": "^0.2.8",
         "convex": "^1.23.0",
         "convex-helpers": "^0.1.79",
         "up-fetch": "^2.1.0",
@@ -114,6 +116,10 @@
     "@clack/core": ["@clack/core@0.4.2", "", { "dependencies": { "picocolors": "^1.0.0", "sisteransi": "^1.0.5" } }, "sha512-NYQfcEy8MWIxrT5Fj8nIVchfRFA26yYKJcvBS7WlUIlw2OmQOY9DhGGXMovyI5J5PpxrCPGkgUi207EBrjpBvg=="],
 
     "@clack/prompts": ["@clack/prompts@0.10.1", "", { "dependencies": { "@clack/core": "0.4.2", "picocolors": "^1.0.0", "sisteransi": "^1.0.5" } }, "sha512-Q0T02vx8ZM9XSv9/Yde0jTmmBQufZhPJfYAg2XrrrxWWaZgq1rr8nU8Hv710BQ1dhoP8rtY7YUdpGej2Qza/cw=="],
+
+    "@convex-dev/workflow": ["@convex-dev/workflow@0.2.3", "", { "dependencies": { "async-channel": "^0.2.0" }, "peerDependencies": { "@convex-dev/workpool": "^0.2.8", "convex": ">=1.21.0 <1.25.0", "convex-helpers": "^0.1.77" } }, "sha512-nTzz+ozQqZjT1n1z4YDGgjGuM3izFe5hQxm+gpsUjUaz9xWCjTkyKa9m2L4RIWNexAVGJAMLZDTeKpjnevz6Lg=="],
+
+    "@convex-dev/workpool": ["@convex-dev/workpool@0.2.8", "", { "peerDependencies": { "convex": ">=1.17.0 <1.25.0", "convex-helpers": "^0.1.71" } }, "sha512-rCECIl8I+BASyN5Oa9izEW7VcqWvxNOxW71ddBNtPANFZgezgJtDWanZ9pEqeC/RJ6v4jri+9NX5KxcsjeO/fg=="],
 
     "@dprint/formatter": ["@dprint/formatter@0.3.0", "", {}, "sha512-N9fxCxbaBOrDkteSOzaCqwWjso5iAe+WJPsHC021JfHNj2ThInPNEF13ORDKta3llq5D1TlclODCvOvipH7bWQ=="],
 
@@ -422,6 +428,8 @@
     "are-docs-informative": ["are-docs-informative@0.0.2", "", {}, "sha512-ixiS0nLNNG5jNQzgZJNoUpBKdo9yTYZMGJ+QgT2jmjR7G7+QHRCc4v6LQ3NgE7EBJq+o0ams3waJwkrlBom8Ig=="],
 
     "argparse": ["argparse@2.0.1", "", {}, "sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q=="],
+
+    "async-channel": ["async-channel@0.2.0", "", {}, "sha512-BJyjI/sfKlyijaBt2hbOSxT28xGNtLR0QLzAKO1Hlnv5BULY7sAoYoTPW3lfr1ZIC7y+FxabxO9T8GXpyoofGg=="],
 
     "balanced-match": ["balanced-match@1.0.2", "", {}, "sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw=="],
 

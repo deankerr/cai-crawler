@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.798.0",
+    "@convex-dev/workflow": "^0.2.3",
+    "@convex-dev/workpool": "^0.2.8",
     "convex": "^1.23.0",
     "convex-helpers": "^0.1.79",
     "up-fetch": "^2.1.0",
