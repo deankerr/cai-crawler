@@ -12,20 +12,21 @@ The CivitAI Crawler is designed to systematically retrieve and store content fro
 The system architecture uses:
 - **Convex** as the backend database and serverless functions platform
 - **R2** for asset storage
+- **Cloudflare Workers** for asset downloading and storage management
 - **Bun** as the JavaScript runtime
 - **Zod** for validation
 
 The core functionality includes:
 1. Querying the CivitAI API for various resources (images, models, model versions)
 2. Storing metadata in Convex
-3. Downloading and storing images in R2
+3. Downloading and storing images in R2 via Cloudflare Workers
 4. Providing a clean interface to query the cached data
 
-## The Run System
+## The Query and Task System
 
 ### Purpose and Design
 
-The runs system is an implementation of a task queue for API requests that:
+The query and task system is an implementation of a task queue for API requests that:
 
 1. **Decouples task execution from task management**: The action logic (API calls and processing) is separate from state management (what to query next, tracking progress).
 
@@ -42,16 +43,16 @@ The runs system is an implementation of a task queue for API requests that:
 
 ### Key Components
 
-- **createRun**: Creates a run entry and queues initial worker
-- **startRunTask**: Claims the highest priority pending task
-- **endRunTask**: Updates a task with results, modifies URL with next cursor if needed
-- **failRunTask**: Marks a task as failed with error details
-- **runCivitaiQuery**: The core action that performs API calls and processes results
-- **Helper mutations**: Simplified methods for creating specific types of API queries
+- **insertQuery**: Creates a query entry and queues initial worker
+- **startTask**: Claims the highest priority pending task
+- **endTask**: Updates a task with results, modifies URL with next cursor if needed
+- **failTask**: Marks a task as failed with error details
+- **worker**: The core action that performs API calls and processes results
+- **Helper mutations**: Simplified methods for creating specific types of API queries, like `addImagesByModelVersionQuery`, `addImagesByModelQuery`, and `addImagesByUsernameQuery`
 
 ### Task Lifecycle
 
-1. A run is created with a specific URL (query), items target, and priority
+1. A query is created with a specific URL, items target, and priority
 2. The worker picks the highest priority pending task
 3. The task is executed against the CivitAI API
 4. Results are processed and stored in Convex (entity snapshots and image records)
@@ -60,20 +61,43 @@ The runs system is an implementation of a task queue for API requests that:
    - Updated with a new cursor and set back to pending for continuation
    - Marked failed if an error occurs
 
-## Differences from Initial Expectations
+## Asset Storage System with Cloudflare Workers
 
-From my initial implementation, there are several key differences in the approach:
+The asset storage system uses Cloudflare Workers, R2, and Queues to efficiently download and store images from CivitAI.
 
-1. **URL-centric design**: Rather than managing complex state objects, the system uses URLs (with query parameters) as the core state representation. This is more elegant than I initially envisioned.
+### Key Components
 
-2. **Workpool integration**: The implementation uses Convex's Workpool, which provides a more robust way to manage concurrency than my originally suggested approach.
+- **Convex storage.enqueue action**: Sends batches of download tasks to the Cloudflare Worker
+- **Cloudflare Worker /enqueue endpoint**: Receives task batches and adds them to a Queue
+- **Cloudflare Queue processor**: Handles the actual downloading and storage of assets
 
-3. **Simplified state transitions**: The updated design has cleaner state transitions (pending → in_progress → pending/completed/failed).
+### Asset Processing Flow
 
-4. **Return values**: The endRunTask and failRunTask functions return the patched document directly, which is more convenient for chaining operations.
+1. After image entities are processed in Convex, a storage task is created for each image
+2. Tasks include a `sourceUrl` (the image URL on CivitAI) and a `storageKey` (where to store it in R2)
+3. Batches of up to 100 tasks are sent to the Cloudflare Worker via the `/enqueue` endpoint
+4. The Worker validates the tasks and adds them to a Queue
+5. The Queue processor:
+   - Checks if the asset already exists in R2 (avoiding duplication)
+   - Fetches the asset from CivitAI
+   - Stores the asset in the R2 bucket with appropriate metadata
+   - Implements exponential backoff for retry attempts on failure
 
-5. **Error field clearing**: When a task succeeds after previously failing, the error field is explicitly cleared.
+### Error Handling
 
-6. **Helper mutations**: The implementation includes purpose-built mutations for specific query types, making the system more user-friendly.
+- The Cloudflare Worker implements exponential backoff for failed download attempts
+- Retry delay starts at 5 seconds and caps at 5 minutes (300 seconds)
+- Each task carries metadata about number of attempts and failure reasons
+- Tasks that consistently fail after multiple attempts will be dropped after exceeding retry limits
 
-7. **finishedAt tracking**: A separate timestamp for when tasks complete or fail, distinct from the general updatedAt timestamp.
+## Entity Processing System
+
+The system uses a two-phase approach to entity processing:
+
+1. **Raw Data Capture**: Stores the complete API response as stringified JSON in `entitySnapshots`
+2. **Structured Processing**: Extracts and normalizes data to create structured records (images, models, etc.)
+
+This approach provides several benefits:
+- Resilience to API schema changes
+- Ability to re-process data if extraction logic improves
+- Complete data preservation, even if current processing logic can't handle certain fields

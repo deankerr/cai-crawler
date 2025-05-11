@@ -1,14 +1,14 @@
-# Civitai Entities
+# CivitAI Entities
 
-This document outlines the core entities in the Civitai API ecosystem, their relationships, and important attributes based on our observations from sample API responses.
+This document outlines the core entities in the CivitAI API ecosystem, their relationships, and important attributes based on our observations from sample API responses.
 
 ## Entity Overview
 
-The Civitai API revolves around several key entities that represent different aspects of AI image generation models and their usage. Below is a detailed description of each entity and how they relate to one another.
+The CivitAI API revolves around several key entities that represent different aspects of AI image generation models and their usage. Below is a detailed description of each entity and how they relate to one another.
 
 ## 1. Model
 
-Models are the central entity in Civitai, representing the AI image generation models themselves (like Checkpoints, LORAa, etc.).
+Models are the central entity in CivitAI, representing the AI image generation models themselves (like Checkpoints, LORAa, etc.).
 
 ### Key Attributes
 - **id**: Unique identifier for the model
@@ -17,8 +17,6 @@ Models are the central entity in Civitai, representing the AI image generation m
 - **type**: Type of model (Checkpoint, TextualInversion, LORA, etc.)
 - **nsfw**: Boolean indicating adult content
 - **stats**: Download counts, ratings, etc.
-- **allowCommercialUse**: Permission settings for commercial usage
-- **allowDerivatives**: Whether derivatives are allowed
 - **creator**: Reference to the Creator who published it
 
 ### Relationships
@@ -35,7 +33,7 @@ Models are the central entity in Civitai, representing the AI image generation m
   "nsfw": false,
   "creator": {
     "username": "Cyberdelia",
-    "image": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/63c3d8a0-6f3b-4293-9be7-9efc8c1d9bc8/width=96/Cyberdelia.jpeg"
+    "image": "https://image.civitAI.com/xG1nkqKTMzGDvpLrqFT7WA/63c3d8a0-6f3b-4293-9be7-9efc8c1d9bc8/width=96/Cyberdelia.jpeg"
   },
   "tags": [
     "photorealistic",
@@ -117,7 +115,7 @@ Represents an actual downloadable file for a ModelVersion, such as weights, conf
     "size": "pruned",
     "format": "SafeTensor"
   },
-  "downloadUrl": "https://civitai.com/api/download/models/1460987",
+  "downloadUrl": "https://civitAI.com/api/download/models/1460987",
   "primary": true
 }
 ```
@@ -139,7 +137,7 @@ A reduced representation of an Image that's associated with a ModelVersion. This
 ### Example Usage
 ```json
 {
-  "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/dd0b7252-9b82-44e3-8631-dccc79e94019/width=1600/60055394.jpeg",
+  "url": "https://image.civitAI.com/xG1nkqKTMzGDvpLrqFT7WA/dd0b7252-9b82-44e3-8631-dccc79e94019/width=1600/60055394.jpeg",
   "width": 1600,
   "height": 2400,
   "hash": "UREVEDrq_NM{?bt7yDR*Iq%MWYxux]oz%Mxu",
@@ -168,14 +166,14 @@ User-uploaded or user-generated images, which may be associated with a model or 
 
 ### Relationships
 - **username**: References Creator/user
-- Optional references to Model/ModelVersion in the meta.civitaiResources field
+- Optional references to Model/ModelVersion in the meta.civitAIResources field
 - May correspond to one or more ModelImages across different ModelVersions
 
 ### Example Usage
 ```json
 {
   "id": 48399688,
-  "url": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/e82c268a-c450-4d2c-b9f4-057dd665c889/width=1466/e82c268a-c450-4d2c-b9f4-057dd665c889.jpeg",
+  "url": "https://image.civitAI.com/xG1nkqKTMzGDvpLrqFT7WA/e82c268a-c450-4d2c-b9f4-057dd665c889/width=1466/e82c268a-c450-4d2c-b9f4-057dd665c889.jpeg",
   "nsfw": false,
   "nsfwLevel": "None",
   "postId": 10911709,
@@ -203,7 +201,7 @@ User-uploaded or user-generated images, which may be associated with a model or 
 
 ## 6. Creator
 
-A user who creates and publishes models on Civitai.
+A user who creates and publishes models on CivitAI.
 
 ### Key Attributes
 - **username**: Unique identifier
@@ -220,8 +218,8 @@ A user who creates and publishes models on Civitai.
 {
   "username": "Cyberdelia",
   "modelCount": 4,
-  "link": "https://civitai.com/api/v1/models?username=Cyberdelia",
-  "image": "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/63c3d8a0-6f3b-4293-9be7-9efc8c1d9bc8/width=96/Cyberdelia.jpeg"
+  "link": "https://civitAI.com/api/v1/models?username=Cyberdelia",
+  "image": "https://image.civitAI.com/xG1nkqKTMzGDvpLrqFT7WA/63c3d8a0-6f3b-4293-9be7-9efc8c1d9bc8/width=96/Cyberdelia.jpeg"
 }
 ```
 
@@ -242,7 +240,7 @@ Categorization labels for models.
 ```json
 {
   "name": "photorealistic",
-  "link": "https://civitai.com/api/v1/models?tag=photorealistic"
+  "link": "https://civitAI.com/api/v1/models?tag=photorealistic"
 }
 ```
 

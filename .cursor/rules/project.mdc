@@ -3,7 +3,7 @@ description:
 globs: 
 alwaysApply: true
 ---
-# Project: civit-crawler
+# Project: cai-crawler
 
 - Store assets and generation data collected from the CivitAI API, with a strategy geared towards data preservation
 - The CivitAI database and API have evolved organically over time, as the generative AI field has rapidly evolved, resulting in a large amount of variance in the data structures
