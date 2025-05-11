@@ -92,14 +92,13 @@ export default defineSchema(
       .index('by_entity', ['entityType', 'entityId'])
       .index('by_entityType_processedDocumentId', ['entityType', 'processedDocumentId']),
 
-    runs: defineTable({
+    queries: defineTable({
       status: literals('pending', 'in_progress', 'completed', 'failed', 'stopped'),
+      updatedAt: v.number(),
       url: v.string(),
       priority: v.number(),
-      itemsTarget: v.number(),
-      itemsRead: v.number(),
-      updatedAt: v.number(),
-      finishedAt: v.optional(v.number()),
+      limit: v.number(),
+      count: v.number(),
       error: v.optional(v.string()),
     }),
   },

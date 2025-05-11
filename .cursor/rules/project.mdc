@@ -5,13 +5,17 @@ alwaysApply: true
 ---
 # Project: civit-crawler
 
-- Civitai host a huge amount of image generation models, LoRAs and images, and have full API. It's also quite slow, and sometimes becomes unavailable
-- We want to crawler which iterates over queries, storing API results and images with associated data
-- It should handling queuing/rate-limiting of API requests and assets loads
-- Downloading actual model files isn't planned, but we do want their metadata
-- Architecture: Convex, R2, bun, zod
-- The goal to be able to query our cache by model/lora etc.
-- Finally, we will add frontend UI.
+- Store assets and generation data collected from the CivitAI API, with a strategy geared towards data preservation
+- The CivitAI database and API have evolved organically over time, as the generative AI field has rapidly evolved, resulting in a large amount of variance in the data structures
+- Image generation metadata is particularly difficult to parse, with desired information like models used (Checkpoints, LoRAs) being declared in different formats, or not at all
+- Convex is used to orchestrate the system and store entity data, and Cloudflare R2 stores assets using a Queue and Worker to retrieve assets via URL from their CDN
+- Current query patterns are to paginate through the API by a model or model version id, or username, storing a large number of the most popular associated images
+- Any entity can have a lot of data associated with it - our strategy is to store the payload response in full in a stringified form, then creating our linked representation of the entity by processing the data in a second step
+- This lets us continue with collecting results without being halted by validation issues, and enabling us to enrich our entities over time without being dependant on CivitAI
+- Our functions should be idempotent where possible, allowing us to re-run batch processes without duplication/issues with existing data
+- There is currently no frontend, the system is managed using the Convex Dashboard
+- The system is design for a single user only
+- package manager: bun
 
 # Philosophy
 

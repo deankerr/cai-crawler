@@ -11,11 +11,9 @@
 import type * as civitai_query from "../civitai/query.js";
 import type * as civitai_validators from "../civitai/validators.js";
 import type * as entitySnapshots from "../entitySnapshots.js";
-import type * as http from "../http.js";
 import type * as images from "../images.js";
-import type * as run from "../run.js";
-import type * as runs from "../runs.js";
 import type * as storage from "../storage.js";
+import type * as tasks from "../tasks.js";
 import type * as utils_extractors from "../utils/extractors.js";
 import type * as utils_url from "../utils/url.js";
 import type * as validators from "../validators.js";
@@ -38,11 +36,9 @@ declare const fullApi: ApiFromModules<{
   "civitai/query": typeof civitai_query;
   "civitai/validators": typeof civitai_validators;
   entitySnapshots: typeof entitySnapshots;
-  http: typeof http;
   images: typeof images;
-  run: typeof run;
-  runs: typeof runs;
   storage: typeof storage;
+  tasks: typeof tasks;
   "utils/extractors": typeof utils_extractors;
   "utils/url": typeof utils_url;
   validators: typeof validators;

@@ -18,68 +18,65 @@ const pool = new Workpool(components.civitaiWorkpool, {
 
 const DEFAULT_PRIORITY = 10
 
-export async function createRun(ctx: MutationCtx, args: { url: URL, itemsTarget: number, priority?: number }) {
-  const runId = await ctx.db.insert('runs', {
+export async function insertQuery(ctx: MutationCtx, args: { url: URL, limit: number, priority?: number }) {
+  const queryId = await ctx.db.insert('queries', {
     url: args.url.toString(),
-    itemsTarget: args.itemsTarget,
-    itemsRead: 0,
+    limit: args.limit,
+    count: 0,
     status: 'pending',
     updatedAt: Date.now(),
     priority: args.priority ?? DEFAULT_PRIORITY,
   })
 
-  const workId: string = await pool.enqueueAction(ctx, internal.runs.runCivitaiQuery, {})
+  const workId: string = await pool.enqueueAction(ctx, internal.tasks.worker, {})
 
-  return { runId, workId }
+  return { queryId, workId }
 }
 
-// * run instance functions
-export const startRunTask = internalMutation({
+// * task worker runtime mutations
+export const startTask = internalMutation({
   handler: async (ctx) => {
-    const runs = await ctx.db.query('runs')
+    const queries = await ctx.db.query('queries')
       .filter(q => q.eq(q.field('status'), 'pending'))
       .collect()
 
     // Sort by priority (higher number = higher priority)
-    runs.sort((a, b) => b.priority - a.priority)
+    queries.sort((a, b) => b.priority - a.priority)
 
-    // Get the highest priority run
-    const nextRun = runs[0]
+    // Get the highest priority query
+    const nextQuery = queries[0]
 
-    // If there are no pending runs, return
-    if (!nextRun) {
+    // all tasks finished
+    if (!nextQuery) {
       return
     }
 
     // Update its status to in_progress
-    await ctx.db.patch(nextRun._id, {
+    await ctx.db.patch(nextQuery._id, {
       status: 'in_progress',
       updatedAt: Date.now(),
-      finishedAt: undefined,
     })
 
     return {
-      id: nextRun._id,
-      url: nextRun.url,
+      id: nextQuery._id,
+      url: nextQuery.url,
     }
   },
 })
 
-export const endRunTask = internalMutation({
+export const endTask = internalMutation({
   args: {
-    runId: v.id('runs'),
-    runItemsRead: v.number(),
+    queryId: v.id('queries'),
+    count: v.number(),
     nextCursor: v.optional(v.union(v.string(), v.number())),
   },
   handler: async (ctx, args) => {
-    const run = await ctx.db.get(args.runId)
-    if (!run) {
-      throw new ConvexError({ message: 'Run not found', runId: args.runId })
+    const query = await ctx.db.get(args.queryId)
+    if (!query) {
+      throw new ConvexError({ message: 'Query not found', queryId: args.queryId })
     }
 
-    const totalItemsRead = run.itemsRead + args.runItemsRead
-
-    const nextUrl = new URL(run.url)
+    const nextUrl = new URL(query.url)
     if (args.nextCursor) {
       nextUrl.searchParams.set('cursor', args.nextCursor.toString())
     }
@@ -87,51 +84,50 @@ export const endRunTask = internalMutation({
       nextUrl.searchParams.delete('cursor')
     }
 
-    const isComplete = totalItemsRead >= run.itemsTarget || args.runItemsRead === 0 || !args.nextCursor
+    const newCount = query.count + args.count
+    const isComplete = newCount >= query.limit || args.count === 0 || !args.nextCursor
 
     const updates = {
       status: isComplete ? 'completed' as const : 'pending' as const,
-      itemsRead: totalItemsRead,
+      count: newCount,
       url: nextUrl.toString(),
       updatedAt: Date.now(),
-      finishedAt: isComplete ? Date.now() : undefined,
       error: undefined,
     }
 
-    return await ctx.db.patch(args.runId, updates)
+    return await ctx.db.patch(args.queryId, updates)
   },
 })
 
-export const failRunTask = internalMutation({
+export const failTask = internalMutation({
   args: {
-    runId: v.id('runs'),
+    queryId: v.id('queries'),
     error: v.string(),
   },
   handler: async (ctx, args) => {
-    const run = await ctx.db.get(args.runId)
-    if (!run) {
-      throw new ConvexError({ message: 'Run not found', runId: args.runId })
+    const query = await ctx.db.get(args.queryId)
+    if (!query) {
+      throw new ConvexError({ message: 'Query not found', queryId: args.queryId })
     }
 
-    return await ctx.db.patch(args.runId, {
+    return await ctx.db.patch(args.queryId, {
       status: 'failed',
       error: args.error,
       updatedAt: Date.now(),
-      finishedAt: Date.now(),
     })
   },
 })
 
-// * images run
-export const runCivitaiQuery = internalAction({
+// * task worker
+export const worker = internalAction({
   handler: async (ctx) => {
-    const run = await ctx.runMutation(internal.runs.startRunTask)
-    if (!run) {
-      console.log('[RUN] No run to process')
+    const query = await ctx.runMutation(internal.tasks.startTask)
+    if (!query) {
+      console.log('[QUERY] No query to process')
       return
     }
 
-    const { items, metadata } = await civitaiQuery(run.url, {
+    const { items, metadata } = await civitaiQuery(query.url, {
       schema: z.object({
         items: z.array(z.object({ id: z.number() }).passthrough()),
         metadata: CursorMetadata,
@@ -142,7 +138,7 @@ export const runCivitaiQuery = internalAction({
     const entitySnapshotResults = await ctx.runMutation(internal.entitySnapshots.insertEntitySnapshots, { items: items.map(item => ({
       entityId: item.id,
       entityType: 'image' as const,
-      queryKey: getPathAndQuery(run.url),
+      queryKey: getPathAndQuery(query.url),
       rawData: JSON.stringify(item),
     })) })
 
@@ -154,68 +150,66 @@ export const runCivitaiQuery = internalAction({
     })
 
     const imagesCreated = imageResults.filter((r: { inserted: boolean }) => r.inserted).length
-    console.log(`[RUN] ${run.url} - ${imagesCreated} images created`)
+    console.log(`[QUERY] ${query.url} - ${imagesCreated} images created`)
 
-    await ctx.runMutation(internal.runs.endRunTask, {
-      runId: run.id,
-      runItemsRead: items.length,
+    await ctx.runMutation(internal.tasks.endTask, {
+      queryId: query.id,
+      count: items.length,
       nextCursor: metadata.nextCursor,
     })
 
-    await pool.enqueueAction(ctx, internal.runs.runCivitaiQuery, {})
+    await pool.enqueueAction(ctx, internal.tasks.worker, {})
   },
 })
 
-// * run management
-export const startWorker = internalMutation(async (ctx) => {
-  const workId: string = await pool.enqueueAction(ctx, internal.runs.runCivitaiQuery, {})
+// * manual worker start for debugging
+export const forceStartWorker = internalMutation(async (ctx) => {
+  const workId: string = await pool.enqueueAction(ctx, internal.tasks.worker, {})
   return workId
 })
 
-export const addImagesByModelVersionRun = internalMutation({
+// * query management
+export const addImagesByModelVersionQuery = internalMutation({
   args: {
     modelVersionId: v.number(),
-    itemsTarget: v.number(),
+    limit: v.number(),
     nsfw: v.boolean(),
     sort: vSortOrder,
     period: vTimePeriod,
     priority: v.optional(v.number()),
   },
-  handler: async (ctx, { itemsTarget, priority, ...searchParams }) => {
+  handler: async (ctx, { limit, priority, ...searchParams }) => {
     const url = buildURL(baseUrl, ['images'], searchParams).toString()
-
-    return await createRun(ctx, { url: new URL(url), itemsTarget, priority })
+    return await insertQuery(ctx, { url: new URL(url), limit, priority })
   },
 })
 
-export const addImagesByModelRun = internalMutation({
+export const addImagesByModelQuery = internalMutation({
   args: {
     modelId: v.number(),
-    itemsTarget: v.number(),
+    limit: v.number(),
     nsfw: v.boolean(),
     sort: vSortOrder,
     period: vTimePeriod,
     priority: v.optional(v.number()),
   },
-  handler: async (ctx, { itemsTarget, priority, ...searchParams }) => {
+  handler: async (ctx, { limit, priority, ...searchParams }) => {
     const url = buildURL(baseUrl, ['images'], searchParams).toString()
-
-    return await createRun(ctx, { url: new URL(url), itemsTarget, priority })
+    return await insertQuery(ctx, { url: new URL(url), limit, priority })
   },
 })
 
-export const addImagesByUsernameRun = internalMutation({
+export const addImagesByUsernameQuery = internalMutation({
   args: {
     username: v.string(),
-    itemsTarget: v.number(),
+    limit: v.number(),
     nsfw: v.boolean(),
     sort: vSortOrder,
     period: vTimePeriod,
     priority: v.optional(v.number()),
   },
-  handler: async (ctx, { itemsTarget, priority, ...searchParams }) => {
+  handler: async (ctx, { limit, priority, ...searchParams }) => {
     const url = buildURL(baseUrl, ['images'], searchParams).toString()
-
-    return await createRun(ctx, { url: new URL(url), itemsTarget, priority })
+    return await insertQuery(ctx, { url: new URL(url), limit, priority })
   },
 })
