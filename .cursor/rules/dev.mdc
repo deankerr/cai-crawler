@@ -1,0 +1,11 @@
+---
+alwaysApply: true
+---
+
+Do not start the dev server. Use `bun check` to confirm your code is valid.
+
+add shadcn/ui components: `bunx shadcn@latest add <name>`
+
+Do not use Docker.
+
+There are no tests.

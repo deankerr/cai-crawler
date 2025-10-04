@@ -1,28 +1,51 @@
 {
   "name": "cai-crawler",
   "type": "module",
-  "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "convex dev",
-    "predev": "convex dev --until-success && convex dashboard",
-    "logs": "convex logs",
-    "lint": "tsc -p convex && eslint . --ext ts,tsx --report-unused-disable-directives --fix"
+    "build": "react-router build",
+    "dev": "concurrently \"bun run dev:frontend\" \"bun run dev:backend\"",
+    "dev:frontend": "react-router dev",
+    "dev:backend": "convex dev",
+    "start": "react-router-serve ./build/server/index.js",
+    "typecheck": "react-router typegen && tsc",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --fix",
+    "check": "bun typecheck && bun lint"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.901.0",
     "@convex-dev/workpool": "^0.2.18",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@react-router/node": "^7.9.2",
+    "@react-router/serve": "^7.9.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "convex": "^1.27.3",
     "convex-helpers": "^0.1.104",
+    "isbot": "^5.1.31",
+    "lucide-react": "^0.544.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router": "^7.9.2",
+    "tailwind-merge": "^3.3.1",
     "up-fetch": "^2.4.0",
     "zod": "^3.25.76"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.19.0",
+    "@react-router/dev": "^7.9.2",
+    "@tailwindcss/vite": "^4.1.14",
     "@types/bun": "^1.2.23",
     "@types/node": "^22.18.8",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "concurrently": "^9.2.1",
     "eslint": "^9.37.0",
     "eslint-plugin-format": "^1.0.2",
-    "typescript": "^5.9.3"
+    "tailwindcss": "^4.1.14",
+    "tw-animate-css": "^1.4.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.7",
+    "vite-tsconfig-paths": "^5.1.4"
   }
 }
