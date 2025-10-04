@@ -1,6 +1,6 @@
 import type { Id } from '../../convex/_generated/dataModel'
 import { usePaginatedQuery, useQuery } from 'convex/react'
-import { Link, useSearchParams } from 'react-router'
+import { Link, useNavigate, useSearchParams } from 'react-router'
 import { api } from '../../convex/_generated/api'
 import { ImageDetail } from '../components/ImageDetail'
 import { Button } from '../components/ui/button'
@@ -25,7 +25,8 @@ export default function Images() {
     {},
     { initialNumItems: 20 },
   )
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
   const modalImageId = searchParams.get('modal')
   const modalImage = useQuery(
     api.images.get,
@@ -33,7 +34,7 @@ export default function Images() {
   )
 
   const closeModal = () => {
-    setSearchParams({})
+    navigate('.', { preventScrollReset: true })
   }
 
   if (status === 'LoadingFirstPage') {
@@ -63,6 +64,7 @@ export default function Images() {
               <Link
                 key={image._id}
                 to={`?modal=${image._id}`}
+                preventScrollReset
                 className="group relative aspect-[3/4] overflow-hidden rounded-lg border bg-muted hover:border-primary transition-colors"
               >
                 {isVideo
