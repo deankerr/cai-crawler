@@ -1,9 +1,12 @@
+import type { WindowVirtualizerHandle } from 'virtua'
 import type { Id } from '../../convex/_generated/dataModel'
 import { usePaginatedQuery, useQuery } from 'convex/react'
+import { VideoIcon } from 'lucide-react'
+import { useRef } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router'
+import { WindowVirtualizer } from 'virtua'
 import { api } from '../../convex/_generated/api'
 import { ImageDetail } from '../components/ImageDetail'
-import { Button } from '../components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -33,8 +36,33 @@ export default function Images() {
     modalImageId ? { id: modalImageId as Id<'images'> } : 'skip',
   )
 
+  const virtualizerRef = useRef<WindowVirtualizerHandle>(null)
+  const fetchedCountRef = useRef(-1)
+
   const closeModal = () => {
     navigate('.', { preventScrollReset: true })
+  }
+
+  const handleScroll = () => {
+    if (!virtualizerRef.current)
+      return
+    if (status !== 'CanLoadMore')
+      return
+
+    const rowCount = Math.ceil(results.length / 4)
+    const endIndex = virtualizerRef.current.findEndIndex()
+
+    // Trigger load when we're within 3 rows of the end
+    if (fetchedCountRef.current < rowCount && endIndex + 3 > rowCount) {
+      fetchedCountRef.current = rowCount
+      loadMore(20)
+    }
+  }
+
+  /* Chunk results into groups of 4 */
+  const rows = []
+  for (let i = 0; i < results.length; i += 4) {
+    rows.push(results.slice(i, i + 4))
   }
 
   if (status === 'LoadingFirstPage') {
@@ -46,7 +74,7 @@ export default function Images() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background">
       <header className="border-b">
         <div className="container mx-auto px-4 py-4">
           <h1 className="text-2xl font-bold">CivitAI Images</h1>
@@ -54,95 +82,74 @@ export default function Images() {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-          {results.map((image) => {
-            const mediaUrl = getAssetUrl(image.storageKey)
-            if (!mediaUrl)
-              return null
-            const isVideo = isVideoUrl(image.url)
-            return (
-              <Link
-                key={image._id}
-                to={`?modal=${image._id}`}
-                preventScrollReset
-                className="group relative aspect-[3/4] overflow-hidden rounded-lg border bg-muted hover:border-primary transition-colors"
-              >
-                {isVideo
-                  ? (
-                      <video
-                        src={mediaUrl}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        muted
-                        loop
-                        playsInline
-                        onMouseEnter={e => e.currentTarget.play()}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.pause()
-                          e.currentTarget.currentTime = 0
-                        }}
-                      />
-                    )
-                  : (
-                      <img
-                        src={mediaUrl}
-                        alt={`Image ${image.imageId}`}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        loading="lazy"
-                      />
+        <WindowVirtualizer ref={virtualizerRef} onScroll={handleScroll}>
+          {rows.map(row => (
+            <div
+              key={row[0]._id}
+              className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4"
+            >
+              {row.map((image) => {
+                const mediaUrl = getAssetUrl(image.storageKey)
+                if (!mediaUrl)
+                  return null
+                const isVideo = isVideoUrl(image.url)
+                return (
+                  <Link
+                    key={image._id}
+                    to={`?modal=${image._id}`}
+                    preventScrollReset
+                    className="group relative aspect-[3/4] overflow-hidden rounded-lg border bg-muted hover:border-primary transition-colors"
+                  >
+                    {isVideo
+                      ? (
+                          <video
+                            src={mediaUrl}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            muted
+                            loop
+                            playsInline
+                            onMouseEnter={e => e.currentTarget.play()}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.pause()
+                              e.currentTarget.currentTime = 0
+                            }}
+                          />
+                        )
+                      : (
+                          <img
+                            src={mediaUrl}
+                            alt={`Image ${image.imageId}`}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            loading="lazy"
+                          />
+                        )}
+                    {isVideo && (
+                      <div className="absolute bottom-2 right-2 bg-black/50 backdrop-blur-sm text-white text-xs px-1.5 py-1 rounded">
+                        <VideoIcon />
+                      </div>
                     )}
-                {isVideo && (
-                  <div className="absolute bottom-2 right-2 bg-black/50 backdrop-blur-sm text-white text-xs px-1.5 py-1 rounded">
-                    <svg
-                      className="w-3 h-3"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </div>
-                )}
-                {image.nsfw && (
-                  <div className="absolute top-2 right-2 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-0.5 rounded">
-                    NSFW
-                  </div>
-                )}
-              </Link>
-            )
-          })}
-        </div>
-
-        {status === 'CanLoadMore' && (
-          <div className="mt-8 flex justify-center">
-            <Button onClick={() => loadMore(20)} variant="outline">
-              Load More
-            </Button>
-          </div>
-        )}
-
-        {status === 'LoadingMore' && (
-          <div className="mt-8 flex justify-center">
-            <p className="text-muted-foreground">Loading more...</p>
-          </div>
-        )}
+                    {image.nsfw && (
+                      <div className="absolute top-2 right-2 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-0.5 rounded">
+                        NSFW
+                      </div>
+                    )}
+                  </Link>
+                )
+              })}
+            </div>
+          ))}
+          {status === 'LoadingMore' && (
+            <div className="py-8 flex justify-center">
+              <p className="text-muted-foreground">Loading more...</p>
+            </div>
+          )}
+        </WindowVirtualizer>
       </main>
 
       <Dialog open={!!modalImageId} onOpenChange={open => !open && closeModal()}>
-        <DialogContent className="sm:max-w-11/12 max-h-11/12">
+        <DialogContent className="sm:max-w-11/12 max-h-11/12" aria-describedby={undefined}>
           <DialogHeader>
             <DialogTitle className="flex items-center justify-between">
-
               {modalImageId && (
                 <a
                   href={`/images/${modalImageId}`}
