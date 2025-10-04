@@ -213,3 +213,18 @@ export const addImagesByUsernameQuery = internalMutation({
     return await insertQuery(ctx, { url: new URL(url), limit, priority })
   },
 })
+
+export const addImagesMonthlyTopQuery = internalMutation({
+  args: {
+    limit: v.number(),
+    priority: v.optional(v.number()),
+  },
+  handler: async (ctx, { limit, priority }) => {
+    const url = buildURL(baseUrl, ['images'], {
+      nsfw: true,
+      sort: 'Most Collected',
+      period: 'Month',
+    }).toString()
+    return await insertQuery(ctx, { url: new URL(url), limit, priority })
+  },
+})
