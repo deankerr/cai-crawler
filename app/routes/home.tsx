@@ -1,14 +1,11 @@
 import type { Route } from './+types/home'
-import { Welcome } from '../welcome/welcome'
+import { redirect } from 'react-router'
 
 // eslint-disable-next-line no-empty-pattern
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: 'New React Router App' },
-    { name: 'description', content: 'Welcome to React Router!' },
-  ]
+export function loader({}: Route.LoaderArgs) {
+  return redirect('/images')
 }
 
 export default function Home() {
-  return <Welcome />
+  return null
 }

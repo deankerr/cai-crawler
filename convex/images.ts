@@ -1,9 +1,10 @@
 import type { Id } from './_generated/dataModel'
 import type { MutationCtx, QueryCtx } from './_generated/server'
 import { asyncMap } from 'convex-helpers'
+import { paginationOptsValidator } from 'convex/server'
 import { ConvexError, v } from 'convex/values'
 import { internal } from './_generated/api'
-import { internalMutation } from './_generated/server'
+import { internalMutation, query } from './_generated/server'
 import { Image } from './civitai/validators'
 import { backlinkProcessedDocument, getEntitySnapshot } from './entitySnapshots'
 import { extractModelReferences } from './utils/extractors'
@@ -23,6 +24,7 @@ export const insertImages = internalMutation({
   args: {
     items: v.array(v.object({ entitySnapshotId: v.id('entitySnapshots'), rawData: v.string() })),
   },
+  returns: v.any(),
   handler: async (ctx, { items }) => {
     const processedResults = await asyncMap(items, async ({ entitySnapshotId }) => {
       try {
@@ -90,3 +92,58 @@ async function processEntityToImage(ctx: MutationCtx, { entitySnapshotId }: { en
 export function generateStorageKey(contentType: string, id: number): string {
   return `${contentType}/${id}`
 }
+
+export const list = query({
+  args: {
+    paginationOpts: paginationOptsValidator,
+  },
+  returns: v.any(),
+  handler: async (ctx, { paginationOpts }) => {
+    return await ctx.db.query('images').order('desc').paginate(paginationOpts)
+  },
+})
+
+export const get = query({
+  args: {
+    id: v.id('images'),
+  },
+  returns: v.union(
+    v.object({
+      _id: v.id('images'),
+      _creationTime: v.number(),
+      imageId: v.number(),
+      url: v.string(),
+      width: v.number(),
+      height: v.number(),
+      nsfw: v.boolean(),
+      nsfwLevel: v.string(),
+      createdAt: v.string(),
+      postId: v.optional(v.number()),
+      blurHash: v.string(),
+      username: v.union(v.string(), v.null()),
+      storageKey: v.optional(v.string()),
+      models: v.array(
+        v.object({
+          modelId: v.optional(v.number()),
+          versionId: v.optional(v.number()),
+          type: v.string(),
+          name: v.optional(v.string()),
+          hash: v.optional(v.string()),
+        }),
+      ),
+      totalReactions: v.number(),
+      stats: v.object({
+        likeCount: v.number(),
+        heartCount: v.number(),
+        laughCount: v.number(),
+        cryCount: v.number(),
+        commentCount: v.number(),
+      }),
+      entitySnapshotId: v.id('entitySnapshots'),
+    }),
+    v.null(),
+  ),
+  handler: async (ctx, { id }) => {
+    return await ctx.db.get(id)
+  },
+})

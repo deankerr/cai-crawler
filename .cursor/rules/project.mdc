@@ -50,3 +50,9 @@ We don't need currently:
 - GET /api/v1/models (we may support this in the future)
 - GET /api/v1/creators
 - GET /api/v1/tags
+
+# Assets
+
+`${VITE_ASSETS_BASE_URL}/images/${imageId}`
+
+- Many "images" are actually videos. Check the original URL (the `url` field on the image document) for a '.mp4' extension.
