@@ -1,7 +1,15 @@
-import { usePaginatedQuery } from 'convex/react'
-import { Link } from 'react-router'
+import type { Id } from '../../convex/_generated/dataModel'
+import { usePaginatedQuery, useQuery } from 'convex/react'
+import { Link, useSearchParams } from 'react-router'
 import { api } from '../../convex/_generated/api'
+import { ImageDetail } from '../components/ImageDetail'
 import { Button } from '../components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '../components/ui/dialog'
 import { getAssetUrl, isVideoUrl } from '../lib/media'
 
 export function meta() {
@@ -17,6 +25,16 @@ export default function Images() {
     {},
     { initialNumItems: 20 },
   )
+  const [searchParams, setSearchParams] = useSearchParams()
+  const modalImageId = searchParams.get('modal')
+  const modalImage = useQuery(
+    api.images.get,
+    modalImageId ? { id: modalImageId as Id<'images'> } : 'skip',
+  )
+
+  const closeModal = () => {
+    setSearchParams({})
+  }
 
   if (status === 'LoadingFirstPage') {
     return (
@@ -44,7 +62,7 @@ export default function Images() {
             return (
               <Link
                 key={image._id}
-                to={`/images/${image._id}`}
+                to={`?modal=${image._id}`}
                 className="group relative aspect-[3/4] overflow-hidden rounded-lg border bg-muted hover:border-primary transition-colors"
               >
                 {isVideo
@@ -70,8 +88,31 @@ export default function Images() {
                         loading="lazy"
                       />
                     )}
+                {isVideo && (
+                  <div className="absolute bottom-2 right-2 bg-black/50 backdrop-blur-sm text-white text-xs px-1.5 py-1 rounded">
+                    <svg
+                      className="w-3 h-3"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </div>
+                )}
                 {image.nsfw && (
-                  <div className="absolute top-2 right-2 bg-destructive text-destructive-foreground text-xs px-2 py-1 rounded">
+                  <div className="absolute top-2 right-2 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-0.5 rounded">
                     NSFW
                   </div>
                 )}
@@ -94,6 +135,37 @@ export default function Images() {
           </div>
         )}
       </main>
+
+      <Dialog open={!!modalImageId} onOpenChange={open => !open && closeModal()}>
+        <DialogContent className="sm:max-w-11/12 max-h-11/12">
+          <DialogHeader>
+            <DialogTitle className="flex items-center justify-between">
+
+              {modalImageId && (
+                <a
+                  href={`/images/${modalImageId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-muted-foreground hover:text-foreground"
+                >
+                  permalink →
+                </a>
+              )}
+            </DialogTitle>
+          </DialogHeader>
+          {modalImage === undefined && (
+            <div className="py-8 text-center">
+              <p className="text-muted-foreground">Loading...</p>
+            </div>
+          )}
+          {modalImage === null && (
+            <div className="py-8 text-center">
+              <p className="text-muted-foreground">Image not found</p>
+            </div>
+          )}
+          {modalImage && <ImageDetail image={modalImage} />}
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

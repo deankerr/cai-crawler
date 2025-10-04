@@ -1,5 +1,6 @@
 import type { Route } from './+types/root'
 
+import { ConvexProvider, ConvexReactClient } from 'convex/react'
 import {
   isRouteErrorResponse,
   Links,
@@ -8,7 +9,6 @@ import {
   Scripts,
   ScrollRestoration,
 } from 'react-router'
-import { ConvexProvider, ConvexReactClient } from 'convex/react'
 import './app.css'
 
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string)

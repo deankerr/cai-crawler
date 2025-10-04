@@ -8,13 +8,15 @@
     "dev:frontend": "react-router dev",
     "dev:backend": "convex dev",
     "start": "react-router-serve ./build/server/index.js",
-    "typecheck": "react-router typegen && tsc",
+    "typegen": "react-router typegen",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --fix",
     "check": "bun typecheck && bun lint"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.901.0",
     "@convex-dev/workpool": "^0.2.18",
+    "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-slot": "^1.2.3",
     "@react-router/node": "^7.9.2",
     "@react-router/serve": "^7.9.2",
