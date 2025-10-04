@@ -10,19 +10,19 @@
     "lint": "tsc -p convex && eslint . --ext ts,tsx --report-unused-disable-directives --fix"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.798.0",
-    "@convex-dev/workpool": "^0.2.8",
-    "convex": "^1.23.0",
-    "convex-helpers": "^0.1.79",
-    "up-fetch": "^2.1.0",
-    "zod": "^3.24.3"
+    "@aws-sdk/client-s3": "^3.901.0",
+    "@convex-dev/workpool": "^0.2.18",
+    "convex": "^1.27.3",
+    "convex-helpers": "^0.1.104",
+    "up-fetch": "^2.4.0",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^4.12.0",
-    "@types/bun": "^1.2.10",
-    "@types/node": "^22.15.2",
-    "eslint": "^9.24.0",
-    "eslint-plugin-format": "^1.0.1",
-    "typescript": "^5.2.2"
+    "@antfu/eslint-config": "^4.19.0",
+    "@types/bun": "^1.2.23",
+    "@types/node": "^22.18.8",
+    "eslint": "^9.37.0",
+    "eslint-plugin-format": "^1.0.2",
+    "typescript": "^5.9.3"
   }
 }

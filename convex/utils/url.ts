@@ -42,4 +42,3 @@ export function getPathAndQuery(url: string | URL): string {
 
   return urlObj.pathname + (search ? `?${search}` : '')
 }
-
