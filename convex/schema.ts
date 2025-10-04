@@ -4,16 +4,6 @@ import { v } from 'convex/values'
 
 const entityType = literals('image', 'model', 'modelVersion')
 
-const vModelStats = v.object({
-  downloadCount: v.number(),
-  favoriteCount: v.optional(v.number()),
-  commentCount: v.optional(v.number()),
-  ratingCount: v.optional(v.number()),
-  rating: v.optional(v.number()),
-  thumbsUpCount: v.optional(v.number()),
-  thumbsDownCount: v.optional(v.number()),
-})
-
 export default defineSchema(
   {
     images: defineTable({
@@ -56,30 +46,6 @@ export default defineSchema(
     })
       .index('by_imageId', ['imageId'])
       .index('by_createdAt', ['createdAt']),
-
-    models: defineTable({
-      modelId: v.number(),
-      name: v.string(),
-      description: v.string(),
-      createdAt: v.string(),
-      type: v.string(), // "Checkpoint", "LoRA", etc.
-      nsfw: v.boolean(),
-      username: v.union(v.string(), v.null()),
-      stats: vModelStats,
-    })
-      .index('by_modelId', ['modelId']),
-
-    modelVersions: defineTable({
-      versionId: v.number(),
-      modelId: v.number(),
-      name: v.string(),
-      createdAt: v.string(),
-      updatedAt: v.string(),
-      baseModel: v.string(), // "SD 1.5", "SDXL", etc.
-      stats: vModelStats,
-    })
-      .index('by_versionId', ['versionId'])
-      .index('by_modelId', ['modelId']),
 
     entitySnapshots: defineTable({
       entityType,

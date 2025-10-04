@@ -16,6 +16,7 @@ alwaysApply: true
 - There is currently no frontend, the system is managed using the Convex Dashboard
 - The system is design for a single user only
 - package manager: bun
+- We are only processing and storing images at this time - no model data beyond what is found on an image record.
 
 # Philosophy
 
@@ -23,14 +24,14 @@ alwaysApply: true
 - Never consider backwards compatibility - make breaking changes, refactor existing code, delete what is no longer relevant.
 - Favour pure functions with a single purpose, that can be composed throughout the codebase
 - Do not use return types (unless working with generics), they lie to the compiler and cause bugs and inflexibility
-- Avoid classes, encapsulation and hierachies.
+- Avoid classes, encapsulation and hierarchies.
 - Fail fast: Do not catch errors without a specific reason to. Convex logs error data in full automatically.
 - Good code is easy to delete. Avoid needless complexity and tightly coupled code.
 - We're working with an API that is subject to change at anytime, without warning. Capture the results, then parse them. Abnormalities can be reviewed manually. We don't reject data that doesn't match our naive assumptions.
 
 # Convex
 
-- If you encounter a circular type dependancy issue, it is almost certainly due to type annotations on return values from queries/mutations to actions being required, eg. `const results: Id<'users'> = await ctx.runMutation(internal.users.update, args)`
+- If you encounter a circular type dependency issue, it is almost certainly due to type annotations on return values from queries/mutations to actions being required, eg. `const results: Id<'users'> = await ctx.runMutation(internal.users.update, args)`
 - Don't return data from functions unless there is a practical reason to, especially actions which almost never need this.
 - Actions should almost always be internal, unless you want and end user to use them directly (this is rare).
 - asyncMap from convex-helpers is a convenience wrapper around Promise.all. We should use it whenever we need to run multiple db calls at once (like when storing batches)
