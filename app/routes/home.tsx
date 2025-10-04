@@ -1,3 +1,5 @@
 export default function Home() {
-  return null
+  return (
+    <div>CAI Crawler</div>
+  )
 }
