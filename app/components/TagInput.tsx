@@ -54,8 +54,8 @@ export function TagInput({ allTags, existingTagIds, onAddTag, placeholder = 'Add
           {placeholder}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[300px] p-0" align="start">
-        <Command>
+      <PopoverContent className="w-[300px] p-0">
+        <Command loop>
           <CommandInput
             placeholder="Search or create tag..."
             value={value}
