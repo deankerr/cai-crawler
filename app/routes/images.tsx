@@ -62,7 +62,9 @@ export default function Images() {
   const fetchedCountRef = useRef(-1)
 
   const closeModal = () => {
-    navigate('.', { preventScrollReset: true })
+    const newParams = new URLSearchParams(searchParams)
+    newParams.delete('modal')
+    navigate(`?${newParams.toString()}`, { preventScrollReset: true })
   }
 
   const handleTagSelect = (tagId: Id<'tags'> | undefined) => {
@@ -263,7 +265,7 @@ export default function Images() {
             {rows.map(row => (
               <div
                 key={row[0]._id}
-                className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4"
+                className="grid sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-4"
               >
                 {row.map((image) => {
                   const mediaUrl = getAssetUrl(image.storageKey)
@@ -273,7 +275,7 @@ export default function Images() {
                   return (
                     <Link
                       key={image._id}
-                      to={`?modal=${image._id}`}
+                      to={`?${new URLSearchParams({ ...Object.fromEntries(searchParams), modal: image._id }).toString()}`}
                       preventScrollReset
                       className="group relative aspect-[3/4] overflow-hidden rounded-lg border bg-muted hover:border-primary transition-colors"
                     >
