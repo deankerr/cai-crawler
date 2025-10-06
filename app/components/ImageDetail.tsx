@@ -89,12 +89,20 @@ export function ImageDetail({ image }: { image: Doc<'images'> }) {
           <div>
             <h2 className="text-sm font-medium text-muted-foreground mb-1">Source</h2>
             <a
+              href={`https://civitai.com/images/${image.imageId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-primary hover:underline block"
+            >
+              View on CivitAI →
+            </a>
+            <a
               href={image.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-primary hover:underline"
+              className="text-sm text-primary hover:underline block"
             >
-              View on CivitAI →
+              Original →
             </a>
           </div>
 
