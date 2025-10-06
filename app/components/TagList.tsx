@@ -1,11 +1,14 @@
 import type { Id } from '../../convex/_generated/dataModel'
-import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 
 interface Tag {
   _id: Id<'tags'>
   name: string
-  imageCount: number
+  description?: string
+  color?: string
+  isInternal: boolean
+  createdAt: number
+  updatedAt: number
 }
 
 interface TagListProps {
@@ -19,13 +22,10 @@ export function TagList({ tags, selectedTagId, onTagSelect }: TagListProps) {
     <div className="space-y-1">
       <Button
         variant={selectedTagId === undefined ? 'secondary' : 'ghost'}
-        className="w-full justify-between"
+        className="w-full justify-start"
         onClick={() => onTagSelect(undefined)}
       >
         <span>All Images</span>
-        <Badge variant="outline" className="ml-2">
-          {tags.reduce((sum, tag) => sum + tag.imageCount, 0)}
-        </Badge>
       </Button>
 
       <div className="space-y-0.5">
@@ -33,13 +33,10 @@ export function TagList({ tags, selectedTagId, onTagSelect }: TagListProps) {
           <Button
             key={tag._id}
             variant={selectedTagId === tag._id ? 'secondary' : 'ghost'}
-            className="w-full justify-between"
+            className="w-full justify-start"
             onClick={() => onTagSelect(tag._id)}
           >
             <span className="truncate">{tag.name}</span>
-            <Badge variant="outline" className="ml-2 shrink-0">
-              {tag.imageCount}
-            </Badge>
           </Button>
         ))}
       </div>

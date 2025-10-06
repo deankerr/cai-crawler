@@ -120,6 +120,14 @@ export const ensureTag = internalMutation({
 - Used when adding tags to images
 - Implements the "no pre-creation required" feature
 
+##### `ensureTagByName` (helper)
+```typescript
+async function ensureTagByName(ctx: MutationCtx, { name, isInternal = false })
+```
+- Helper function that ensures tag exists by name
+- Can be used within other mutation functions without `ctx.runMutation`
+- Automatically handles tag normalization and creation
+
 ##### `listTags` (query)
 ```typescript
 export const listTags = query({
@@ -173,8 +181,8 @@ export const deleteTag = mutation({
 ```
 - Deletes a tag
 - Cannot delete internal tags
-- Cascades to delete all `imageTags` relationships
-- Uses `.collect()` pattern since Convex doesn't support batch delete
+- Uses `deleteRelationship` helper for each image relationship
+- Properly handles untagged tag management for each affected image
 
 #### Image-Tag Relationships
 
@@ -191,8 +199,8 @@ export const addTagToImage = mutation({
 ```
 - Adds a tag to an image
 - Creates tag if it doesn't exist (via `ensureTag`)
-- Idempotent: silently succeeds if relationship already exists
-- Removes "untagged" tag if present (via `removeTagFromImage`)
+- Uses `createRelationship` helper for core logic
+- Handles idempotency and untagged management internally
 
 ##### `removeTagFromImage` (mutation)
 ```typescript
@@ -206,7 +214,8 @@ export const removeTagFromImage = mutation({
 })
 ```
 - Removes a tag from an image
-- If last user tag removed, automatically adds "untagged" tag
+- Uses `deleteRelationship` helper for core logic
+- Handles untagged tag management internally
 
 ##### `getImageTags` (query)
 ```typescript

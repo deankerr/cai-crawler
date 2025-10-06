@@ -135,13 +135,19 @@ export function ImageDetail({ image }: { image: Doc<'images'> }) {
               <div className="flex flex-wrap gap-2">
                 {imageTags && imageTags.length > 0
                   ? (
-                      imageTags.map(tag => (
-                        <TagBadge
-                          key={tag._id}
-                          tag={tag}
-                          onRemove={() => removeTag({ imageId: image._id, tagId: tag._id })}
-                        />
-                      ))
+                      imageTags
+                        .filter(tag => tag !== null)
+                        .map(tag => (
+                          <TagBadge
+                            key={tag._id}
+                            tag={{
+                              _id: tag._id,
+                              name: tag.name,
+                              color: tag.color,
+                            }}
+                            onRemove={() => removeTag({ imageId: image._id, tagId: tag._id })}
+                          />
+                        ))
                     )
                   : (
                       <p className="text-sm text-muted-foreground">No tags yet</p>
@@ -149,8 +155,10 @@ export function ImageDetail({ image }: { image: Doc<'images'> }) {
               </div>
               {allTags && (
                 <TagInput
-                  allTags={allTags}
-                  existingTagIds={new Set(imageTags?.map(t => t._id) ?? [])}
+                  allTags={allTags
+                    .filter(t => t !== null)
+                    .map(t => ({ _id: t._id, name: t.name }))}
+                  existingTagIds={new Set(imageTags?.filter(t => t !== null).map(t => t._id) ?? [])}
                   onAddTag={tagName => addTag({ imageId: image._id, tagName })}
                   placeholder="Add tag..."
                 />

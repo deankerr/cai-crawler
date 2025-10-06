@@ -10,6 +10,50 @@ Asset and metadata crawler for CivitAI API using Convex for database/orchestrati
 
 - There are currently 111,000+ images/entitySnapshots in the production database. NEVER `collect` these tables.
 
+## Query Optimization Rules
+
+**CRITICAL: Never load entire tables into memory.** With 111k+ images, this will crash the system.
+
+### Efficient Query Patterns
+
+1. **Always use pagination** for image queries:
+   ```typescript
+   // ✅ Good - only loads requested page
+   const result = await ctx.db.query('images').order('desc').paginate(paginationOpts)
+
+   // ❌ Bad - loads ALL images into memory
+   const allImages = await ctx.db.query('images').collect()
+   ```
+
+2. **For tag filtering, paginate through relationships**:
+   ```typescript
+   // ✅ Efficient - paginate through imageTags, then fetch only needed images
+   const relationshipsPage = await ctx.db
+     .query('imageTags')
+     .withIndex('by_tagId', q => q.eq('tagId', tagId))
+     .order('desc')
+     .paginate(paginationOpts)
+
+   const images = await asyncMap(relationshipsPage.page, async (rel) => {
+     return await ctx.db.get(rel.imageId)
+   })
+   ```
+
+3. **Use indexes, not filters**:
+   ```typescript
+   // ✅ Good - uses index
+   const images = await ctx.db.query('images').withIndex('by_imageId', q => q.eq('imageId', id))
+
+   // ❌ Bad - table scan
+   const images = await ctx.db.query('images').filter(q => q.eq(q.field('imageId'), id))
+   ```
+
+### Performance-Critical Functions
+
+- `getTaggedImages`: Uses paginated relationship queries to avoid loading all imageTag records
+- `listTags`: Loads all tags but without image counts (counts removed for performance)
+- `getImageTags`: Uses `getUserTagsForImage` helper instead of problematic count queries
+
 ## Commands
 
 Development:
