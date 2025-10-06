@@ -1,7 +1,15 @@
 import type { Doc } from '../../convex/_generated/dataModel'
+import { useMutation, useQuery } from 'convex/react'
+import { api } from '../../convex/_generated/api'
 import { getAssetUrl, isVideoUrl } from '../lib/media'
+import { TagBadge } from './TagBadge'
+import { TagInput } from './TagInput'
 
 export function ImageDetail({ image }: { image: Doc<'images'> }) {
+  const imageTags = useQuery(api.tags.getImageTags, { imageId: image._id })
+  const allTags = useQuery(api.tags.listTags, { includeInternal: false })
+  const addTag = useMutation(api.tags.addTagToImage)
+  const removeTag = useMutation(api.tags.removeTagFromImage)
   const mediaUrl = getAssetUrl(image.storageKey)
   const isVideo = isVideoUrl(image.url)
 
@@ -118,6 +126,35 @@ export function ImageDetail({ image }: { image: Doc<'images'> }) {
                 {' '}
                 {image.stats.commentCount}
               </span>
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-sm font-medium text-muted-foreground mb-2">Tags</h2>
+            <div className="space-y-2">
+              <div className="flex flex-wrap gap-2">
+                {imageTags && imageTags.length > 0
+                  ? (
+                      imageTags.map(tag => (
+                        <TagBadge
+                          key={tag._id}
+                          tag={tag}
+                          onRemove={() => removeTag({ imageId: image._id, tagId: tag._id })}
+                        />
+                      ))
+                    )
+                  : (
+                      <p className="text-sm text-muted-foreground">No tags yet</p>
+                    )}
+              </div>
+              {allTags && (
+                <TagInput
+                  allTags={allTags}
+                  existingTagIds={new Set(imageTags?.map(t => t._id) ?? [])}
+                  onAddTag={tagName => addTag({ imageId: image._id, tagName })}
+                  placeholder="Add tag..."
+                />
+              )}
             </div>
           </div>
 

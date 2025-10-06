@@ -67,6 +67,26 @@ export default defineSchema(
       count: v.number(),
       error: v.optional(v.string()),
     }),
+
+    tags: defineTable({
+      name: v.string(),
+      description: v.optional(v.string()),
+      color: v.optional(v.string()),
+      isInternal: v.boolean(),
+      createdAt: v.number(),
+      updatedAt: v.number(),
+    })
+      .index('by_name', ['name'])
+      .index('by_isInternal', ['isInternal']),
+
+    imageTags: defineTable({
+      imageId: v.id('images'),
+      tagId: v.id('tags'),
+      createdAt: v.number(),
+    })
+      .index('by_imageId', ['imageId'])
+      .index('by_tagId', ['tagId'])
+      .index('by_imageId_and_tagId', ['imageId', 'tagId']),
   },
   // If you ever get an error about schema mismatch
   // between your data and your schema, and you cannot

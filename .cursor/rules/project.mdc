@@ -20,7 +20,6 @@ alwaysApply: true
 
 # Philosophy
 
-- This is a new project which we have started today. There is no existing system or data beyond what exists here, locally.
 - Never consider backwards compatibility - make breaking changes, refactor existing code, delete what is no longer relevant.
 - Favour pure functions with a single purpose, that can be composed throughout the codebase
 - Do not use return types (unless working with generics), they lie to the compiler and cause bugs and inflexibility

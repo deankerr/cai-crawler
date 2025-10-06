@@ -7,6 +7,7 @@ import { internal } from './_generated/api'
 import { internalMutation, query } from './_generated/server'
 import { Image } from './civitai/validators'
 import { backlinkProcessedDocument, getEntitySnapshot } from './entitySnapshots'
+import { INTERNAL_TAGS } from './tags'
 import { extractModelReferences } from './utils/extractors'
 
 export async function getImageByImageId(ctx: QueryCtx, { imageId }: { imageId: number }) {
@@ -26,6 +27,12 @@ export const insertImages = internalMutation({
   },
   returns: v.any(),
   handler: async (ctx, { items }) => {
+    // * ensure untagged tag exists once for the entire batch
+    const untaggedTagId: Id<'tags'> = await ctx.runMutation(internal.tags.ensureTag, {
+      name: INTERNAL_TAGS.untagged,
+      isInternal: true,
+    })
+
     const processedResults = await asyncMap(items, async ({ entitySnapshotId }) => {
       try {
         return await processEntityToImage(ctx, { entitySnapshotId })
@@ -36,6 +43,18 @@ export const insertImages = internalMutation({
     })
 
     const imageEntityPairs = processedResults.filter(e => 'image' in e)
+
+    // * apply untagged tag to newly inserted images (batch)
+    const newlyInsertedImages = imageEntityPairs.filter(e => e.inserted)
+    if (newlyInsertedImages.length > 0) {
+      await asyncMap(newlyInsertedImages, async (result) => {
+        await ctx.db.insert('imageTags', {
+          imageId: result.image._id,
+          tagId: untaggedTagId,
+          createdAt: Date.now(),
+        })
+      })
+    }
 
     await ctx.scheduler.runAfter(0, internal.storage.enqueue, {
       tasks: imageEntityPairs.map(e => ({
