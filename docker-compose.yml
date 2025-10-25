@@ -4,11 +4,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        VITE_ASSETS_BASE_URL: ${VITE_ASSETS_BASE_URL}
+        VITE_CONVEX_URL: ${VITE_CONVEX_URL}
     ports:
       - "3000:3000"
+    environment:
+      - VITE_ASSETS_BASE_URL=${VITE_ASSETS_BASE_URL}
+      - VITE_CONVEX_URL=${VITE_CONVEX_URL}
     env_file:
       - .env
-    environment:
-      - VITE_CONVEX_URL
-      - VITE_ASSETS_BASE_URL
     restart: unless-stopped
