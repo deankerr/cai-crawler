@@ -1,0 +1,14 @@
+services:
+  app:
+    image: cai-crawler:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      - VITE_CONVEX_URL
+      - VITE_ASSETS_BASE_URL
+    restart: unless-stopped

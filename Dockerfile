@@ -1,22 +1,29 @@
-FROM node:20-alpine AS development-dependencies-env
-COPY . /app
-WORKDIR /app
-RUN npm ci
 
-FROM node:20-alpine AS production-dependencies-env
-COPY ./package.json package-lock.json /app/
-WORKDIR /app
-RUN npm ci --omit=dev
+# --- Bun build stages ---
+FROM oven/bun:1 AS base
+WORKDIR /usr/src/app
 
-FROM node:20-alpine AS build-env
-COPY . /app/
-COPY --from=development-dependencies-env /app/node_modules /app/node_modules
-WORKDIR /app
-RUN npm run build
+FROM base AS install
+RUN mkdir -p /temp/dev
+COPY package.json bun.lock /temp/dev/
+RUN cd /temp/dev && bun install --frozen-lockfile
 
-FROM node:20-alpine
-COPY ./package.json package-lock.json /app/
-COPY --from=production-dependencies-env /app/node_modules /app/node_modules
-COPY --from=build-env /app/build /app/build
-WORKDIR /app
-CMD ["npm", "run", "start"]
+RUN mkdir -p /temp/prod
+COPY package.json bun.lock /temp/prod/
+RUN cd /temp/prod && bun install --frozen-lockfile --production
+
+FROM base AS build
+COPY --from=install /temp/dev/node_modules node_modules
+COPY . .
+ENV NODE_ENV=production
+RUN bun run build
+
+# --- Node.js runtime stage ---
+FROM node:24-alpine AS release
+WORKDIR /usr/src/app
+COPY --from=install /temp/prod/node_modules ./node_modules
+COPY --from=build /usr/src/app/build ./build
+COPY package.json ./
+ENV NODE_ENV=production
+EXPOSE 3000
+CMD ["npx", "react-router-serve", "./build/server/index.js"]
